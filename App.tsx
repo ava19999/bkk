@@ -101,8 +101,6 @@ const App: React.FC = () => {
 
         {/* SECTION 2: VISION & MISSION */}
         <section className="py-24 relative overflow-hidden bg-gradient-to-b from-stone-50 to-[#fdfbf7] border-y border-stone-200">
-           <div className="absolute top-0 right-0 w-1/3 h-full bg-orange-50/40 rounded-l-[100px] hidden lg:block pointer-events-none"></div>
-           
            <div className="max-w-[1400px] mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-20 items-center">
               {/* Vision */}
               <div className="reveal-hidden">
@@ -155,29 +153,22 @@ const App: React.FC = () => {
            </div>
         </section>
 
-        {/* SECTION 3: CORE VALUES (BACKGROUND JABAT TANGAN LINE ART) */}
-        <section className="py-24 px-6 relative overflow-hidden">
+        {/* SECTION 3: CORE VALUES (SOLID GREEN BACKGROUND - NO IMAGE) */}
+        <section className="py-32 px-6 relative overflow-hidden bg-green-950">
           
-          {/* Background Image: Handshake Line Art - Dark Lines on Light BG */}
-          {/* opacity-[0.08] membuatnya terlihat seperti watermark samar (abu-abu muda) */}
-          <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-             <img 
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Handshake_icon_2016.svg/1200px-Handshake_icon_2016.svg.png" 
-               alt="Handshake Watermark" 
-               className="w-full md:w-3/4 h-auto object-contain opacity-[0.08]" 
-             />
-          </div>
-
           <div className="max-w-[1400px] mx-auto relative z-10">
             <div className="text-center mb-16 reveal-hidden">
-               <span className="text-orange-600 text-[10px] font-bold uppercase tracking-[0.3em] bg-white/50 px-2 py-1">Core Values</span>
-               <h2 className="text-4xl md:text-5xl font-serif text-green-950 mt-3">Why Work With Us?</h2>
+               {/* Label warna oranye terang agar kontras di background hijau tua */}
+               <span className="text-orange-400 text-[10px] font-bold uppercase tracking-[0.3em] bg-white/10 px-3 py-1 rounded-full">Core Values</span>
+               {/* Judul warna putih */}
+               <h2 className="text-4xl md:text-5xl font-serif text-white mt-4">Why Work With Us?</h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-hidden">
+               {/* Cards menggunakan background terang (off-white) agar menonjol di background hijau */}
                {/* Trust */}
-               <div className="p-8 bg-white/90 backdrop-blur-sm border border-stone-200 hover:border-orange-200 shadow-sm hover:shadow-lg transition-all duration-300 group cursor-default rounded-sm">
-                 <div className="mb-6 w-14 h-14 bg-stone-50 rounded-full flex items-center justify-center group-hover:bg-orange-600 transition-colors shadow-sm">
+               <div className="p-8 bg-[#fdfbf7] border border-stone-200 hover:border-orange-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm">
+                 <div className="mb-6 w-14 h-14 bg-stone-100 rounded-full flex items-center justify-center group-hover:bg-orange-600 transition-colors shadow-sm">
                     <Handshake className="text-orange-500 group-hover:text-white transition-colors" size={28} />
                  </div>
                  <h4 className="font-serif text-2xl mb-4 text-green-950 group-hover:text-orange-600 transition-colors">Trust</h4>
@@ -187,8 +178,8 @@ const App: React.FC = () => {
                </div>
 
                {/* Commitment */}
-               <div className="p-8 bg-white/90 backdrop-blur-sm border border-stone-200 hover:border-orange-200 shadow-sm hover:shadow-lg transition-all duration-300 group cursor-default rounded-sm">
-                 <div className="mb-6 w-14 h-14 bg-stone-50 rounded-full flex items-center justify-center group-hover:bg-orange-600 transition-colors shadow-sm">
+               <div className="p-8 bg-[#fdfbf7] border border-stone-200 hover:border-orange-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm">
+                 <div className="mb-6 w-14 h-14 bg-stone-100 rounded-full flex items-center justify-center group-hover:bg-orange-600 transition-colors shadow-sm">
                     <HeartHandshake className="text-orange-500 group-hover:text-white transition-colors" size={28} />
                  </div>
                  <h4 className="font-serif text-2xl mb-4 text-green-950 group-hover:text-orange-600 transition-colors">Commitment</h4>
@@ -198,8 +189,8 @@ const App: React.FC = () => {
                </div>
 
                {/* Integrity */}
-               <div className="p-8 bg-white/90 backdrop-blur-sm border border-stone-200 hover:border-orange-200 shadow-sm hover:shadow-lg transition-all duration-300 group cursor-default rounded-sm">
-                 <div className="mb-6 w-14 h-14 bg-stone-50 rounded-full flex items-center justify-center group-hover:bg-orange-600 transition-colors shadow-sm">
+               <div className="p-8 bg-[#fdfbf7] border border-stone-200 hover:border-orange-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm">
+                 <div className="mb-6 w-14 h-14 bg-stone-100 rounded-full flex items-center justify-center group-hover:bg-orange-600 transition-colors shadow-sm">
                     <Shield className="text-orange-500 group-hover:text-white transition-colors" size={28} />
                  </div>
                  <h4 className="font-serif text-2xl mb-4 text-green-950 group-hover:text-orange-600 transition-colors">Integrity</h4>
@@ -214,7 +205,6 @@ const App: React.FC = () => {
         {/* SECTION 4: STATS & GLOBAL REACH (World Map Background) */}
         <section className="py-24 bg-white relative overflow-hidden">
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-             {/* Map Background - Style sama dengan handshake */}
              <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" alt="World Map" className="w-full h-auto object-cover opacity-[0.05]" />
           </div>
 
