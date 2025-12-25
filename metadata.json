@@ -1,0 +1,7 @@
+{
+  "name": "PT. BINTANG KIAT KEMULIAAN",
+  "description": "Leading Indonesian Fruits, Vegetables, and Flowers Exporter. Trust, Commitment, Integrity.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
