@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="viewport" content="width=1050">
+    
     <title>PT. BINTANG KIAT KEMULIAAN | Premium Indonesian Exporter</title>
     
     <script type="importmap">
@@ -26,13 +28,20 @@
             font-family: 'Manrope', sans-serif;
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
-            background-color: #fdfbf7; /* Warm Cream Background */
+            background-color: #fdfbf7; 
             color: #1c1917;
             overflow-x: hidden;
+            
+            /* Trik Tambahan: Sedikit menebalkan font agar lebih jelas saat di layar kecil */
+            -webkit-text-stroke: 0.1px rgba(0,0,0,0.1);
         }
+        
+        /* Memastikan font Serif (judul) lebih tebal sedikit agar terbaca */
         h1, h2, h3, h4, h5, .font-serif {
             font-family: 'Cormorant Garamond', serif;
+            font-weight: 600; /* Sedikit ditebalkan dari default */
         }
+
         .reveal-hidden {
             opacity: 0;
             transform: translateY(30px);
@@ -46,16 +55,15 @@
             width: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #14532d; /* green-900 */
+            background: #14532d; 
             border-radius: 10px;
         }
-        /* Utility to hide scrollbar but allow scrolling */
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
         .scrollbar-hide {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
     </head>
