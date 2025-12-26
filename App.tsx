@@ -6,7 +6,7 @@ import { SERVICES } from './constants';
 import { 
   ArrowRight, MapPin, Mail, Phone, CheckCircle2, Globe, TrendingUp, 
   Package, Leaf, Target, Scale, Clock, ShieldCheck, Banknote, 
-  Sprout, Carrot, Flower2, Handshake, HeartHandshake, Shield 
+  Sprout, Carrot, Flower2, Handshake, HeartHandshake, Shield, X 
 } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -173,7 +173,7 @@ const App: React.FC = () => {
                     <Target size={16} className="text-red-600" />
                     <span className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Our Vision</span>
                  </div>
-                 <h3 className="text-4xl md:text-5xl lg:text-6xl font-serif text-green-950 leading-[1.1] mb-8">
+                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-serif text-green-950 leading-[1.1] mb-8">
                    "To be the <span className="text-red-600 italic">most trusted</span> exporter for fruits, vegetables, and flowers."
                  </h3>
                  <div className="pl-6 border-l-2 border-red-600/30">
@@ -266,39 +266,42 @@ const App: React.FC = () => {
           <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center relative z-10">
             <div className="reveal-hidden relative order-2 lg:order-1">
               
-              <div className="grid grid-cols-2 gap-6">
+              {/* FIX: Ubah grid-cols-2 menjadi grid-cols-1 pada mobile (grid-cols-1 sm:grid-cols-2) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                  
-                 <div className="bg-stone-50 backdrop-blur-sm p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
+                 {/* FIX: Ubah padding p-8 menjadi p-6 pada mobile (p-6 md:p-8) agar lebih lega */}
+                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
                     <div>
                         <Globe className="text-red-600 mb-4" size={32} />
-                        <h3 className="text-5xl font-serif mb-2 text-green-950">7+</h3>
+                        {/* FIX: Ubah text-5xl jadi text-4xl di mobile */}
+                        <h3 className="text-4xl md:text-5xl font-serif mb-2 text-green-950">7+</h3>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Export Countries</p>
                     </div>
                     <p className="text-sm mt-4 text-stone-600">China, Singapore, Thailand, Malaysia, UAE, Bangladesh, Canada.</p>
                  </div>
 
-                 <div className="bg-stone-50 backdrop-blur-sm p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
+                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
                     <div>
                         <TrendingUp className="text-red-600 mb-4" size={32} />
-                        <h3 className="text-5xl font-serif mb-2 text-green-950">100+</h3>
+                        <h3 className="text-4xl md:text-5xl font-serif mb-2 text-green-950">100+</h3>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Happy Clients</p>
                     </div>
                     <p className="text-sm mt-4 text-stone-600">Trusting us annually.</p>
                  </div>
 
-                 <div className="bg-stone-50 backdrop-blur-sm p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
+                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
                     <div>
                         <Package className="text-red-600 mb-4" size={32} />
-                        <h3 className="text-5xl font-serif mb-2 text-green-950">100<span className="text-2xl">MT</span></h3>
+                        <h3 className="text-4xl md:text-5xl font-serif mb-2 text-green-950">100<span className="text-xl md:text-2xl">MT</span></h3>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Monthly Capacity</p>
                     </div>
                     <p className="text-sm mt-4 text-stone-600">For each commodity.</p>
                  </div>
 
-                 <div className="bg-stone-50 backdrop-blur-sm p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
+                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
                     <div>
                         <CheckCircle2 className="text-red-600 mb-4" size={32} />
-                        <h3 className="text-5xl font-serif mb-2 text-green-950">GACC</h3>
+                        <h3 className="text-4xl md:text-5xl font-serif mb-2 text-green-950">GACC</h3>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Certified</p>
                     </div>
                     <p className="text-sm mt-4 text-stone-600">Registered Packaging House.</p>
@@ -308,9 +311,8 @@ const App: React.FC = () => {
             </div>
             <div className="reveal-hidden order-1 lg:order-2 lg:pl-10">
               <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">Global Reach</span>
-              <h2 className="text-5xl md:text-7xl font-serif text-green-950 mb-8 leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-green-950 mb-8 leading-tight">
                 Connecting <br /> 
-                {/* UBAH: text-red-600 agar Merah */}
                 <span className="italic text-red-600">Indonesian Harvests</span> to the World.
               </h2>
               <p className="text-stone-600 font-light leading-relaxed mb-10 text-lg">
@@ -402,28 +404,21 @@ const App: React.FC = () => {
         </section>
 
         {/* SECTION 6: PARTNER */}
-        <section className="py-32 bg-stone-900 text-white relative overflow-hidden">
-           <div className="absolute inset-0">
-              <img 
-                src="https://images.unsplash.com/photo-1494412574643-35d324698420?auto=format&fit=crop&q=80&w=2400" 
-                alt="Global Shipping Port" 
-                className="w-full h-full object-cover opacity-60" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-stone-900/95 via-stone-900/80 to-stone-900/40"></div>
-           </div>
-           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <section className="py-32 bg-white text-stone-600 relative overflow-hidden">
+           {/* IMAGE BACKGROUND REMOVED & BG CHANGED TO WHITE */}
+           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
            <div className="max-w-[1000px] mx-auto px-6 relative z-10 text-center">
-              <div className="w-16 h-1 bg-red-600 mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.8)]"></div>
-              <h2 className="text-5xl md:text-7xl font-serif mb-8 leading-tight text-white drop-shadow-2xl">
-                 Partner <br/> <span className="italic text-stone-300">With Us.</span>
+              <div className="w-16 h-1 bg-red-600 mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.3)]"></div>
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif mb-8 leading-tight text-green-950 drop-shadow-sm">
+                 Partner <br/> <span className="italic text-red-600">With Us.</span>
               </h2>
-              <p className="text-white text-xl md:text-2xl font-light mb-12 leading-relaxed max-w-2xl mx-auto drop-shadow-xl">
+              <p className="text-stone-600 text-xl md:text-2xl font-light mb-12 leading-relaxed max-w-2xl mx-auto">
                   We are looking forward to working with you to bring nature's finest to your market.
               </p>
               
               <button 
                 onClick={() => setIsContactOpen(true)}
-                className="group relative px-12 py-6 bg-white text-green-950 text-xs font-bold uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all overflow-hidden shadow-2xl hover:shadow-red-900/50 rounded-sm mx-auto flex items-center gap-4"
+                className="group relative px-12 py-6 bg-green-950 text-white text-xs font-bold uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all overflow-hidden shadow-2xl hover:shadow-red-900/50 rounded-sm mx-auto flex items-center gap-4"
               >
                   Contact Sales <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
@@ -431,6 +426,7 @@ const App: React.FC = () => {
         </section>
       </main>
 
+      {/* FOOTER */}
       <footer className="bg-[#010805] text-white pt-24 pb-12 px-6 border-t border-white/5 relative z-10">
         <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16 mb-20">
           
@@ -498,16 +494,16 @@ const App: React.FC = () => {
               
               <div className="flex items-center gap-3 text-sm text-stone-300 font-light group mt-4">
                  <Mail size={16} className="text-green-600 group-hover:text-white transition-colors" />
-                 <a href="mailto:info@bkkemuliaan.com" className="hover:text-red-400 transition-colors">info@bkkemuliaan.com</a>
+                 <a href="mailto:info@bkkemuliaan.com" className="hover:text-red-400 transition-colors break-all">info@bkkemuliaan.com</a>
               </div>
               <div className="flex items-center gap-3 text-sm text-stone-300 font-light group">
                  <Mail size={16} className="text-green-600 group-hover:text-white transition-colors" />
-                 <a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="hover:text-red-400 transition-colors">Sales-marketing.2@bkkemuliaan.com</a>
+                 <a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="hover:text-red-400 transition-colors break-all">Sales-marketing.2@bkkemuliaan.com</a>
               </div>
 
               <div className="flex items-center gap-3 text-sm text-stone-300 font-light group mt-4">
                  <Globe size={16} className="text-green-600 group-hover:text-white transition-colors" />
-                 <a href="https://www.bkkemuliaan.com" target="_blank" rel="noreferrer" className="hover:text-red-400 transition-colors">www.bkkemuliaan.com</a>
+                 <a href="https://www.bkkemuliaan.com" target="_blank" rel="noreferrer" className="hover:text-red-400 transition-colors break-all">www.bkkemuliaan.com</a>
               </div>
             </div>
           </div>
@@ -534,6 +530,67 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
+      
+      {isContactOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={() => setIsContactOpen(false)}></div>
+            <div className="relative bg-white border border-stone-200 rounded-sm shadow-2xl max-w-lg w-full p-8 md:p-10 animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto">
+               <button onClick={() => setIsContactOpen(false)} className="absolute top-4 right-4 p-2 text-stone-400 hover:text-red-600 transition-colors"><X size={24} /></button>
+               
+               <div className="text-center mb-6">
+                  <h2 className="text-3xl font-serif text-green-950 mb-2">Get in Touch</h2>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-red-600">We'd love to hear from you</p>
+               </div>
+               
+               <div className="space-y-4">
+                  <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
+                      <Phone className="text-green-600 shrink-0 mt-1" size={20} />
+                      <div>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Phone / WhatsApp</h4>
+                          <a href="tel:+62226016306" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">+62 22 6016 306</a>
+                          <a href="tel:+628176878166" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">+62 817 687 8166</a>
+                      </div>
+                  </div>
+                  <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
+                      <Mail className="text-green-600 shrink-0 mt-1" size={20} />
+                      <div>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Emails</h4>
+                          <a href="mailto:info@bkkemuliaan.com" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors break-all">info@bkkemuliaan.com</a>
+                          <a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors break-all">Sales-marketing.2@bkkemuliaan.com</a>
+                      </div>
+                  </div>
+                  <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
+                      <Globe className="text-green-600 shrink-0 mt-1" size={20} />
+                      <div>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Website</h4>
+                          <a href="https://www.bkkemuliaan.com" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm hover:text-red-600 transition-colors break-all">www.bkkemuliaan.com</a>
+                      </div>
+                  </div>
+                  <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
+                      <MapPin className="text-green-600 shrink-0 mt-1" size={20} />
+                      <div>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-2">Our Locations</h4>
+                          <div className="mb-4">
+                            <strong className="text-stone-500 text-[10px] uppercase tracking-wide block mb-1">Main Office:</strong>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Jl.+Sawit+Darangdan+No.+3,+Purwakarta,+West+Java+41163+-+Indonesia" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm leading-relaxed hover:text-red-600 transition-colors block">Jl. Sawit Darangdan No. 3, Purwakarta, West Java 41163 - Indonesia</a>
+                          </div>
+                          <div>
+                            <strong className="text-stone-500 text-[10px] uppercase tracking-wide block mb-1">Operational Warehouse:</strong>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Husein+Sastranegara+Airport,+Cargo+Park+C.49+Jl.+Padjajaran+No.+156,+Bandung,+West+Java+40174" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm leading-relaxed hover:text-red-600 transition-colors block">Husein Sastranegara Airport, Cargo Park C.49 Jl. Padjajaran No. 156, Bandung, West Java 40174</a>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+               <div className="mt-8 pt-6 border-t border-stone-200 text-center">
+                  <div className="flex flex-col items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-500">
+                      <img src="/images/logo.png" alt="BKK Logo" className="w-12 h-12 object-contain mb-3" />
+                      <h3 className="text-xl font-serif text-green-950 tracking-[0.2em] uppercase">BKK</h3>
+                      <p className="text-[9px] font-medium tracking-[0.3em] uppercase text-stone-500 mt-1">PT. Bintang Kiat Kemuliaan</p>
+                  </div>
+               </div>
+            </div>
+        </div>
+      )}
     </div>
   );
 };
