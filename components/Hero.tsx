@@ -33,7 +33,8 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
+    // PERBAIKAN: h-screen diubah jadi h-[915px] untuk mobile, md:h-screen untuk desktop
+    <section className="relative h-[915px] md:h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
       
       <style>{`
         @keyframes scroll {
@@ -58,8 +59,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Hero Content */}
-      {/* UBAH: mt-32 dihapus, diganti pb-32 agar posisi naik ke atas secara signifikan */}
-      <div className="relative z-10 text-center text-white px-6 pb-32 md:pb-0 md:mt-0 max-w-5xl">
+      <div className="relative z-10 text-center text-white px-6 mt-32 md:mt-40 max-w-5xl">
         
         <button 
             onClick={scrollToPopular}
