@@ -24,10 +24,11 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
     }
   };
 
-  // UBAH: Ukuran font dikembalikan ke text-[5px] agar pas (tidak terlalu kecil seperti text-[4px])
+  // --- TEMPAT MENGUBAH UKURAN TEKS MENU ---
+  // Cari 'text-[6px]' di bawah ini. Ganti angkanya jika ingin lebih besar/kecil.
   const buttonClass = `
     group relative px-1 py-0.5 md:px-3 md:py-1.5 rounded-sm 
-    text-[5px] md:text-[9px] font-bold uppercase 
+    text-[6px] md:text-[9px] font-bold uppercase 
     tracking-tight md:tracking-[0.2em] transition-all duration-300 border whitespace-nowrap
     ${scrolled 
         ? 'border-green-950 text-green-950 hover:bg-green-950 hover:text-white' 
@@ -43,20 +44,25 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
             : 'bg-transparent py-2 md:py-6 border-transparent'
         }`}
       >
-        {/* UBAH: pr-2 (Menggeser menu sedikit ke kanan dibanding pr-3, tapi tidak terlalu mepet) */}
         <div className="w-full pl-1 pr-2 md:px-12 flex justify-between items-center gap-1">
           
           <button onClick={() => scrollToSection('home')} className="flex items-center gap-1 md:gap-2 group shrink-0 text-left">
+              {/* --- TEMPAT MENGUBAH UKURAN LOGO --- */}
+              {/* Ubah 'w-6 h-6' menjadi angka lain (misal w-7 h-7) */}
               <img 
                 src="/images/logo.png" 
                 alt="BKK Logo" 
-                className="w-5 h-5 md:w-16 md:h-16 object-contain transition-transform duration-300 group-hover:scale-105"
+                className="w-6 h-6 md:w-16 md:h-16 object-contain transition-transform duration-300 group-hover:scale-105"
               />
               <div className="flex flex-col">
-                  <h1 className={`text-sm md:text-4xl font-serif font-bold leading-none tracking-wide transition-colors duration-300 ${scrolled ? 'text-green-950' : 'text-white'}`}>
+                  {/* --- TEMPAT MENGUBAH UKURAN JUDUL 'BKK' --- */}
+                  {/* Ubah 'text-base' menjadi text-lg atau text-sm */}
+                  <h1 className={`text-base md:text-4xl font-serif font-bold leading-none tracking-wide transition-colors duration-300 ${scrolled ? 'text-green-950' : 'text-white'}`}>
                       BKK
                   </h1>
-                  <p className="text-[4px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] mt-0.5 md:mt-1 text-red-600 transition-colors duration-300 whitespace-nowrap">
+                  {/* --- TEMPAT MENGUBAH UKURAN SUBTITLE 'PT...' --- */}
+                  {/* Ubah 'text-[5px]' menjadi angka lain */}
+                  <p className="text-[5px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] mt-0.5 md:mt-1 text-red-600 transition-colors duration-300 whitespace-nowrap">
                       PT. Bintang Kiat Kemuliaan
                   </p>
               </div>
@@ -69,8 +75,7 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
               
               <button onClick={() => setIsContactOpen(true)} className={`${buttonClass} pl-1.5 pr-1.5 md:pl-4 md:pr-3 flex items-center gap-0.5 md:gap-2`}>
                   <span>Contact</span>
-                  {/* UBAH: Ukuran icon disesuaikan dengan font text-[5px] */}
-                  <ArrowRight size={6} className="group-hover:translate-x-1 transition-transform md:w-[10px] md:h-[10px]" />
+                  <ArrowRight size={8} className="group-hover:translate-x-1 transition-transform md:w-[10px] md:h-[10px]" />
               </button>
           </nav>
 
