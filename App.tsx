@@ -1,150 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import MangosteenCard from './components/MangosteenCard';
 import BookingWidget from './components/BookingWidget';
-import { useLanguage } from './contexts/LanguageContext';
-import { 
-  ArrowRight, MapPin, Mail, Phone, CheckCircle2, Globe, TrendingUp, 
-  Package, Leaf, Target, Scale, Clock, ShieldCheck, Banknote, 
-  Sprout, Carrot, Flower2, Handshake, HeartHandshake, Shield, X 
-} from 'lucide-react';
+// Import komponen section baru dari folder components
+import HistorySection from './components/HistorySection';
+import VisionSection from './components/VisionSection';
+import ValuesSection from './components/ValuesSection';
+import StatsSection from './components/StatsSection';
+import ProductSection from './components/ProductSection';
+import PartnerSection from './components/PartnerSection';
+import Footer from './components/Footer';
 
 const App: React.FC = () => {
-  const { t } = useLanguage();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const isDown = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-  const [isGrabbing, setIsGrabbing] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
 
-  // --- LOGIKA GAMBAR & LABEL PRODUK ---
-  const defaultImages = {
-    fruits: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=600",
-    vegetables: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&q=80&w=600",
-    spices: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600"
-  };
-
-  const [categoryImages, setCategoryImages] = useState({
-    fruits: defaultImages.fruits,
-    vegetables: defaultImages.vegetables,
-    spices: defaultImages.spices
-  });
-
-  const [selectedLabels, setSelectedLabels] = useState({
-      fruits: { adj: 'Sensational', name: 'Fruits' }, 
-      vegetables: { adj: 'Premium', name: 'Vegetables' },
-      spices: { adj: 'Exquisite', name: 'Spices & Flowers' }
-  });
-
-  const [mobileActiveImage, setMobileActiveImage] = useState(defaultImages.fruits);
-  const [activeProduct, setActiveProduct] = useState<string>('');
-  const [mobileActiveCategory, setMobileActiveCategory] = useState<'fruits' | 'vegetables' | 'spices'>('fruits');
-
-  const productImages: Record<string, string> = {
-    'Avocado': 'https://images.unsplash.com/photo-1523049673856-38866de6c069?auto=format&fit=crop&q=80&w=600',
-    'Harumanis Mango': 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&q=80&w=600',
-    'Honey Pineapple': 'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&q=80&w=600',
-    'Mangosteen': 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=600',
-    'Rockmelon': 'https://images.unsplash.com/photo-1593407983685-61882c974917?auto=format&fit=crop&q=80&w=600',
-    'Salacca': 'https://images.unsplash.com/photo-1627308785461-9c1782079039?auto=format&fit=crop&q=80&w=600',
-    'Watermelon': 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=600',
-    'Durian': 'https://images.unsplash.com/photo-1587393855524-087f83d95bc9?auto=format&fit=crop&q=80&w=600',
-    'Dragon Fruit': 'https://images.unsplash.com/photo-1527725964894-3914a5c0b9e8?auto=format&fit=crop&q=80&w=600',
-    'French Beans': 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&q=80&w=600',
-    'Capsicum': 'https://images.unsplash.com/photo-1563565375-f3fdf5dbc240?auto=format&fit=crop&q=80&w=600',
-    'Honey Sweet Potato': 'https://images.unsplash.com/photo-1596097635121-14b63b84041e?auto=format&fit=crop&q=80&w=600',
-    'Elephant Ginger': 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600',
-    'Young Ginger': 'https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=600',
-    'Potato': 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&q=80&w=600',
-    'Sweet Potato': 'https://images.unsplash.com/photo-1634547902407-359f42807e3d?auto=format&fit=crop&q=80&w=600',
-    'Watercress': 'https://images.unsplash.com/photo-1558487226-724f33d7b86d?auto=format&fit=crop&q=80&w=600',
-    'Cinnamon': 'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&q=80&w=600',
-    'Vanilla': 'https://images.unsplash.com/photo-1610214612300-66444c20f188?auto=format&fit=crop&q=80&w=600',
-    'Black Pepper': 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600',
-    'Clove': 'https://images.unsplash.com/photo-1618635296065-2410286b0266?auto=format&fit=crop&q=80&w=600',
-    'Jasmine Flower': 'https://images.unsplash.com/photo-1600387845879-a4713f764110?auto=format&fit=crop&q=80&w=600',
-    'White Pepper': 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&q=80&w=600'
-  };
-
-  const handleProductClick = (category: 'fruits' | 'vegetables' | 'spices', productNameKey: string) => {
-    const imageUrl = productImages[productNameKey] || defaultImages[category];
-    setCategoryImages(prev => ({ ...prev, [category]: imageUrl }));
-    setMobileActiveImage(imageUrl);
-    setActiveProduct(productNameKey);
-
-    const randomAdjective = t.products.adjectives[Math.floor(Math.random() * t.products.adjectives.length)];
-    const catName = category === 'fruits' ? t.products.cats.fruits : category === 'vegetables' ? t.products.cats.vegetables : t.products.cats.spices;
-    
-    setSelectedLabels(prev => ({
-        ...prev,
-        [category]: { adj: randomAdjective, name: catName }
-    }));
-  };
-
-  const galleryImages = [
-    "https://images.unsplash.com/photo-1599940859674-a7fef05b94ae?auto=format&fit=crop&q=80&w=1200", 
-    "https://images.unsplash.com/photo-1600387845879-a4713f764110?auto=format&fit=crop&q=80&w=1200", 
-    "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=1200", 
-    "https://images.unsplash.com/photo-1591462619084-28b3c9597375?auto=format&fit=crop&q=80&w=1200", 
-    "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&q=80&w=1200", 
-  ];
-  const displayGallery = [...galleryImages, ...galleryImages, ...galleryImages];
-
-  const bgRow1 = [
-    "https://images.unsplash.com/photo-1599940859674-a7fef05b94ae?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1600387845879-a4713f764110?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1591462619084-28b3c9597375?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&q=80&w=800"
-  ];
-  const bgRow2 = [
-    "https://images.unsplash.com/photo-1523049673856-38866de6c069?auto=format&fit=crop&q=80&w=600",
-    "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=600",
-    "https://images.unsplash.com/photo-1610214612300-66444c20f188?auto=format&fit=crop&q=80&w=600",
-    "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600",
-    "https://images.unsplash.com/photo-1587393855524-087f83d95bc9?auto=format&fit=crop&q=80&w=600"
-  ];
-  const displayBgRow1 = [...bgRow1, ...bgRow1, ...bgRow1, ...bgRow1];
-  const displayBgRow2 = [...bgRow2, ...bgRow2, ...bgRow2, ...bgRow2];
-
-  useEffect(() => {
-    let animationFrameId: number;
-    const scrollContainer = scrollRef.current;
-    const animate = () => {
-      if (scrollContainer) {
-        if (!isDown.current) scrollContainer.scrollLeft += 1; 
-        const oneSetWidth = scrollContainer.scrollWidth / 3;
-        if (scrollContainer.scrollLeft >= oneSetWidth * 2) scrollContainer.scrollLeft -= oneSetWidth;
-        else if (scrollContainer.scrollLeft <= 0) scrollContainer.scrollLeft += oneSetWidth;
-      }
-      animationFrameId = requestAnimationFrame(animate);
-    };
-    animationFrameId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    isDown.current = true;
-    setIsGrabbing(true);
-    startX.current = e.pageX - scrollRef.current.offsetLeft;
-    scrollLeft.current = scrollRef.current.scrollLeft;
-  };
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDown.current || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2; 
-    scrollRef.current.scrollLeft = scrollLeft.current - walk;
-  };
-  useEffect(() => {
-    const handleGlobalMouseUp = () => { isDown.current = false; setIsGrabbing(false); };
-    window.addEventListener('mouseup', handleGlobalMouseUp);
-    return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
-  }, []);
-
+  // Animasi Reveal saat scroll
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('reveal-visible'); });
@@ -153,26 +24,17 @@ const App: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  const allProductKeys = {
-    fruits: ['Avocado', 'Harumanis Mango', 'Honey Pineapple', 'Mangosteen', 'Rockmelon', 'Salacca', 'Watermelon', 'Durian', 'Dragon Fruit'],
-    vegetables: ['French Beans', 'Capsicum', 'Honey Sweet Potato', 'Elephant Ginger', 'Young Ginger', 'Potato', 'Sweet Potato', 'Watercress'],
-    spices: ['Cinnamon', 'Vanilla', 'Black Pepper', 'Clove', 'Jasmine Flower', 'White Pepper']
-  };
-
-  const exportCountries = ['China', 'Singapore', 'Thailand', 'Malaysia', 'UAE', 'Bangladesh', 'Canada'];
-  const getProdName = (key: string) => (t.commodities as any)[key] || key;
-
   return (
     <div className="relative min-h-screen bg-white font-sans text-stone-600 text-enhanced">
       
-      {/* CSS GLOBAL: HANYA JUDUL YANG ADA SHADOW */}
+      {/* GLOBAL CSS STYLES */}
       <style>{`
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
         .animate-scroll-left { animation: scroll-left 50s linear infinite; }
         .animate-scroll-right { animation: scroll-right 50s linear infinite; }
         
-        /* 1. Berikan Shadow HANYA ke Heading (h1-h6) */
+        /* Heading Shadows */
         .text-enhanced h1, 
         .text-enhanced h2, 
         .text-enhanced h3, 
@@ -180,10 +42,9 @@ const App: React.FC = () => {
         .text-enhanced h5, 
         .text-enhanced h6 {
            text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
-           /* -webkit-text-stroke: 0.5px rgba(0,0,0,0.15); // Opsional: Aktifkan jika ingin stroke tipis pada judul */
         }
 
-        /* 2. PAKSA HAPUS Shadow untuk elemen selain Heading */
+        /* Clean styles for other elements */
         .text-enhanced p, 
         .text-enhanced span, 
         .text-enhanced div, 
@@ -198,6 +59,7 @@ const App: React.FC = () => {
         }
       `}</style>
 
+      {/* Background Texture */}
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0" style={{ backgroundImage: `url("https://www.transparenttextures.com/patterns/cream-paper.png")` }}></div>
 
       <Header isContactOpen={isContactOpen} setIsContactOpen={setIsContactOpen} />
@@ -207,396 +69,16 @@ const App: React.FC = () => {
         <div><BookingWidget /></div>
         <div id="popular" className="scroll-mt-24"><MangosteenCard /></div>
         
-        {/* SECTION: ABOUT & GALLERY */}
-        <section id="about" className="py-20 md:py-32 bg-green-50 reveal-hidden text-left relative scroll-mt-24">
-           <div className="px-6 max-w-6xl mx-auto mb-20 relative z-10">
-              <div className="absolute top-0 right-0 -mr-20 -mt-20 opacity-5 pointer-events-none hidden lg:block"><Sprout size={400} className="text-green-100" /></div>
-              <div className="flex justify-start mb-4"><Leaf size={24} className="text-red-600" /></div>
-              <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">{t.history.label}</p>
-              
-              {/* Judul akan otomatis dapat shadow dari CSS .text-enhanced h2 */}
-              <h2 className="text-3xl md:text-5xl font-serif text-green-700 leading-normal mb-16 pb-2 relative z-10">
-                {t.history.title} <br/> <span className="italic text-red-600">{t.history.subtitle}</span>
-              </h2>
-              <div className="grid md:grid-cols-2 gap-10 items-center relative z-10">
-                <p className="text-stone-600 leading-relaxed font-light text-xl">
-                  {t.history.description}
-                </p>
-                <div className="bg-white border border-stone-200 p-8 rounded-sm shadow-xl transition-all duration-500 transform hover:-translate-y-1">
-                  <div className="flex items-start gap-5">
-                     <div className="bg-green-100 p-3 rounded-full text-green-600 shrink-0"><CheckCircle2 size={24} /></div>
-                     <div>
-                        <h4 className="font-serif text-xl text-green-700 mb-2">{t.history.gaccTitle}</h4>
-                        <p className="text-sm text-stone-500 leading-relaxed">{t.history.gaccDesc}</p>
-                     </div>
-                  </div>
-                </div>
-              </div>
-           </div>
-
-           <div className="relative w-full h-[60vh] bg-green-50 group">
-                <div ref={scrollRef} className={`flex h-full w-full overflow-x-hidden select-none ${isGrabbing ? 'cursor-grabbing' : 'cursor-grab'}`} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                    {displayGallery.map((src, index) => (
-                        <div key={index} className="h-full min-w-[50vw] md:min-w-[33vw] lg:min-w-[25vw] border-r border-green-50 relative shrink-0">
-                             <img src={src} alt={`Gallery ${index}`} className="w-full h-full object-cover pointer-events-none transition-all duration-700" draggable={false} />
-                             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-900/80 to-transparent pointer-events-none opacity-80"></div>
-                        </div>
-                    ))}
-                </div>
-                <style>{`.overflow-x-hidden::-webkit-scrollbar { display: none; }`}</style>
-           </div>
-        </section>
-
-        {/* SECTION: VISION & MISSION */}
-        <section className="pt-4 pb-12 md:pt-4 md:pb-16 relative overflow-hidden bg-green-50">
-           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-green-50 to-transparent pointer-events-none z-0"></div>
-           <div className="max-w-[1400px] mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-10 items-center">
-              <div className="reveal-hidden">
-                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm mb-8 border border-stone-200">
-                    <Target size={16} className="text-red-600" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-stone-500">{t.vision.label}</span>
-                 </div>
-                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-serif text-green-700 leading-[1.1] mb-8">{t.vision.text}</h3>
-                 <div className="pl-6 border-l-2 border-red-600/30">
-                    <p className="text-stone-600 text-lg font-light leading-relaxed">{t.vision.subText}</p>
-                 </div>
-              </div>
-              <div className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl border border-stone-100 reveal-hidden relative transform transition-transform hover:scale-[1.01] duration-500">
-                 <div className="flex items-center gap-4 mb-8">
-                    <div className="bg-green-100 p-3 rounded-xl text-green-600 shadow-sm"><Scale size={24} /></div>
-                    <div>
-                        <h3 className="text-3xl font-serif text-green-700 leading-none">{t.vision.missionTitle}</h3>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mt-1">{t.vision.missionSub}</p>
-                    </div>
-                 </div>
-                 <p className="text-stone-600 mb-8 leading-relaxed font-light">{t.vision.missionDesc}</p>
-                 <div className="space-y-4">
-                    {t.vision.points.map((point, idx) => {
-                      const Icon = idx === 0 ? Banknote : idx === 1 ? Clock : ShieldCheck;
-                      return (
-                        <div key={idx} className="flex items-center gap-5 p-4 bg-stone-50 rounded-2xl hover:bg-stone-100 transition-colors group cursor-default border border-stone-100 hover:border-red-200">
-                            <div className="bg-white p-3 rounded-full shadow-sm text-stone-500 group-hover:text-red-600 transition-colors shrink-0"><Icon size={20} /></div>
-                            <div>
-                              <h4 className="font-bold text-green-700 text-sm uppercase tracking-wider mb-1">{point.title}</h4>
-                              <p className="text-xs text-stone-500">{point.desc}</p>
-                            </div>
-                        </div>
-                      )
-                    })}
-                 </div>
-              </div>
-           </div>
-        </section>
-
-        {/* SECTION: CORE VALUES */}
-        <section className="py-20 md:py-32 px-6 relative overflow-hidden bg-stone-50">
-          <div className="absolute inset-0 z-0 overflow-hidden flex flex-col pointer-events-none">
-             <div className="flex-1 w-full relative overflow-hidden flex items-center bg-green-50">
-                <div className="flex animate-scroll-right min-w-full h-full">
-                    {displayBgRow1.map((src, i) => (
-                      <div key={`row1-${i}`} className="h-full w-[40vw] md:w-[25vw] shrink-0 mx-0"><img src={src} className="w-full h-full object-cover" alt="bg" /></div>
-                    ))}
-                </div>
-             </div>
-             <div className="flex-1 w-full relative overflow-hidden flex items-center bg-green-50">
-                <div className="flex animate-scroll-left min-w-full h-full">
-                    {displayBgRow2.map((src, i) => (
-                      <div key={`row2-${i}`} className="h-full w-[40vw] md:w-[25vw] shrink-0 mx-0"><img src={src} className="w-full h-full object-cover" alt="bg" /></div>
-                    ))}
-                </div>
-             </div>
-             <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-green-50 to-transparent z-[2]"></div>
-             <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-green-50 to-transparent z-[2]"></div>
-             <div className="absolute inset-0 bg-green-50/20 backdrop-blur-[1px] z-[1]"></div>
-          </div>
-          <div className="max-w-[1400px] mx-auto relative z-10">
-            <div className="text-center mb-12 md:mb-16 reveal-hidden">
-               <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] bg-white border border-stone-200 px-3 py-1 rounded-full shadow-sm">{t.values.label}</span>
-               <h2 className="text-4xl md:text-5xl font-serif text-green-700 mt-4 drop-shadow-sm">{t.values.title}</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-8">
-               {t.values.cards.map((card, i) => {
-                 const Icon = i === 0 ? Handshake : i === 1 ? HeartHandshake : Shield;
-                 return (
-                   <div key={i} className="relative overflow-hidden p-4 md:p-8 bg-white/60 backdrop-blur-xl border border-white/40 hover:border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
-                     <div className="relative z-10">
-                         <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-stone-50 rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto"><Icon className="text-red-600 w-5 h-5 md:w-7 md:h-7" /></div>
-                         <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">{card.title}</h4>
-                         <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">{card.desc}</p>
-                     </div>
-                   </div>
-                 )
-               })}
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION: STATS */}
-        <section id="global" className="py-12 md:py-24 bg-white relative overflow-hidden scroll-mt-24">
-          <div className="absolute top-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-b from-green-50 to-transparent z-[5] pointer-events-none"></div>
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-             <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" alt="World Map" className="w-full h-auto object-cover opacity-20" style={{ filter: 'invert(34%) sepia(98%) saturate(696%) hue-rotate(88deg) brightness(93%) contrast(92%)' }} />
-          </div>
-          <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-8 lg:gap-20 items-center relative z-10">
-            <div className="relative order-2 lg:order-1">
-              <div className="grid grid-cols-3 md:grid-cols-2 gap-3 md:gap-6">
-                 {/* Item 1 */}
-                 <div className="col-span-3 md:col-span-1 bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
-                    <div className="flex flex-row md:flex-col items-center md:items-start justify-center md:justify-start gap-3 md:gap-0 text-center md:text-left">
-                        <Globe className="text-red-600 mb-0 md:mb-4 w-8 h-8 md:w-8 md:h-8 shrink-0" />
-                        <div className="flex flex-row md:flex-col items-baseline md:items-start gap-2 md:gap-0">
-                           <h3 className="text-4xl md:text-5xl font-serif mb-0 md:mb-2 text-green-700">7+</h3>
-                           <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500 whitespace-nowrap">{t.stats.items.countries}</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-4">
-                       {exportCountries.map((country, idx) => (
-                           <span key={idx} className="bg-white border border-stone-200 px-2 py-1 rounded-full text-[10px] font-medium text-stone-600 shadow-sm">{country}</span>
-                       ))}
-                    </div>
-                 </div>
-                 {/* Item 2 */}
-                 <div className="col-span-1 md:col-span-1 bg-stone-50 backdrop-blur-sm p-3 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
-                    <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                        <TrendingUp className="text-red-600 mb-2 md:mb-4 w-6 h-6 md:w-8 md:h-8" />
-                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-700">100+</h3>
-                        <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-stone-500 leading-tight">{t.stats.items.clients}</p>
-                    </div>
-                    <p className="hidden md:block text-sm mt-2 text-stone-600 leading-tight">{t.stats.items.clientsSub}</p>
-                 </div>
-                 {/* Item 3 */}
-                 <div className="col-span-1 md:col-span-1 bg-stone-50 backdrop-blur-sm p-3 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
-                    <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                        <Package className="text-red-600 mb-2 md:mb-4 w-6 h-6 md:w-8 md:h-8" />
-                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-700">100<span className="text-sm md:text-2xl">MT</span></h3>
-                        <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-stone-500 leading-tight">{t.stats.items.capacity}</p>
-                    </div>
-                    <p className="hidden md:block text-sm mt-2 text-stone-600 leading-tight">{t.stats.items.capacitySub}</p>
-                 </div>
-                 {/* Item 4 */}
-                 <div className="col-span-1 md:col-span-1 bg-stone-50 backdrop-blur-sm p-3 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
-                    <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                        <CheckCircle2 className="text-red-600 mb-2 md:mb-4 w-6 h-6 md:w-8 md:h-8" />
-                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-700">GACC</h3>
-                        <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-stone-500 leading-tight">{t.stats.items.certified}</p>
-                    </div>
-                    <p className="hidden md:block text-sm mt-2 text-stone-600 leading-tight">{t.stats.items.certifiedSub}</p>
-                 </div>
-              </div>
-            </div>
-            <div className="reveal-hidden order-1 lg:order-2 lg:pl-10">
-              <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] mb-4 md:mb-6 block">{t.stats.label}</span>
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-green-700 mb-6 md:mb-8 leading-tight">
-                {t.stats.title1} <br /> <span className="italic text-red-600">{t.stats.title2}</span> <br/> {t.stats.title3}
-              </h2>
-              <p className="text-stone-600 font-light leading-relaxed mb-6 lg:mb-10 text-lg">{t.stats.description}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION: PRODUCTS */}
-        <section id="catalogue" className="py-24 bg-white relative scroll-mt-24">
-           <div className="absolute top-1/2 left-0 w-96 h-96 bg-green-900/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-           <div className="max-w-[1600px] mx-auto px-6 md:px-10 relative z-10">
-              <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-stone-200 pb-6 reveal-hidden">
-                <div className="mb-4 md:mb-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-red-600 mb-2">{t.products.label}</p>
-                  <h3 className="text-3xl md:text-5xl font-serif text-green-700">{t.products.title}</h3>
-                </div>
-                <div className="text-right"><p className="text-stone-500 text-sm font-light">{t.products.subtitle}</p></div>
-              </div>
-              <div className="grid lg:grid-cols-2 gap-4 lg:gap-10 items-stretch reveal-hidden">
-                {/* Image Col */}
-                <div className="h-full relative md:min-h-[400px]">
-                   <div className="md:hidden flex flex-col items-center justify-center mb-0">
-                      <div className="w-full max-w-sm aspect-[4/3] rounded-sm overflow-hidden shadow-lg border border-stone-200 relative group">
-                         <img src={mobileActiveImage} alt="Selected Product" className="w-full h-full object-cover transition-opacity duration-500" />
-                         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/90 via-green-950/40 to-transparent pointer-events-none opacity-95"></div>
-                         <div className="absolute bottom-4 right-4 z-10">
-                             <div className="bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full flex items-baseline gap-2">
-                                <span className="text-red-500 font-serif font-light italic text-xs tracking-widest">{selectedLabels[mobileActiveCategory].adj}</span>
-                                <span className="text-white font-serif font-thin text-xs tracking-widest uppercase">{selectedLabels[mobileActiveCategory].name}</span>
-                             </div>
-                         </div>
-                      </div>
-                   </div>
-                   <div className="hidden md:flex flex-col gap-6 h-full">
-                       {/* Fruits Img */}
-                       <div className="relative h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200 group">
-                          <img src={categoryImages.fruits} alt="Fruits" className="w-full h-full object-cover transition-opacity duration-500" />
-                          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/90 via-green-950/40 to-transparent pointer-events-none opacity-95"></div>
-                          <div className="absolute bottom-4 right-4 z-10">
-                             <div className="bg-black/40 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full flex items-baseline gap-2">
-                                <span className="text-red-500 font-serif font-light italic text-sm tracking-widest">{selectedLabels.fruits.adj}</span>
-                                <span className="text-red-100 font-serif font-thin text-sm tracking-widest uppercase">{t.products.cats.fruits}</span>
-                             </div>
-                          </div>
-                       </div>
-                       {/* Veg Img */}
-                       <div className="relative h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200 group">
-                          <img src={categoryImages.vegetables} alt="Vegetables" className="w-full h-full object-cover transition-opacity duration-500" />
-                          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/90 via-green-950/40 to-transparent pointer-events-none opacity-95"></div>
-                          <div className="absolute bottom-4 right-4 z-10">
-                             <div className="bg-black/40 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full flex items-baseline gap-2">
-                                <span className="text-red-500 font-serif font-light italic text-sm tracking-widest">{selectedLabels.vegetables.adj}</span>
-                                <span className="text-green-100 font-serif font-thin text-sm tracking-widest uppercase">{t.products.cats.vegetables}</span>
-                             </div>
-                          </div>
-                       </div>
-                       {/* Spices Img */}
-                       <div className="relative h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200 group">
-                          <img src={categoryImages.spices} alt="Spices" className="w-full h-full object-cover transition-opacity duration-500" />
-                          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/90 via-green-950/40 to-transparent pointer-events-none opacity-95"></div>
-                          <div className="absolute bottom-4 right-4 z-10">
-                             <div className="bg-black/40 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full flex items-baseline gap-2">
-                                <span className="text-red-500 font-serif font-light italic text-sm tracking-widest">{selectedLabels.spices.adj}</span>
-                                <span className="text-yellow-100 font-serif font-thin text-sm tracking-widest uppercase">{t.products.cats.spices}</span>
-                             </div>
-                          </div>
-                       </div>
-                   </div>
-                </div>
-                {/* List Col */}
-                <div className="h-full">
-                   {/* Mobile Tabs */}
-                   <div className="md:hidden bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 flex flex-col">
-                       <div className="flex justify-between items-center px-2 mb-6 border-b border-stone-200 pb-2">
-                           {(['fruits', 'vegetables', 'spices'] as const).map((cat) => (
-                               <button key={cat} onClick={() => setMobileActiveCategory(cat)} className={`text-xs uppercase tracking-widest transition-all pb-1 ${mobileActiveCategory === cat ? 'text-red-600 font-bold border-b-2 border-red-600' : 'text-stone-400 font-light'}`}>
-                                 {t.products.cats[cat]}
-                               </button>
-                           ))}
-                       </div>
-                       <div className="flex flex-col gap-2">
-                           {allProductKeys[mobileActiveCategory].map((key, i) => {
-                               const isActive = activeProduct === key;
-                               return (
-                                   <button key={i} onClick={() => handleProductClick(mobileActiveCategory, key)} className={`w-full py-2 px-4 rounded-full text-xs text-left transition-all border flex items-center gap-3 ${isActive ? 'bg-red-600 border-red-600 text-white shadow-md' : 'bg-white border-stone-100 text-stone-600'}`}>
-                                     <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${isActive ? 'bg-white' : 'bg-red-600'}`}></div> {getProdName(key)}
-                                   </button>
-                               )
-                           })}
-                       </div>
-                   </div>
-                   {/* Desktop List */}
-                   <div className="hidden md:flex flex-col gap-6 h-full text-left">
-                       <div className="h-[250px] bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 overflow-y-auto hover:border-red-200 transition-colors">
-                          <h4 className="flex items-center gap-3 font-serif text-2xl text-red-600 mb-4 border-b border-stone-200 pb-2 sticky top-0 bg-stone-50 z-10"><Sprout size={24} /> {t.products.cats.fruits}</h4>
-                          <ul className="grid grid-cols-2 gap-y-2 gap-x-6">
-                             {allProductKeys.fruits.map((key, i) => (
-                                <li key={i} className={`text-sm flex items-center gap-2 cursor-pointer transition-all ${activeProduct === key ? 'text-red-600 font-bold' : 'text-stone-600 hover:text-red-600'}`} onClick={() => handleProductClick('fruits', key)}>
-                                   <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeProduct === key ? 'bg-red-600' : 'bg-red-600/50'}`}></div> {getProdName(key)}
-                                </li>
-                             ))}
-                          </ul>
-                       </div>
-                       <div className="h-[250px] bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 overflow-y-auto hover:border-green-200 transition-colors">
-                          <h4 className="flex items-center gap-3 font-serif text-2xl text-green-600 mb-4 border-b border-stone-200 pb-2 sticky top-0 bg-stone-50 z-10"><Carrot size={24} /> {t.products.cats.vegetables}</h4>
-                          <ul className="grid grid-cols-2 gap-y-2 gap-x-6">
-                             {allProductKeys.vegetables.map((key, i) => (
-                                <li key={i} className={`text-sm flex items-center gap-2 cursor-pointer transition-all ${activeProduct === key ? 'text-green-600 font-bold' : 'text-stone-600 hover:text-green-600'}`} onClick={() => handleProductClick('vegetables', key)}>
-                                   <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeProduct === key ? 'bg-green-600' : 'bg-green-600/50'}`}></div> {getProdName(key)}
-                                </li>
-                             ))}
-                          </ul>
-                       </div>
-                       <div className="h-[250px] bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 overflow-y-auto hover:border-yellow-200 transition-colors">
-                          <h4 className="flex items-center gap-3 font-serif text-2xl text-yellow-500 mb-4 border-b border-stone-200 pb-2 sticky top-0 bg-stone-50 z-10"><Flower2 size={24} /> {t.products.cats.spices}</h4>
-                          <ul className="grid grid-cols-2 gap-y-2 gap-x-6">
-                             {allProductKeys.spices.map((key, i) => (
-                                <li key={i} className={`text-sm flex items-center gap-2 cursor-pointer transition-all ${activeProduct === key ? 'text-yellow-600 font-bold' : 'text-stone-600 hover:text-yellow-600'}`} onClick={() => handleProductClick('spices', key)}>
-                                   <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeProduct === key ? 'bg-yellow-500' : 'bg-yellow-500/50'}`}></div> {getProdName(key)}
-                                </li>
-                             ))}
-                          </ul>
-                       </div>
-                   </div>
-                </div>
-              </div>
-           </div>
-        </section>
-
-        {/* SECTION: PARTNER */}
-        <section className="py-12 md:py-32 bg-white text-stone-600 relative overflow-hidden">
-           <div className="max-w-[1000px] mx-auto px-6 relative z-10 text-center">
-              <div className="reveal-hidden">
-                  <div className="w-16 h-1 bg-red-600 mb-4 md:mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.3)]"></div>
-                  <h2 className="text-3xl md:text-5xl lg:text-7xl font-serif mb-4 md:mb-8 leading-tight text-green-700 drop-shadow-sm">{t.partner.title}</h2>
-                  <p className="text-stone-600 text-lg md:text-2xl font-light mb-8 md:mb-12 leading-relaxed max-w-2xl mx-auto">{t.partner.description}</p>
-                  <button onClick={() => setIsContactOpen(true)} className="group relative px-12 py-6 bg-green-600 text-white text-xs font-bold uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all overflow-hidden shadow-2xl hover:shadow-red-900/50 rounded-sm mx-auto flex items-center gap-4">
-                      {t.partner.btn} <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
-              </div>
-           </div>
-        </section>
+        {/* Sections */}
+        <HistorySection />
+        <VisionSection />
+        <ValuesSection />
+        <StatsSection />
+        <ProductSection />
+        <PartnerSection setIsContactOpen={setIsContactOpen} />
       </main>
 
-      {/* FOOTER */}
-      <footer className="bg-[#021a10] text-white pt-24 pb-12 px-6 border-t border-white/5 relative z-10 reveal-hidden">
-        <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16 mb-20">
-          <div className="col-span-1">
-             <a href="#" className="flex items-center gap-4 mb-8 group">
-                <img src="/images/logo.png" alt="BKK Logo" className="w-16 h-16 object-contain opacity-80 group-hover:opacity-100 transition-opacity" />
-                <div>
-                   <h2 className="text-4xl font-serif tracking-widest uppercase text-white">BKK</h2>
-                   <p className="text-[9px] font-medium tracking-[0.3em] uppercase opacity-60">PT. Bintang Kiat Kemuliaan</p>
-                </div>
-             </a>
-             <p className="text-stone-400 text-sm font-light leading-relaxed mb-2">{t.footer.tagline}</p>
-             <p className="text-[10px] text-stone-500 uppercase tracking-widest mt-2 mb-8">{t.footer.subTagline}</p>
-          </div>
-          <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-red-600">{t.footer.officeTitle}</h4>
-            <div className="space-y-6">
-              <div className="flex gap-4">
-                 <MapPin className="text-green-600 shrink-0 mt-1" size={18} />
-                 <div>
-                   <strong className="text-white block text-xs uppercase tracking-wide mb-1">{t.contact.office}</strong>
-                   <a href="https://www.google.com/maps/search/?api=1&query=Jl.+Sawit+Darangdan+No.+3,+Purwakarta,+West+Java+41163+-+Indonesia" target="_blank" rel="noreferrer" className="text-sm text-stone-300 font-light leading-relaxed hover:text-red-400 transition-colors block">
-                     Jl. Sawit Darangdan No. 3, Purwakarta<br/>West Java 41163 - Indonesia
-                   </a>
-                 </div>
-              </div>
-              <div className="flex gap-4">
-                 <MapPin className="text-green-600 shrink-0 mt-1" size={18} />
-                 <div>
-                   <strong className="text-white block text-xs uppercase tracking-wide mb-1">{t.contact.warehouse}</strong>
-                   <a href="https://www.google.com/maps/search/?api=1&query=Husein+Sastranegara+Airport,+Cargo+Park+C.49+Jl.+Padjajaran+No.+156,+Bandung,+West+Java+40174" target="_blank" rel="noreferrer" className="text-sm text-stone-300 font-light leading-relaxed hover:text-red-400 transition-colors block">
-                     Husein Sastranegara Airport<br/>Cargo Park C.49 Jl. Padjajaran No. 156,<br/>Bandung, West Java 40174
-                   </a>
-                 </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-red-600">{t.footer.contactTitle}</h4>
-            <div className="space-y-4">
-               <div className="flex items-center gap-3 text-sm text-stone-300 font-light group"><Phone size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="tel:+62226016306" className="hover:text-red-400 transition-colors">+62 22 6016 306</a></div>
-               <div className="flex items-center gap-3 text-sm text-stone-300 font-light group"><Phone size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="tel:+628176878166" className="hover:text-red-400 transition-colors">+62 817 687 8166</a></div>
-               <div className="flex items-center gap-3 text-sm text-stone-300 font-light group mt-4"><Mail size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="mailto:info@bkkemuliaan.com" className="hover:text-red-400 transition-colors break-all">info@bkkemuliaan.com</a></div>
-               <div className="flex items-center gap-3 text-sm text-stone-300 font-light group"><Mail size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="hover:text-red-400 transition-colors break-all">Sales-marketing.2@bkkemuliaan.com</a></div>
-            </div>
-          </div>
-          <div>
-             <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-red-600">{t.footer.linksTitle}</h4>
-             <ul className="space-y-4 text-sm text-stone-300 font-light">
-               <li className="hover:text-red-400 cursor-pointer transition-colors" onClick={() => document.getElementById('about')?.scrollIntoView({behavior:'smooth'})}>{t.nav.about}</li>
-               <li className="hover:text-red-400 cursor-pointer transition-colors" onClick={() => document.getElementById('catalogue')?.scrollIntoView({behavior:'smooth'})}>{t.nav.product}</li>
-               <li className="hover:text-red-400 cursor-pointer transition-colors" onClick={() => setIsContactOpen(true)}>{t.contact.title}</li>
-             </ul>
-          </div>
-        </div>
-        <div className="max-w-[1600px] mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500 text-center md:text-left">
-            © 2025 PT. Bintang Kiat Kemuliaan. <span className="hidden sm:inline">{t.footer.rights}</span>
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500">
-            <a href="#" className="hover:text-red-500 transition-colors">{t.footer.privacy}</a>
-            <a href="#" className="hover:text-red-500 transition-colors">{t.footer.terms}</a>
-            <a href="#" className="hover:text-red-500 transition-colors">{t.footer.cookie}</a>
-          </div>
-        </div>
-      </footer>
+      <Footer setIsContactOpen={setIsContactOpen} />
     </div>
   );
 };

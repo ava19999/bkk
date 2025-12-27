@@ -34,11 +34,17 @@ const MangosteenCard: React.FC = () => {
     window.location.href = `mailto:info@bkkemuliaan.com?subject=${subject}&body=${body}`;
   };
 
+  // Path gambar
+  const image1 = "/images/popular/48cbbd1b8072032c0c3b6441cddbe9e1.jpg";
+  const image2 = encodeURI("/images/popular/Adventure Instagram Post_20250206_114851_0000.png");
+
+  // Class untuk kabut hijau tua
+  // Menggunakan gradien dari hijau tua (green-950) ke transparan
+  const fogOverlayClass = "absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-green-950/90 via-green-900/50 to-transparent pointer-events-none mix-blend-multiply";
+
   return (
-    // Tambahkan class 'clean-section'
     <section className="relative z-30 w-full bg-green-50 py-24 px-6 reveal-hidden clean-section">
       
-      {/* CSS Override: Hapus semua shadow KECUALI yang punya class 'title-shadow' */}
       <style>{`
         .clean-section h1:not(.title-shadow), 
         .clean-section h2:not(.title-shadow), 
@@ -52,7 +58,6 @@ const MangosteenCard: React.FC = () => {
            -webkit-text-stroke: 0 !important;
         }
         
-        /* Paksa Shadow HANYA untuk Judul */
         .title-shadow {
            text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
            -webkit-text-stroke: 0.5px rgba(0,0,0,0.15) !important;
@@ -70,7 +75,6 @@ const MangosteenCard: React.FC = () => {
                 {t.mangosteen.badge}
              </p>
 
-            {/* JUDUL UTAMA: Diberi class 'title-shadow' agar tetap punya efek */}
             <h3 className="text-4xl md:text-6xl font-serif text-green-700 mb-6 leading-tight shrink-0 title-shadow">
               {t.mangosteen.titleMain} <br /> <span className="text-red-600 title-part">{t.mangosteen.titleSub}</span>
             </h3>
@@ -79,14 +83,16 @@ const MangosteenCard: React.FC = () => {
                {t.mangosteen.description}
             </p>
 
-            {/* GAMBAR MOBILE */}
+            {/* GAMBAR MOBILE (Image 1) dengan FOG */}
             <div className="md:hidden flex flex-col gap-4 mb-10">
-                <div className="relative w-full min-h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200">
+                <div className="relative w-full min-h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200 group">
                    <img 
-                     src="https://images.unsplash.com/photo-1591462619084-28b3c9597375?auto=format&fit=crop&q=80&w=800"
-                     alt="Mangosteen Orchard"
+                     src={image1}
+                     alt="Premium Mangosteen Quality"
                      className="absolute inset-0 w-full h-full object-cover"
                    />
+                   {/* Overlay Kabut Hijau Tua */}
+                   <div className={fogOverlayClass}></div>
                 </div>
             </div>
 
@@ -214,19 +220,25 @@ const MangosteenCard: React.FC = () => {
 
         {/* KOLOM KANAN (DESKTOP ONLY) */}
         <div className="hidden md:flex flex-col gap-6 h-full pt-20">
+            {/* Gambar Atas (Image 1) dengan FOG */}
             <div className="flex-1 relative w-full min-h-[250px] rounded-sm overflow-hidden shadow-lg group border border-stone-200">
                <img 
-                 src="https://images.unsplash.com/photo-1591462619084-28b3c9597375?auto=format&fit=crop&q=80&w=800"
-                 alt="Mangosteen Orchard"
+                 src={image1}
+                 alt="Premium Mangosteen Quality"
                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                />
+               {/* Overlay Kabut Hijau Tua */}
+               <div className={fogOverlayClass}></div>
             </div>
+            {/* Gambar Bawah (Image 2) dengan FOG */}
             <div className="flex-1 relative w-full min-h-[250px] rounded-sm overflow-hidden shadow-lg group border border-stone-200">
                <img 
-                 src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800"
-                 alt="Premium Mangosteen"
+                 src={image2}
+                 alt="Fresh Mangosteen Harvest"
                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                />
+               {/* Overlay Kabut Hijau Tua */}
+               <div className={fogOverlayClass}></div>
             </div>
         </div>
 
