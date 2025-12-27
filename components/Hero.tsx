@@ -1,19 +1,40 @@
 import React from 'react';
 import { Apple, Carrot, Flower } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero: React.FC = () => {
+  const { t } = useLanguage();
+
   const fruits = [
-    'AVOCADO', 'HARUMANIS MANGO', 'HONEY SWEET PINEAPPLE', 'MANGOSTEEN', 
-    'ROCKMELON', 'SALACCA (SNAKE HEAD)', 'WATERMELON', 'DURIAN', 'DRAGON FRUIT'
+    t.commodities['Avocado'], 
+    t.commodities['Harumanis Mango'], 
+    t.commodities['Honey Pineapple'],
+    t.commodities['Mangosteen'], 
+    t.commodities['Rockmelon'], 
+    t.commodities['Salacca'], 
+    t.commodities['Watermelon'], 
+    t.commodities['Durian'], 
+    t.commodities['Dragon Fruit']
   ];
 
   const vegetables = [
-    'FRENCH BEANS', 'CAPSICUM (BELL PEPPER)', 'HONEY SWEET POTATO', 
-    'ELEPHANT GINGER', 'YOUNG GINGER', 'POTATO', 'SWEET POTATO', 'WATERCRESS'
+    t.commodities['French Beans'], 
+    t.commodities['Capsicum'], 
+    t.commodities['Honey Sweet Potato'], 
+    t.commodities['Elephant Ginger'],
+    t.commodities['Young Ginger'], 
+    t.commodities['Potato'], 
+    t.commodities['Sweet Potato'], 
+    t.commodities['Watercress']
   ];
 
   const spices = [
-    'CINNAMON', 'VANILLA', 'BLACK PEPPER', 'CLOVE', 'JASMINE FLOWER', 'WHITE PEPPER'
+    t.commodities['Cinnamon'], 
+    t.commodities['Vanilla'], 
+    t.commodities['Black Pepper'], 
+    t.commodities['Clove'], 
+    t.commodities['Jasmine Flower'], 
+    t.commodities['White Pepper']
   ];
 
   const allCommodities = [...fruits, ...vegetables, ...spices];
@@ -34,17 +55,9 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative h-[730px] md:h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
-      
       <style>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-          animation: scroll 60s linear infinite;
-          width: max-content;
-        }
-        /* Custom text stroke/outline effect */
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-scroll { animation: scroll 60s linear infinite; width: max-content; }
         .text-outline {
            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -58,39 +71,35 @@ const Hero: React.FC = () => {
           alt="Fresh Indonesian Mangosteen Harvest" 
           className="w-full h-full object-cover opacity-100 brightness-110 transition-transform duration-[60s] scale-100 hover:scale-105"
         />
-        
-        {/* EFEK FOG HIJAU TIPIS */}
-        {/* Layer 1: Kabut hijau sangat tipis (5%) */}
         <div className="absolute inset-0 bg-green-500/5 mix-blend-screen pointer-events-none"></div>
-        {/* Layer 2: Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-green-950/90 via-green-900/30 to-green-950/40 mix-blend-multiply"></div>
       </div>
 
-      {/* Hero Content */}
       <div className="relative z-10 text-center text-white px-6 mt-20 md:mt-24 max-w-5xl">
-        
         <button 
             onClick={scrollToPopular}
             className="group inline-flex items-center gap-3 border border-white/20 pl-1 pr-4 py-1 rounded-full mb-8 backdrop-blur-sm bg-white/5 animate-in fade-in slide-in-from-bottom-4 duration-1000 hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all cursor-pointer"
         >
-            <span className="bg-red-600 text-white text-[9px] font-bold px-2 py-1 rounded-full uppercase tracking-wider group-hover:bg-red-500 transition-colors">HOT</span>
+            <span className="bg-red-600 text-white text-[9px] font-bold px-2 py-1 rounded-full uppercase tracking-wider group-hover:bg-red-500 transition-colors">
+                {t.hero.hotTag}
+            </span>
             <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase group-hover:text-red-200 transition-colors">
-             Premium Mangosteen
+             {t.hero.hotText}
             </p>
         </button>
         
+        {/* JUDUL UTAMA TETAP PAKAI SHADOW AGAR TERBACA */}
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
-          {/* PERUBAHAN DI SINI: Kembali menjadi text-white */}
-          <span className="text-white drop-shadow-lg">Trusted</span> <br />
-          <span className="text-white drop-shadow-lg">Indonesian</span> <br />
+          <span className="text-white drop-shadow-lg">{t.hero.titleTrusted}</span> <br />
+          <span className="text-white drop-shadow-lg">{t.hero.titleIndonesian}</span> <br />
           <span className="italic text-red-600 font-light" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-            Fresh Produce Exporter
+            {t.hero.titleSuffix}
           </span>
         </h1>
         
-        <p className="max-w-3xl mx-auto text-base md:text-xl font-light tracking-wide leading-relaxed opacity-90 text-stone-200 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 mb-10 drop-shadow-md" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
-          Bridging Indonesia's Finest Harvest to the Global Market. <br className="hidden md:block"/> 
-          Proudly serving China, Singapore, Thailand, Malaysia, UAE, Bangladesh, and Canada.
+        {/* DESKRIPSI TANPA SHADOW (Sesuai Request) */}
+        <p className="max-w-3xl mx-auto text-base md:text-xl font-light tracking-wide leading-relaxed opacity-90 text-stone-200 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 mb-10 drop-shadow-md">
+          {t.hero.description}
         </p>
       </div>
 

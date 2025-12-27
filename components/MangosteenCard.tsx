@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sprout, ShieldCheck, Truck, Star, ArrowRight, Globe, Scale, ChevronDown, Check } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const MangosteenCard: React.FC = () => {
+  const { t } = useLanguage();
+  
   // Form States
   const [destination, setDestination] = useState('');
   const [volume, setVolume] = useState('');
@@ -10,7 +13,6 @@ const MangosteenCard: React.FC = () => {
 
   const countries = ['China', 'Singapore', 'Thailand', 'Malaysia', 'UAE', 'Bangladesh', 'Canada', 'Other'];
 
-  // Handle click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (destinationRef.current && !destinationRef.current.contains(event.target as Node)) {
@@ -21,11 +23,10 @@ const MangosteenCard: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Email Handler
   const handleEmail = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!destination) {
-        alert("Please select a destination.");
+        alert(t.booking.alert);
         return;
     }
     const subject = `Premium Mangosteen Quote Request`;
@@ -34,8 +35,30 @@ const MangosteenCard: React.FC = () => {
   };
 
   return (
-    // MODIFIED: Removed border-y border-green-100 to make it blend with the next section
-    <section className="relative z-30 w-full bg-green-50 py-24 px-6 reveal-hidden">
+    // Tambahkan class 'clean-section'
+    <section className="relative z-30 w-full bg-green-50 py-24 px-6 reveal-hidden clean-section">
+      
+      {/* CSS Override: Hapus semua shadow KECUALI yang punya class 'title-shadow' */}
+      <style>{`
+        .clean-section h1:not(.title-shadow), 
+        .clean-section h2:not(.title-shadow), 
+        .clean-section h3:not(.title-shadow), 
+        .clean-section h4:not(.title-shadow), 
+        .clean-section p, 
+        .clean-section span:not(.title-part), 
+        .clean-section div, 
+        .clean-section input {
+           text-shadow: none !important;
+           -webkit-text-stroke: 0 !important;
+        }
+        
+        /* Paksa Shadow HANYA untuk Judul */
+        .title-shadow {
+           text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+           -webkit-text-stroke: 0.5px rgba(0,0,0,0.15) !important;
+        }
+      `}</style>
+
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
         
         {/* KOLOM KIRI */}
@@ -44,15 +67,16 @@ const MangosteenCard: React.FC = () => {
                 <Star size={24} className="text-red-600" />
              </div>
              <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">
-                Popular Product
+                {t.mangosteen.badge}
              </p>
 
-            <h3 className="text-4xl md:text-6xl font-serif text-green-700 mb-6 leading-tight shrink-0">
-              Mangosteen <br /> The <span className="text-red-600">Queen of Fruits</span>
+            {/* JUDUL UTAMA: Diberi class 'title-shadow' agar tetap punya efek */}
+            <h3 className="text-4xl md:text-6xl font-serif text-green-700 mb-6 leading-tight shrink-0 title-shadow">
+              {t.mangosteen.titleMain} <br /> <span className="text-red-600 title-part">{t.mangosteen.titleSub}</span>
             </h3>
             
             <p className="text-stone-600 text-lg font-light mb-10 leading-relaxed border-l-2 border-red-600 pl-6 shrink-0">
-               Indonesia's Superfood Commodity. Known for its sweet, juicy white flesh and deep purple rind, harvested at the peak of perfection.
+               {t.mangosteen.description}
             </p>
 
             {/* GAMBAR MOBILE */}
@@ -61,13 +85,6 @@ const MangosteenCard: React.FC = () => {
                    <img 
                      src="https://images.unsplash.com/photo-1591462619084-28b3c9597375?auto=format&fit=crop&q=80&w=800"
                      alt="Mangosteen Orchard"
-                     className="absolute inset-0 w-full h-full object-cover"
-                   />
-                </div>
-                <div className="relative w-full min-h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200">
-                   <img 
-                     src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800"
-                     alt="Premium Mangosteen"
                      className="absolute inset-0 w-full h-full object-cover"
                    />
                 </div>
@@ -80,9 +97,9 @@ const MangosteenCard: React.FC = () => {
                         <Sprout className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
-                        <h4 className="font-bold text-green-700 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">Fresh & Traceable</h4>
+                        <h4 className="font-bold text-green-700 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">{t.mangosteen.feat1Title}</h4>
                         <p className="text-stone-500 text-xs md:text-sm leading-relaxed font-light">
-                          Directly sourced from registered farmers with transparent tracking from harvest to shipment.
+                          {t.mangosteen.feat1Desc}
                         </p>
                     </div>
                 </div>
@@ -92,9 +109,9 @@ const MangosteenCard: React.FC = () => {
                         <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
-                        <h4 className="font-bold text-green-700 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">International Standard</h4>
+                        <h4 className="font-bold text-green-700 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">{t.mangosteen.feat2Title}</h4>
                         <p className="text-stone-500 text-xs md:text-sm leading-relaxed font-light">
-                          GACC certified packaging house ensuring global export quality compliance.
+                          {t.mangosteen.feat2Desc}
                         </p>
                     </div>
                 </div>
@@ -104,9 +121,9 @@ const MangosteenCard: React.FC = () => {
                         <Truck className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
-                        <h4 className="font-bold text-green-700 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">Reliable Supply</h4>
+                        <h4 className="font-bold text-green-700 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">{t.mangosteen.feat3Title}</h4>
                         <p className="text-stone-500 text-xs md:text-sm leading-relaxed font-light">
-                          Consistent volume availability during harvest seasons to meet your market demands.
+                          {t.mangosteen.feat3Desc}
                         </p>
                     </div>
                 </div>
@@ -116,25 +133,23 @@ const MangosteenCard: React.FC = () => {
             <div className="mt-auto pt-8 border-t border-green-200">
                 <h4 className="font-serif text-xl text-green-700 mb-6 flex items-center gap-3">
                    <span className="w-8 h-[1px] bg-red-600"></span>
-                   Get a Quotation
+                   {t.mangosteen.formTitle}
                 </h4>
                 
                 <div className="space-y-4">
-                   {/* 1. COMMODITY (READ ONLY) */}
                    <div className="relative group">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Sprout className="text-green-600" size={16} />
                       </div>
                       <input 
                         type="text" 
-                        value="Premium Mangosteen"
+                        value={t.commodities['Mangosteen']}
                         readOnly
                         className="block w-full pl-10 pr-3 py-4 text-sm text-green-700 bg-white border border-stone-200 rounded-sm focus:outline-none font-bold shadow-sm cursor-not-allowed" 
                       />
                    </div>
 
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* 2. DESTINATION (DROPDOWN) */}
                       <div className="relative" ref={destinationRef}>
                           <div 
                             className="relative w-full cursor-pointer"
@@ -148,14 +163,12 @@ const MangosteenCard: React.FC = () => {
                                 readOnly
                                 value={destination}
                                 className="block w-full pl-10 pr-3 py-4 text-sm text-green-700 bg-white border border-stone-200 rounded-sm focus:ring-1 focus:ring-red-600 focus:border-red-600 cursor-pointer placeholder:text-stone-400 font-light shadow-sm" 
-                                placeholder="Select Destination" 
+                                placeholder={t.mangosteen.inputDest} 
                               />
                               <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                   <ChevronDown className={`text-stone-400 transition-transform ${isOpenDestination ? 'rotate-180' : ''}`} size={16} />
                               </div>
                           </div>
-
-                          {/* Dropdown Menu */}
                           {isOpenDestination && (
                             <div className="absolute bottom-full mb-1 left-0 w-full bg-white shadow-xl border border-stone-100 rounded-sm z-50 animate-in fade-in zoom-in-95 duration-200 max-h-48 overflow-y-auto">
                                 <ul className="py-1">
@@ -174,7 +187,6 @@ const MangosteenCard: React.FC = () => {
                           )}
                       </div>
 
-                      {/* 3. VOLUME INPUT */}
                       <div className="relative group">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                               <Scale className="text-stone-400 group-focus-within:text-red-600 transition-colors" size={16} />
@@ -184,17 +196,16 @@ const MangosteenCard: React.FC = () => {
                             value={volume}
                             onChange={(e) => setVolume(e.target.value)}
                             className="block w-full pl-10 pr-3 py-4 text-sm text-green-700 bg-white border border-stone-200 rounded-sm focus:ring-1 focus:ring-red-600 focus:border-red-600 transition-all placeholder:text-stone-400 font-light shadow-sm" 
-                            placeholder="Volume (MT)" 
+                            placeholder={t.mangosteen.inputVol} 
                           />
                       </div>
                    </div>
 
-                   {/* 4. TOMBOL REQUEST */}
                    <button 
                      onClick={handleEmail}
                      className="w-full group inline-flex items-center justify-center gap-2 py-4 bg-green-600 text-white text-xs font-bold uppercase tracking-[0.2em] rounded-sm hover:bg-red-600 transition-all shadow-lg hover:shadow-red-900/20 transform hover:-translate-y-0.5"
                    >
-                       Request Quote <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                       {t.mangosteen.btnRequest} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                    </button>
                 </div>
             </div>
