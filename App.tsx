@@ -474,7 +474,13 @@ const App: React.FC = () => {
         {/* SECTION 4: STATS */}
         <section id="global" className="py-12 md:py-24 bg-white relative overflow-hidden scroll-mt-24">
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-             <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" alt="World Map" className="w-full h-auto object-cover opacity-[0.03]" />
+             {/* MODIFIED IMAGE: Opacity 20% + Green Filter */}
+             <img 
+               src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" 
+               alt="World Map" 
+               className="w-full h-auto object-cover opacity-20"
+               style={{ filter: 'invert(34%) sepia(98%) saturate(696%) hue-rotate(88deg) brightness(93%) contrast(92%)' }} 
+             />
           </div>
           
           <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-8 lg:gap-20 items-center relative z-10">
