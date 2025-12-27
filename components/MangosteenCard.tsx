@@ -24,39 +24,61 @@ const MangosteenCard: React.FC = () => {
                Indonesia's Superfood Commodity. Known for its sweet, juicy white flesh and deep purple rind, harvested at the peak of perfection.
             </p>
 
-            <div className="space-y-8 mb-12">
+            {/* --- KHUSUS MOBILE: GAMBAR DI SINI --- */}
+            <div className="md:hidden flex flex-col gap-4 mb-10">
+                <div className="relative w-full min-h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200">
+                   <img 
+                     src="https://images.unsplash.com/photo-1591462619084-28b3c9597375?auto=format&fit=crop&q=80&w=800"
+                     alt="Mangosteen Orchard"
+                     className="absolute inset-0 w-full h-full object-cover"
+                   />
+                </div>
+                <div className="relative w-full min-h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200">
+                   <img 
+                     src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800"
+                     alt="Premium Mangosteen"
+                     className="absolute inset-0 w-full h-full object-cover"
+                   />
+                </div>
+            </div>
+            {/* ------------------------------------- */}
+
+            {/* LIST FITUR: Dibuat padat (mepet) di mobile */}
+            <div className="space-y-3 md:space-y-8 mb-8 md:mb-12">
                 {/* Highlight 1 */}
-                <div className="flex gap-5">
-                    <div className="bg-green-50 p-4 rounded-full shadow-sm text-green-800 shrink-0 h-fit border border-green-100">
-                        <Sprout size={24} />
+                <div className="flex gap-3 md:gap-5 items-start">
+                    <div className="bg-green-50 p-2.5 md:p-4 rounded-full shadow-sm text-green-800 shrink-0 h-fit border border-green-100">
+                        <Sprout className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
-                        <h4 className="font-bold text-green-950 uppercase tracking-wider text-sm mb-2">Fresh & Traceable</h4>
-                        <p className="text-stone-500 text-sm leading-relaxed font-light">
+                        <h4 className="font-bold text-green-950 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">Fresh & Traceable</h4>
+                        <p className="text-stone-500 text-xs md:text-sm leading-relaxed font-light">
                           Directly sourced from registered farmers with transparent tracking from harvest to shipment.
                         </p>
                     </div>
                 </div>
 
-                <div className="flex gap-5">
-                    <div className="bg-green-50 p-4 rounded-full shadow-sm text-green-800 shrink-0 h-fit border border-green-100">
-                        <ShieldCheck size={24} />
+                {/* Highlight 2 */}
+                <div className="flex gap-3 md:gap-5 items-start">
+                    <div className="bg-green-50 p-2.5 md:p-4 rounded-full shadow-sm text-green-800 shrink-0 h-fit border border-green-100">
+                        <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
-                        <h4 className="font-bold text-green-950 uppercase tracking-wider text-sm mb-2">International Standard</h4>
-                        <p className="text-stone-500 text-sm leading-relaxed font-light">
+                        <h4 className="font-bold text-green-950 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">International Standard</h4>
+                        <p className="text-stone-500 text-xs md:text-sm leading-relaxed font-light">
                           GACC certified packaging house ensuring global export quality compliance.
                         </p>
                     </div>
                 </div>
 
-                <div className="flex gap-5">
-                    <div className="bg-green-50 p-4 rounded-full shadow-sm text-green-800 shrink-0 h-fit border border-green-100">
-                        <Truck size={24} />
+                {/* Highlight 3 */}
+                <div className="flex gap-3 md:gap-5 items-start">
+                    <div className="bg-green-50 p-2.5 md:p-4 rounded-full shadow-sm text-green-800 shrink-0 h-fit border border-green-100">
+                        <Truck className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
-                        <h4 className="font-bold text-green-950 uppercase tracking-wider text-sm mb-2">Reliable Supply</h4>
-                        <p className="text-stone-500 text-sm leading-relaxed font-light">
+                        <h4 className="font-bold text-green-950 uppercase tracking-wider text-xs md:text-sm mb-1 md:mb-2">Reliable Supply</h4>
+                        <p className="text-stone-500 text-xs md:text-sm leading-relaxed font-light">
                           Consistent volume availability during harvest seasons to meet your market demands.
                         </p>
                     </div>
@@ -106,8 +128,8 @@ const MangosteenCard: React.FC = () => {
 
         </div>
 
-        {/* KOLOM KANAN */}
-        <div className="flex flex-col gap-6 h-full pt-0 md:pt-20">
+        {/* KOLOM KANAN (DESKTOP ONLY) */}
+        <div className="hidden md:flex flex-col gap-6 h-full pt-20">
             <div className="flex-1 relative w-full min-h-[250px] rounded-sm overflow-hidden shadow-lg group border border-stone-200">
                <img 
                  src="https://images.unsplash.com/photo-1591462619084-28b3c9597375?auto=format&fit=crop&q=80&w=800"

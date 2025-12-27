@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
         <div className="w-full pl-1 pr-2 md:px-12 flex justify-between items-center gap-1">
           
           <button onClick={() => scrollToSection('home')} className="flex items-center gap-1 md:gap-2 group shrink-0 text-left">
-              {/* PERBAIKAN: Logo dibesarkan sedikit menjadi w-7 h-7 (sebelumnya w-6 h-6) */}
+              {/* PERBAIKAN: Logo diubah menjadi w-9 h-9 (36px) sesuai permintaan "ubah ke 9" */}
               <img 
                 src="/images/logo.png" 
                 alt="BKK Logo" 
