@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import MangosteenCard from './components/MangosteenCard';
-import BookingWidget from './components/BookingWidget'; // Pastikan Import ini ada
+import BookingWidget from './components/BookingWidget';
 import { SERVICES } from './constants';
 import { 
   ArrowRight, MapPin, Mail, Phone, CheckCircle2, Globe, TrendingUp, 
@@ -178,7 +178,7 @@ const App: React.FC = () => {
             <Hero />
         </div>
 
-        {/* --- BOOKING WIDGET (Ditampilkan di semua device, tanpa overlap) --- */}
+        {/* BOOKING WIDGET */}
         <div>
            <BookingWidget />
         </div>
@@ -648,15 +648,14 @@ const App: React.FC = () => {
         </section>
 
         {/* SECTION 6: PARTNER */}
-        <section className="py-32 bg-white text-stone-600 relative overflow-hidden">
+        <section className="py-12 md:py-32 bg-white text-stone-600 relative overflow-hidden">
            <div className="max-w-[1000px] mx-auto px-6 relative z-10 text-center">
-              {/* WRAPPER BARU AGAR ANIMASI BERJALAN */}
               <div className="reveal-hidden">
-                  <div className="w-16 h-1 bg-red-600 mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.3)]"></div>
-                  <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif mb-8 leading-tight text-green-700 drop-shadow-sm">
+                  <div className="w-16 h-1 bg-red-600 mb-4 md:mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.3)]"></div>
+                  <h2 className="text-3xl md:text-5xl lg:text-7xl font-serif mb-4 md:mb-8 leading-tight text-green-700 drop-shadow-sm">
                      Partner <br/> <span className="italic text-red-600">With Us.</span>
                   </h2>
-                  <p className="text-stone-600 text-xl md:text-2xl font-light mb-12 leading-relaxed max-w-2xl mx-auto">
+                  <p className="text-stone-600 text-lg md:text-2xl font-light mb-8 md:mb-12 leading-relaxed max-w-2xl mx-auto">
                       We are looking forward to working with you to bring nature's finest to your market.
                   </p>
                   
