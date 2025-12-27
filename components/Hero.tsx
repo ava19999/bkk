@@ -33,7 +33,6 @@ const Hero: React.FC = () => {
   };
 
   return (
-    // PERBAIKAN: Tinggi diubah menjadi h-[730px] untuk mobile
     <section className="relative h-[730px] md:h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
       
       <style>{`
@@ -44,6 +43,11 @@ const Hero: React.FC = () => {
         .animate-scroll {
           animation: scroll 60s linear infinite;
           width: max-content;
+        }
+        /* Custom text stroke/outline effect */
+        .text-outline {
+           -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
+           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
       `}</style>
 
@@ -59,7 +63,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 text-center text-white px-6 mt-32 md:mt-40 max-w-5xl">
+      <div className="relative z-10 text-center text-white px-6 mt-20 md:mt-24 max-w-5xl">
         
         <button 
             onClick={scrollToPopular}
@@ -71,12 +75,16 @@ const Hero: React.FC = () => {
             </p>
         </button>
         
-        <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium mb-6 leading-none md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight">
-          Trusted Indonesian <br />
-          <span className="italic text-red-600 font-light">Fresh Produce Exporter</span>
+        {/* UPDATED: Text layout split into 3 lines with Outline & Shadow */}
+        <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
+          Trusted <br />
+          Indonesian <br />
+          <span className="italic text-red-600 font-light" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+            Fresh Produce Exporter
+          </span>
         </h1>
         
-        <p className="max-w-3xl mx-auto text-base md:text-xl font-light tracking-wide leading-relaxed opacity-90 text-stone-200 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 mb-10">
+        <p className="max-w-3xl mx-auto text-base md:text-xl font-light tracking-wide leading-relaxed opacity-90 text-stone-200 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 mb-10 drop-shadow-md" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
           Bridging Indonesia's Finest Harvest to the Global Market. <br className="hidden md:block"/> 
           Proudly serving China, Singapore, Thailand, Malaysia, UAE, Bangladesh, and Canada.
         </p>

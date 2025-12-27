@@ -187,60 +187,67 @@ const App: React.FC = () => {
             <MangosteenCard />
         </div>
         
-        {/* SECTION 1: ABOUT */}
-        <section id="about" className="py-20 md:py-32 px-6 max-w-6xl mx-auto reveal-hidden text-left relative scroll-mt-24">
-           <div className="absolute top-0 right-0 -mr-20 -mt-20 opacity-5 pointer-events-none hidden lg:block">
-              <Sprout size={400} className="text-stone-100" />
-           </div>
-          <div className="flex justify-start mb-4">
-             <Leaf size={24} className="text-red-600" />
-          </div>
-          <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">Our History</p>
-          
-          <h2 className="text-3xl md:text-5xl font-serif text-green-700 leading-normal mb-16 pb-2 relative z-10">
-            Established in 2013, legalized in 2016. <br/> Indonesia's <span className="italic text-red-600">premier exporter</span>.
-          </h2>
-          <div className="grid md:grid-cols-2 gap-10 items-center relative z-10">
-            <p className="text-stone-600 leading-relaxed font-light text-xl">
-              PT. Bintang Kiat Kemuliaan (BKK) is dedicated to delivering the finest fresh fruits, vegetables, and flowers to the global market. We prioritize quality, consistency, and integrity in every shipment we make to the world.
-            </p>
-            <div className="bg-stone-50 border border-stone-200 p-8 rounded-sm shadow-xl transition-all duration-500 transform hover:-translate-y-1">
-              <div className="flex items-start gap-5">
-                 <div className="bg-green-100 p-3 rounded-full text-green-600 shrink-0">
-                    <CheckCircle2 size={24} />
-                 </div>
-                 <div>
-                    <h4 className="font-serif text-xl text-green-700 mb-2">GACC Registered</h4>
-                    <p className="text-sm text-stone-500 leading-relaxed">
-                      Our packaging house is legally registered at GACC <strong className="text-green-700 block mt-1">(Reg No. KEMTAN RI PH-32-73-0018-0418)</strong> for Mangosteen and Salacca, ensuring strict global quality standards.
-                    </p>
-                 </div>
+        {/* COMBINED SECTION: ABOUT & GALLERY */}
+        <section id="about" className="py-20 md:py-32 bg-white reveal-hidden text-left relative scroll-mt-24 border-t border-stone-100">
+           
+           {/* PART 1: ABOUT TEXT (Centered Box) */}
+           <div className="px-6 max-w-6xl mx-auto mb-20 relative z-10">
+              <div className="absolute top-0 right-0 -mr-20 -mt-20 opacity-5 pointer-events-none hidden lg:block">
+                  <Sprout size={400} className="text-stone-100" />
               </div>
-            </div>
-          </div>
-        </section>
+              <div className="flex justify-start mb-4">
+                 <Leaf size={24} className="text-red-600" />
+              </div>
+              <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">Our History</p>
+              
+              <h2 className="text-3xl md:text-5xl font-serif text-green-700 leading-normal mb-16 pb-2 relative z-10">
+                Established in 2013, legalized in 2016. <br/> Indonesia's <span className="italic text-red-600">premier exporter</span>.
+              </h2>
+              <div className="grid md:grid-cols-2 gap-10 items-center relative z-10">
+                <p className="text-stone-600 leading-relaxed font-light text-xl">
+                  PT. Bintang Kiat Kemuliaan (BKK) is dedicated to delivering the finest fresh fruits, vegetables, and flowers to the global market. We prioritize quality, consistency, and integrity in every shipment we make to the world.
+                </p>
+                <div className="bg-stone-50 border border-stone-200 p-8 rounded-sm shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                  <div className="flex items-start gap-5">
+                     <div className="bg-green-100 p-3 rounded-full text-green-600 shrink-0">
+                        <CheckCircle2 size={24} />
+                     </div>
+                     <div>
+                        <h4 className="font-serif text-xl text-green-700 mb-2">GACC Registered</h4>
+                        <p className="text-sm text-stone-500 leading-relaxed">
+                          Our packaging house is legally registered at GACC <strong className="text-green-700 block mt-1">(Reg No. KEMTAN RI PH-32-73-0018-0418)</strong> for Mangosteen and Salacca, ensuring strict global quality standards.
+                        </p>
+                     </div>
+                  </div>
+                </div>
+              </div>
+           </div>
 
-        {/* CAROUSEL */}
-        <section className="relative w-full h-[60vh] bg-white group reveal-hidden border-y border-stone-100">
-            <div 
-              ref={scrollRef}
-              className={`flex h-full w-full overflow-x-hidden select-none ${isGrabbing ? 'cursor-grabbing' : 'cursor-grab'}`}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-                {displayGallery.map((src, index) => (
-                    <div key={index} className="h-full min-w-[50vw] md:min-w-[33vw] lg:min-w-[25vw] border-r border-white relative shrink-0">
-                         <img 
-                           src={src} 
-                           alt={`Gallery ${index}`} 
-                           className="w-full h-full object-cover pointer-events-none transition-all duration-700" 
-                           draggable={false} 
-                         />
-                    </div>
-                ))}
-            </div>
-            <style>{`.overflow-x-hidden::-webkit-scrollbar { display: none; }`}</style>
+           {/* PART 2: GALLERY CAROUSEL (Full Width) */}
+           <div className="relative w-full h-[60vh] bg-white group border-y border-stone-100">
+                <div 
+                  ref={scrollRef}
+                  className={`flex h-full w-full overflow-x-hidden select-none ${isGrabbing ? 'cursor-grabbing' : 'cursor-grab'}`}
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                    {displayGallery.map((src, index) => (
+                        <div key={index} className="h-full min-w-[50vw] md:min-w-[33vw] lg:min-w-[25vw] border-r border-white relative shrink-0">
+                             <img 
+                               src={src} 
+                               alt={`Gallery ${index}`} 
+                               className="w-full h-full object-cover pointer-events-none transition-all duration-700" 
+                               draggable={false} 
+                             />
+                             {/* ADDED: GREEN FOG OVERLAY */}
+                             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-900/80 to-transparent pointer-events-none opacity-80"></div>
+                        </div>
+                    ))}
+                </div>
+                <style>{`.overflow-x-hidden::-webkit-scrollbar { display: none; }`}</style>
+           </div>
+
         </section>
 
         {/* SECTION 2: VISION & MISSION */}
@@ -650,6 +657,7 @@ const App: React.FC = () => {
         {/* SECTION 6: PARTNER */}
         <section className="py-12 md:py-32 bg-white text-stone-600 relative overflow-hidden">
            <div className="max-w-[1000px] mx-auto px-6 relative z-10 text-center">
+              {/* WRAPPER BARU AGAR ANIMASI BERJALAN */}
               <div className="reveal-hidden">
                   <div className="w-16 h-1 bg-red-600 mb-4 md:mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.3)]"></div>
                   <h2 className="text-3xl md:text-5xl lg:text-7xl font-serif mb-4 md:mb-8 leading-tight text-green-700 drop-shadow-sm">
