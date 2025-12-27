@@ -3,7 +3,6 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import MangosteenCard from './components/MangosteenCard';
 import BookingWidget from './components/BookingWidget';
-import { SERVICES } from './constants';
 import { 
   ArrowRight, MapPin, Mail, Phone, CheckCircle2, Globe, TrendingUp, 
   Package, Leaf, Target, Scale, Clock, ShieldCheck, Banknote, 
@@ -99,6 +98,28 @@ const App: React.FC = () => {
 
   const displayGallery = [...galleryImages, ...galleryImages, ...galleryImages];
 
+  // --- BACKGROUND IMAGES FOR "WHY WORK WITH US" ---
+  const bgRow1 = [
+    "https://images.unsplash.com/photo-1599940859674-a7fef05b94ae?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1600387845879-a4713f764110?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1591462619084-28b3c9597375?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&q=80&w=800"
+  ];
+
+  const bgRow2 = [
+    "https://images.unsplash.com/photo-1523049673856-38866de6c069?auto=format&fit=crop&q=80&w=600", // Avocado
+    "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=600", // Mangosteen
+    "https://images.unsplash.com/photo-1610214612300-66444c20f188?auto=format&fit=crop&q=80&w=600", // Vanilla
+    "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=600", // Ginger
+    "https://images.unsplash.com/photo-1587393855524-087f83d95bc9?auto=format&fit=crop&q=80&w=600"  // Durian
+  ];
+
+  // Duplicate for smooth loop
+  const displayBgRow1 = [...bgRow1, ...bgRow1, ...bgRow1, ...bgRow1];
+  const displayBgRow2 = [...bgRow2, ...bgRow2, ...bgRow2, ...bgRow2];
+
+
   useEffect(() => {
     let animationFrameId: number;
     const scrollContainer = scrollRef.current;
@@ -167,6 +188,24 @@ const App: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-white font-sans text-stone-600">
       
+      {/* Styles for animation */}
+      <style>{`
+        @keyframes scroll-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .animate-scroll-left {
+          animation: scroll-left 50s linear infinite;
+        }
+        .animate-scroll-right {
+          animation: scroll-right 50s linear infinite;
+        }
+      `}</style>
+
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0" style={{ 
         backgroundImage: `url("https://www.transparenttextures.com/patterns/cream-paper.png")` 
       }}></div>
@@ -303,11 +342,62 @@ const App: React.FC = () => {
         </section>
 
         {/* SECTION 3: CORE VALUES */}
-        <section className="py-20 md:py-32 px-6 relative overflow-hidden bg-white">
+        <section className="py-20 md:py-32 px-6 relative overflow-hidden bg-stone-50">
+          
+          {/* ========================================================= */}
+          {/* BACKGROUND ANIMASI BARU (FINAL) */}
+          {/* ========================================================= */}
+          
+          <div className="absolute inset-0 z-0 overflow-hidden flex flex-col pointer-events-none">
+             
+             {/* BARIS ATAS (Row 1): Bergerak ke KANAN */}
+             <div className="flex-1 w-full relative overflow-hidden flex items-center bg-[#021a10]">
+                <div className="flex animate-scroll-right min-w-full h-full">
+                    {displayBgRow1.map((src, i) => (
+                      <div key={`row1-${i}`} className="h-full w-[40vw] md:w-[25vw] shrink-0 mx-0">
+                         {/* UPDATED: Opacity REMOVED for 100% brightness */}
+                         <img 
+                           src={src} 
+                           className="w-full h-full object-cover" 
+                           alt="Background" 
+                         />
+                      </div>
+                    ))}
+                </div>
+             </div>
+             
+             {/* BARIS BAWAH (Row 2): Bergerak ke KIRI */}
+             <div className="flex-1 w-full relative overflow-hidden flex items-center bg-[#021a10]">
+                <div className="flex animate-scroll-left min-w-full h-full">
+                    {displayBgRow2.map((src, i) => (
+                      <div key={`row2-${i}`} className="h-full w-[40vw] md:w-[25vw] shrink-0 mx-0">
+                         {/* UPDATED: Opacity REMOVED for 100% brightness */}
+                         <img 
+                            src={src} 
+                            className="w-full h-full object-cover" 
+                            alt="Background" 
+                          />
+                      </div>
+                    ))}
+                </div>
+             </div>
+
+             {/* GREEN FOG OVERLAYS (Kabut Hijau Atas & Bawah untuk blending) */}
+             <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#021a10] to-transparent z-[2]"></div>
+             <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#021a10] to-transparent z-[2]"></div>
+             
+             {/* OVERLAY KABUT HIJAU UNTUK FOTO (Di tengah) */}
+             {/* Ini memberikan efek "sedikit fog hijau" di atas foto yang cerah */}
+             <div className="absolute inset-0 bg-green-950/30 backdrop-blur-[1px] z-[1] mix-blend-multiply"></div>
+          </div>
+          
+          {/* ========================================================= */}
+
+
           <div className="max-w-[1400px] mx-auto relative z-10">
             <div className="text-center mb-12 md:mb-16 reveal-hidden">
-               <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] bg-stone-50 border border-stone-200 px-3 py-1 rounded-full">Core Values</span>
-               <h2 className="text-4xl md:text-5xl font-serif text-green-700 mt-4">
+               <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] bg-white border border-stone-200 px-3 py-1 rounded-full shadow-sm">Core Values</span>
+               <h2 className="text-4xl md:text-5xl font-serif text-green-700 mt-4 drop-shadow-sm">
                   Why Work <span className="text-red-600">With Us?</span>
                </h2>
             </div>
@@ -315,36 +405,66 @@ const App: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-8">
                
                {/* VALUE 1: TRUST */}
-               <div className="p-4 md:p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
-                 <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
-                    <Handshake className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
+               <div className="relative overflow-hidden p-4 md:p-8 bg-white/60 backdrop-blur-xl border border-white/40 hover:border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
+                 {/* FOG OVERLAY (Di setiap sisi kotak) */}
+                 <div className="absolute inset-0 pointer-events-none z-0">
+                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/90 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white/90 to-transparent"></div>
                  </div>
-                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Trust</h4>
-                 <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
-                   We build your trust by giving excellent quality of products and services. These have made us grow over the decades.
-                 </p>
+
+                 <div className="relative z-10">
+                     <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-stone-50 rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
+                        <Handshake className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
+                     </div>
+                     <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Trust</h4>
+                     <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
+                       We build your trust by giving excellent quality of products and services. These have made us grow over the decades.
+                     </p>
+                 </div>
                </div>
                
                {/* VALUE 2: COMMITMENT */}
-               <div className="p-4 md:p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
-                 <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
-                    <HeartHandshake className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
+               <div className="relative overflow-hidden p-4 md:p-8 bg-white/60 backdrop-blur-xl border border-white/40 hover:border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
+                 {/* FOG OVERLAY */}
+                 <div className="absolute inset-0 pointer-events-none z-0">
+                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/90 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white/90 to-transparent"></div>
                  </div>
-                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Commitment</h4>
-                 <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
-                   We stand on a firm commitment of being the most trusted and developed exporter for Indonesian fresh fruits and vegetables.
-                 </p>
+
+                 <div className="relative z-10">
+                     <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-stone-50 rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
+                        <HeartHandshake className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
+                     </div>
+                     <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Commitment</h4>
+                     <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
+                       We stand on a firm commitment of being the most trusted and developed exporter for Indonesian fresh fruits and vegetables.
+                     </p>
+                 </div>
                </div>
                
                {/* VALUE 3: INTEGRITY */}
-               <div className="p-4 md:p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
-                 <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
-                    <Shield className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
+               <div className="relative overflow-hidden p-4 md:p-8 bg-white/60 backdrop-blur-xl border border-white/40 hover:border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
+                 {/* FOG OVERLAY */}
+                 <div className="absolute inset-0 pointer-events-none z-0">
+                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/90 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white/90 to-transparent"></div>
                  </div>
-                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Integrity</h4>
-                 <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
-                   We uphold noble values rather than winning sectoral gain. We believe in fair businesses for everyone.
-                 </p>
+
+                 <div className="relative z-10">
+                     <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-stone-50 rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
+                        <Shield className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
+                     </div>
+                     <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Integrity</h4>
+                     <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
+                       We uphold noble values rather than winning sectoral gain. We believe in fair businesses for everyone.
+                     </p>
+                 </div>
                </div>
 
             </div>
