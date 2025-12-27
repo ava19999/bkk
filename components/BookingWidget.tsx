@@ -53,7 +53,8 @@ const BookingWidget: React.FC = () => {
   };
 
   return (
-    <div className="relative z-50 w-full bg-white border-y border-stone-200 shadow-xl">
+    // MODIFIED: Changed shadow-xl to shadow-2xl shadow-green-900/40 for Dark Green Shadow
+    <div className="relative z-50 w-full bg-white border-y border-stone-200 shadow-2xl shadow-green-900/40">
       <div className="w-full grid grid-cols-3 lg:flex lg:flex-row">
         
         {/* 1. COMMODITY SELECT */}

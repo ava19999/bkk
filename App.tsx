@@ -227,12 +227,13 @@ const App: React.FC = () => {
         </div>
         
         {/* COMBINED SECTION: ABOUT & GALLERY */}
-        <section id="about" className="py-20 md:py-32 bg-white reveal-hidden text-left relative scroll-mt-24 border-t border-stone-100">
+        {/* MODIFIED: Removed border-t border-green-100 */}
+        <section id="about" className="py-20 md:py-32 bg-green-50 reveal-hidden text-left relative scroll-mt-24">
            
            {/* PART 1: ABOUT TEXT (Centered Box) */}
            <div className="px-6 max-w-6xl mx-auto mb-20 relative z-10">
               <div className="absolute top-0 right-0 -mr-20 -mt-20 opacity-5 pointer-events-none hidden lg:block">
-                  <Sprout size={400} className="text-stone-100" />
+                  <Sprout size={400} className="text-green-100" />
               </div>
               <div className="flex justify-start mb-4">
                  <Leaf size={24} className="text-red-600" />
@@ -246,7 +247,7 @@ const App: React.FC = () => {
                 <p className="text-stone-600 leading-relaxed font-light text-xl">
                   PT. Bintang Kiat Kemuliaan (BKK) is dedicated to delivering the finest fresh fruits, vegetables, and flowers to the global market. We prioritize quality, consistency, and integrity in every shipment we make to the world.
                 </p>
-                <div className="bg-stone-50 border border-stone-200 p-8 rounded-sm shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                <div className="bg-white border border-stone-200 p-8 rounded-sm shadow-xl transition-all duration-500 transform hover:-translate-y-1">
                   <div className="flex items-start gap-5">
                      <div className="bg-green-100 p-3 rounded-full text-green-600 shrink-0">
                         <CheckCircle2 size={24} />
@@ -263,7 +264,8 @@ const App: React.FC = () => {
            </div>
 
            {/* PART 2: GALLERY CAROUSEL (Full Width) */}
-           <div className="relative w-full h-[60vh] bg-white group border-y border-stone-100">
+           {/* MODIFIED: Removed border-y border-stone-100 to make it seamless */}
+           <div className="relative w-full h-[60vh] bg-green-50 group">
                 <div 
                   ref={scrollRef}
                   className={`flex h-full w-full overflow-x-hidden select-none ${isGrabbing ? 'cursor-grabbing' : 'cursor-grab'}`}
@@ -272,14 +274,13 @@ const App: React.FC = () => {
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                     {displayGallery.map((src, index) => (
-                        <div key={index} className="h-full min-w-[50vw] md:min-w-[33vw] lg:min-w-[25vw] border-r border-white relative shrink-0">
+                        <div key={index} className="h-full min-w-[50vw] md:min-w-[33vw] lg:min-w-[25vw] border-r border-green-50 relative shrink-0">
                              <img 
                                src={src} 
                                alt={`Gallery ${index}`} 
                                className="w-full h-full object-cover pointer-events-none transition-all duration-700" 
                                draggable={false} 
                              />
-                             {/* ADDED: GREEN FOG OVERLAY */}
                              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-900/80 to-transparent pointer-events-none opacity-80"></div>
                         </div>
                     ))}
@@ -290,10 +291,14 @@ const App: React.FC = () => {
         </section>
 
         {/* SECTION 2: VISION & MISSION */}
-        <section className="py-24 relative overflow-hidden bg-white border-b border-stone-100">
+        {/* MODIFIED: Removed border-b border-green-100 */}
+        <section className="py-24 relative overflow-hidden bg-green-50">
+           
+           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-green-50 to-transparent pointer-events-none z-0"></div>
+
            <div className="max-w-[1400px] mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-20 items-center">
               <div className="reveal-hidden">
-                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-stone-50 rounded-full shadow-sm mb-8 border border-stone-200">
+                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm mb-8 border border-stone-200">
                     <Target size={16} className="text-red-600" />
                     <span className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Our Vision</span>
                  </div>
@@ -307,7 +312,7 @@ const App: React.FC = () => {
                  </div>
               </div>
               
-              <div className="bg-stone-50 p-8 md:p-12 rounded-3xl shadow-2xl border border-stone-200 reveal-hidden relative transform transition-transform hover:scale-[1.01] duration-500">
+              <div className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl border border-stone-100 reveal-hidden relative transform transition-transform hover:scale-[1.01] duration-500">
                  <div className="flex items-center gap-4 mb-8">
                     <div className="bg-green-100 p-3 rounded-xl text-green-600 shadow-sm">
                        <Scale size={24} />
@@ -326,8 +331,8 @@ const App: React.FC = () => {
                       { icon: Clock, title: "Precise Delivery", desc: "On-time logistics." },
                       { icon: ShieldCheck, title: "Finest Goods", desc: "Premium quality produce." }
                     ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-5 p-4 bg-white rounded-2xl hover:bg-stone-100 transition-colors group cursor-default border border-stone-200 hover:border-red-200">
-                          <div className="bg-stone-100 p-3 rounded-full shadow-sm text-stone-500 group-hover:text-red-600 transition-colors shrink-0">
+                      <div key={idx} className="flex items-center gap-5 p-4 bg-stone-50 rounded-2xl hover:bg-stone-100 transition-colors group cursor-default border border-stone-100 hover:border-red-200">
+                          <div className="bg-white p-3 rounded-full shadow-sm text-stone-500 group-hover:text-red-600 transition-colors shrink-0">
                             <item.icon size={20} />
                           </div>
                           <div>
@@ -344,18 +349,12 @@ const App: React.FC = () => {
         {/* SECTION 3: CORE VALUES */}
         <section className="py-20 md:py-32 px-6 relative overflow-hidden bg-stone-50">
           
-          {/* ========================================================= */}
-          {/* BACKGROUND ANIMASI BARU (FINAL) */}
-          {/* ========================================================= */}
-          
           <div className="absolute inset-0 z-0 overflow-hidden flex flex-col pointer-events-none">
              
-             {/* BARIS ATAS (Row 1): Bergerak ke KANAN */}
-             <div className="flex-1 w-full relative overflow-hidden flex items-center bg-[#021a10]">
+             <div className="flex-1 w-full relative overflow-hidden flex items-center bg-green-50">
                 <div className="flex animate-scroll-right min-w-full h-full">
                     {displayBgRow1.map((src, i) => (
                       <div key={`row1-${i}`} className="h-full w-[40vw] md:w-[25vw] shrink-0 mx-0">
-                         {/* UPDATED: Opacity REMOVED for 100% brightness */}
                          <img 
                            src={src} 
                            className="w-full h-full object-cover" 
@@ -366,12 +365,10 @@ const App: React.FC = () => {
                 </div>
              </div>
              
-             {/* BARIS BAWAH (Row 2): Bergerak ke KIRI */}
-             <div className="flex-1 w-full relative overflow-hidden flex items-center bg-[#021a10]">
+             <div className="flex-1 w-full relative overflow-hidden flex items-center bg-green-50">
                 <div className="flex animate-scroll-left min-w-full h-full">
                     {displayBgRow2.map((src, i) => (
                       <div key={`row2-${i}`} className="h-full w-[40vw] md:w-[25vw] shrink-0 mx-0">
-                         {/* UPDATED: Opacity REMOVED for 100% brightness */}
                          <img 
                             src={src} 
                             className="w-full h-full object-cover" 
@@ -382,18 +379,12 @@ const App: React.FC = () => {
                 </div>
              </div>
 
-             {/* GREEN FOG OVERLAYS (Kabut Hijau Atas & Bawah untuk blending) */}
-             <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#021a10] to-transparent z-[2]"></div>
-             <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#021a10] to-transparent z-[2]"></div>
+             <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-green-50 to-transparent z-[2]"></div>
+             <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-green-50 to-transparent z-[2]"></div>
              
-             {/* OVERLAY KABUT HIJAU UNTUK FOTO (Di tengah) */}
-             {/* Ini memberikan efek "sedikit fog hijau" di atas foto yang cerah */}
-             <div className="absolute inset-0 bg-green-950/30 backdrop-blur-[1px] z-[1] mix-blend-multiply"></div>
+             <div className="absolute inset-0 bg-green-50/20 backdrop-blur-[1px] z-[1]"></div>
           </div>
           
-          {/* ========================================================= */}
-
-
           <div className="max-w-[1400px] mx-auto relative z-10">
             <div className="text-center mb-12 md:mb-16 reveal-hidden">
                <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] bg-white border border-stone-200 px-3 py-1 rounded-full shadow-sm">Core Values</span>
@@ -406,12 +397,11 @@ const App: React.FC = () => {
                
                {/* VALUE 1: TRUST */}
                <div className="relative overflow-hidden p-4 md:p-8 bg-white/60 backdrop-blur-xl border border-white/40 hover:border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
-                 {/* FOG OVERLAY (Di setiap sisi kotak) */}
                  <div className="absolute inset-0 pointer-events-none z-0">
-                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/90 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/90 to-transparent"></div>
-                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white/90 to-transparent"></div>
-                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-green-50/90 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-green-50/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-green-50/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-green-50/90 to-transparent"></div>
                  </div>
 
                  <div className="relative z-10">
@@ -427,12 +417,11 @@ const App: React.FC = () => {
                
                {/* VALUE 2: COMMITMENT */}
                <div className="relative overflow-hidden p-4 md:p-8 bg-white/60 backdrop-blur-xl border border-white/40 hover:border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
-                 {/* FOG OVERLAY */}
                  <div className="absolute inset-0 pointer-events-none z-0">
-                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/90 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/90 to-transparent"></div>
-                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white/90 to-transparent"></div>
-                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-green-50/90 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-green-50/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-green-50/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-green-50/90 to-transparent"></div>
                  </div>
 
                  <div className="relative z-10">
@@ -448,12 +437,11 @@ const App: React.FC = () => {
                
                {/* VALUE 3: INTEGRITY */}
                <div className="relative overflow-hidden p-4 md:p-8 bg-white/60 backdrop-blur-xl border border-white/40 hover:border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden text-center">
-                 {/* FOG OVERLAY */}
                  <div className="absolute inset-0 pointer-events-none z-0">
-                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/90 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/90 to-transparent"></div>
-                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white/90 to-transparent"></div>
-                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white/90 to-transparent"></div>
+                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-green-50/90 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-green-50/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-green-50/90 to-transparent"></div>
+                    <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-green-50/90 to-transparent"></div>
                  </div>
 
                  <div className="relative z-10">
@@ -473,8 +461,9 @@ const App: React.FC = () => {
 
         {/* SECTION 4: STATS */}
         <section id="global" className="py-12 md:py-24 bg-white relative overflow-hidden scroll-mt-24">
+          <div className="absolute top-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-b from-green-50 to-transparent z-[5] pointer-events-none"></div>
+
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-             {/* MODIFIED IMAGE: Opacity 20% + Green Filter */}
              <img 
                src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" 
                alt="World Map" 

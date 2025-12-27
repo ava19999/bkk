@@ -34,7 +34,8 @@ const MangosteenCard: React.FC = () => {
   };
 
   return (
-    <section className="relative z-30 w-full bg-white py-24 px-6 border-y border-stone-200 reveal-hidden">
+    // MODIFIED: Removed border-y border-green-100 to make it blend with the next section
+    <section className="relative z-30 w-full bg-green-50 py-24 px-6 reveal-hidden">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
         
         {/* KOLOM KIRI */}
@@ -75,7 +76,7 @@ const MangosteenCard: React.FC = () => {
             {/* LIST FITUR */}
             <div className="space-y-3 md:space-y-8 mb-8 md:mb-12">
                 <div className="flex gap-3 md:gap-5 items-start">
-                    <div className="bg-green-50 p-2.5 md:p-4 rounded-full shadow-sm text-green-600 shrink-0 h-fit border border-green-100">
+                    <div className="bg-white p-2.5 md:p-4 rounded-full shadow-sm text-green-600 shrink-0 h-fit border border-green-100">
                         <Sprout className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
@@ -87,7 +88,7 @@ const MangosteenCard: React.FC = () => {
                 </div>
 
                 <div className="flex gap-3 md:gap-5 items-start">
-                    <div className="bg-green-50 p-2.5 md:p-4 rounded-full shadow-sm text-green-600 shrink-0 h-fit border border-green-100">
+                    <div className="bg-white p-2.5 md:p-4 rounded-full shadow-sm text-green-600 shrink-0 h-fit border border-green-100">
                         <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
@@ -99,7 +100,7 @@ const MangosteenCard: React.FC = () => {
                 </div>
 
                 <div className="flex gap-3 md:gap-5 items-start">
-                    <div className="bg-green-50 p-2.5 md:p-4 rounded-full shadow-sm text-green-600 shrink-0 h-fit border border-green-100">
+                    <div className="bg-white p-2.5 md:p-4 rounded-full shadow-sm text-green-600 shrink-0 h-fit border border-green-100">
                         <Truck className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
@@ -111,15 +112,15 @@ const MangosteenCard: React.FC = () => {
                 </div>
             </div>
 
-            {/* FORMULIR REQUEST QUOTATION - CLEAN STYLE (Reverted) */}
-            <div className="mt-auto pt-8 border-t border-stone-200">
+            {/* FORMULIR REQUEST QUOTATION */}
+            <div className="mt-auto pt-8 border-t border-green-200">
                 <h4 className="font-serif text-xl text-green-700 mb-6 flex items-center gap-3">
                    <span className="w-8 h-[1px] bg-red-600"></span>
                    Get a Quotation
                 </h4>
                 
                 <div className="space-y-4">
-                   {/* 1. COMMODITY (READ ONLY - PREMIUM MANGOSTEEN) */}
+                   {/* 1. COMMODITY (READ ONLY) */}
                    <div className="relative group">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Sprout className="text-green-600" size={16} />
@@ -128,12 +129,12 @@ const MangosteenCard: React.FC = () => {
                         type="text" 
                         value="Premium Mangosteen"
                         readOnly
-                        className="block w-full pl-10 pr-3 py-4 text-sm text-green-700 bg-stone-50 border border-stone-200 rounded-sm focus:outline-none font-bold shadow-sm cursor-not-allowed" 
+                        className="block w-full pl-10 pr-3 py-4 text-sm text-green-700 bg-white border border-stone-200 rounded-sm focus:outline-none font-bold shadow-sm cursor-not-allowed" 
                       />
                    </div>
 
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* 2. DESTINATION (DROPDOWN TABLE) */}
+                      {/* 2. DESTINATION (DROPDOWN) */}
                       <div className="relative" ref={destinationRef}>
                           <div 
                             className="relative w-full cursor-pointer"
@@ -188,7 +189,7 @@ const MangosteenCard: React.FC = () => {
                       </div>
                    </div>
 
-                   {/* 4. TOMBOL REQUEST (MAILTO) */}
+                   {/* 4. TOMBOL REQUEST */}
                    <button 
                      onClick={handleEmail}
                      className="w-full group inline-flex items-center justify-center gap-2 py-4 bg-green-600 text-white text-xs font-bold uppercase tracking-[0.2em] rounded-sm hover:bg-red-600 transition-all shadow-lg hover:shadow-red-900/20 transform hover:-translate-y-0.5"
