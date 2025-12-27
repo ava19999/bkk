@@ -58,7 +58,8 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 text-center text-white px-6 mt-32 md:mt-40 max-w-5xl">
+      {/* UBAH: mt-32 dihapus, diganti pb-32 agar posisi naik ke atas secara signifikan */}
+      <div className="relative z-10 text-center text-white px-6 pb-32 md:pb-0 md:mt-0 max-w-5xl">
         
         <button 
             onClick={scrollToPopular}
@@ -70,7 +71,6 @@ const Hero: React.FC = () => {
             </p>
         </button>
         
-        {/* PERBAIKAN: text-5xl diubah jadi text-4xl untuk mobile agar tidak kegedean/keluar */}
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium mb-6 leading-none md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight">
           Trusted Indonesian <br />
           <span className="italic text-red-600 font-light">Fresh Produce Exporter</span>
