@@ -56,10 +56,14 @@ const Hero: React.FC = () => {
         <img 
           src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=2400" 
           alt="Fresh Indonesian Mangosteen Harvest" 
-          className="w-full h-full object-cover opacity-80 transition-transform duration-[60s] scale-100 hover:scale-105"
+          className="w-full h-full object-cover opacity-100 brightness-110 transition-transform duration-[60s] scale-100 hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-green-950/90 via-green-900/40 to-green-950/30 mix-blend-multiply"></div>
-        <div className="absolute inset-0 bg-black/20"></div>
+        
+        {/* EFEK FOG HIJAU TIPIS */}
+        {/* Layer 1: Kabut hijau sangat tipis (5%) */}
+        <div className="absolute inset-0 bg-green-500/5 mix-blend-screen pointer-events-none"></div>
+        {/* Layer 2: Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-green-950/90 via-green-900/30 to-green-950/40 mix-blend-multiply"></div>
       </div>
 
       {/* Hero Content */}
@@ -75,10 +79,10 @@ const Hero: React.FC = () => {
             </p>
         </button>
         
-        {/* UPDATED: Text layout split into 3 lines with Outline & Shadow */}
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
-          Trusted <br />
-          Indonesian <br />
+          {/* PERUBAHAN DI SINI: Kembali menjadi text-white */}
+          <span className="text-white drop-shadow-lg">Trusted</span> <br />
+          <span className="text-white drop-shadow-lg">Indonesian</span> <br />
           <span className="italic text-red-600 font-light" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
             Fresh Produce Exporter
           </span>

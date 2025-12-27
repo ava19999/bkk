@@ -186,9 +186,9 @@ const App: React.FC = () => {
   const exportCountries = ['China', 'Singapore', 'Thailand', 'Malaysia', 'UAE', 'Bangladesh', 'Canada'];
 
   return (
-    <div className="relative min-h-screen bg-white font-sans text-stone-600">
+    <div className="relative min-h-screen bg-white font-sans text-stone-600 text-enhanced">
       
-      {/* Styles for animation */}
+      {/* Styles for animation AND STRONGER TEXT EFFECTS */}
       <style>{`
         @keyframes scroll-left {
           0% { transform: translateX(0); }
@@ -203,6 +203,14 @@ const App: React.FC = () => {
         }
         .animate-scroll-right {
           animation: scroll-right 50s linear infinite;
+        }
+        
+        /* CLASS BARU UNTUK EFEK TEKS LEBIH TEGAS */
+        .text-enhanced, 
+        .text-enhanced h1, .text-enhanced h2, .text-enhanced h3, .text-enhanced h4, 
+        .text-enhanced p, .text-enhanced span, .text-enhanced div, .text-enhanced a, .text-enhanced li {
+           text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+           -webkit-text-stroke: 0.5px rgba(0,0,0,0.15); /* Sedikit lebih tebal */
         }
       `}</style>
 
@@ -227,7 +235,6 @@ const App: React.FC = () => {
         </div>
         
         {/* COMBINED SECTION: ABOUT & GALLERY */}
-        {/* MODIFIED: Removed border-t border-green-100 */}
         <section id="about" className="py-20 md:py-32 bg-green-50 reveal-hidden text-left relative scroll-mt-24">
            
            {/* PART 1: ABOUT TEXT (Centered Box) */}
@@ -264,7 +271,6 @@ const App: React.FC = () => {
            </div>
 
            {/* PART 2: GALLERY CAROUSEL (Full Width) */}
-           {/* MODIFIED: Removed border-y border-stone-100 to make it seamless */}
            <div className="relative w-full h-[60vh] bg-green-50 group">
                 <div 
                   ref={scrollRef}
@@ -291,12 +297,12 @@ const App: React.FC = () => {
         </section>
 
         {/* SECTION 2: VISION & MISSION */}
-        {/* MODIFIED: Removed border-b border-green-100 */}
-        <section className="py-24 relative overflow-hidden bg-green-50">
+        {/* MODIFIED: Changed from py-24 to pt-4 pb-12 to move content up (naikkan ke atas) */}
+        <section className="pt-4 pb-12 md:pt-4 md:pb-16 relative overflow-hidden bg-green-50">
            
            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-green-50 to-transparent pointer-events-none z-0"></div>
 
-           <div className="max-w-[1400px] mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+           <div className="max-w-[1400px] mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-10 items-center">
               <div className="reveal-hidden">
                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm mb-8 border border-stone-200">
                     <Target size={16} className="text-red-600" />
