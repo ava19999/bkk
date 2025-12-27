@@ -24,13 +24,14 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
     }
   };
 
+  // UPDATED: Green colors changed from 950 to 600/700 for "Fresh Green" look
   const buttonClass = `
     group relative px-1 py-0.5 md:px-3 md:py-1.5 rounded-sm 
     text-[6px] md:text-[9px] font-bold uppercase 
     tracking-tight md:tracking-[0.2em] transition-all duration-300 border whitespace-nowrap
     ${scrolled 
-        ? 'border-green-950 text-green-950 hover:bg-green-950 hover:text-white' 
-        : 'border-white/20 text-white hover:bg-white hover:text-green-950 backdrop-blur-sm bg-white/5'}
+        ? 'border-green-600 text-green-600 hover:bg-green-600 hover:text-white' 
+        : 'border-white/20 text-white hover:bg-white hover:text-green-600 backdrop-blur-sm bg-white/5'}
   `;
 
   return (
@@ -45,14 +46,15 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
         <div className="w-full pl-1 pr-2 md:px-12 flex justify-between items-center gap-1">
           
           <button onClick={() => scrollToSection('home')} className="flex items-center gap-1 md:gap-2 group shrink-0 text-left">
-              {/* PERBAIKAN: Logo diubah menjadi w-9 h-9 (36px) sesuai permintaan "ubah ke 9" */}
+              {/* Logo tetap ukuran 9 (36px) seperti sebelumnya */}
               <img 
                 src="/images/logo.png" 
                 alt="BKK Logo" 
                 className="w-9 h-9 md:w-16 md:h-16 object-contain transition-transform duration-300 group-hover:scale-105"
               />
               <div className="flex flex-col">
-                  <h1 className={`text-base md:text-4xl font-serif font-bold leading-none tracking-wide transition-colors duration-300 ${scrolled ? 'text-green-950' : 'text-white'}`}>
+                  {/* UPDATED: text-green-950 -> text-green-700 */}
+                  <h1 className={`text-base md:text-4xl font-serif font-bold leading-none tracking-wide transition-colors duration-300 ${scrolled ? 'text-green-700' : 'text-white'}`}>
                       BKK
                   </h1>
                   <p className="text-[5px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] mt-0.5 md:mt-1 text-red-600 transition-colors duration-300 whitespace-nowrap">
@@ -82,7 +84,8 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                <button onClick={() => setIsContactOpen(false)} className="absolute top-4 right-4 p-2 text-stone-400 hover:text-red-600 transition-colors"><X size={24} /></button>
                
                <div className="text-center mb-6">
-                  <h2 className="text-3xl font-serif text-green-950 mb-2">Get in Touch</h2>
+                  {/* UPDATED: text-green-950 -> text-green-700 */}
+                  <h2 className="text-3xl font-serif text-green-700 mb-2">Get in Touch</h2>
                   <p className="text-xs font-bold uppercase tracking-[0.2em] text-red-600">We'd love to hear from you</p>
                </div>
                
@@ -90,7 +93,8 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                   <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
                       <Phone className="text-green-600 shrink-0 mt-1" size={20} />
                       <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Phone / WhatsApp</h4>
+                          {/* UPDATED: text-green-950 -> text-green-700 */}
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">Phone / WhatsApp</h4>
                           <a href="tel:+62226016306" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">+62 22 6016 306</a>
                           <a href="tel:+628176878166" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">+62 817 687 8166</a>
                       </div>
@@ -98,7 +102,8 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                   <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
                       <Mail className="text-green-600 shrink-0 mt-1" size={20} />
                       <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Emails</h4>
+                          {/* UPDATED: text-green-950 -> text-green-700 */}
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">Emails</h4>
                           <a href="mailto:info@bkkemuliaan.com" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">info@bkkemuliaan.com</a>
                           <a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">Sales-marketing.2@bkkemuliaan.com</a>
                       </div>
@@ -106,14 +111,16 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                   <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
                       <Globe className="text-green-600 shrink-0 mt-1" size={20} />
                       <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Website</h4>
+                          {/* UPDATED: text-green-950 -> text-green-700 */}
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">Website</h4>
                           <a href="https://www.bkkemuliaan.com" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm hover:text-red-600 transition-colors">www.bkkemuliaan.com</a>
                       </div>
                   </div>
                   <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
                       <MapPin className="text-green-600 shrink-0 mt-1" size={20} />
                       <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-2">Our Locations</h4>
+                          {/* UPDATED: text-green-950 -> text-green-700 */}
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-2">Our Locations</h4>
                           <div className="mb-4">
                             <strong className="text-stone-500 text-[10px] uppercase tracking-wide block mb-1">Main Office:</strong>
                             <a href="https://www.google.com/maps/search/?api=1&query=Jl.+Sawit+Darangdan+No.+3,+Purwakarta,+West+Java+41163+-+Indonesia" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm leading-relaxed hover:text-red-600 transition-colors block">Jl. Sawit Darangdan No. 3, Purwakarta, West Java 41163 - Indonesia</a>
@@ -128,7 +135,8 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                <div className="mt-8 pt-6 border-t border-stone-200 text-center">
                   <div className="flex flex-col items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-500">
                       <img src="/images/logo.png" alt="BKK Logo" className="w-12 h-12 object-contain mb-3" />
-                      <h3 className="text-xl font-serif text-green-950 tracking-[0.2em] uppercase">BKK</h3>
+                      {/* UPDATED: text-green-950 -> text-green-700 */}
+                      <h3 className="text-xl font-serif text-green-700 tracking-[0.2em] uppercase">BKK</h3>
                       <p className="text-[9px] font-medium tracking-[0.3em] uppercase text-stone-500 mt-1">PT. Bintang Kiat Kemuliaan</p>
                   </div>
                </div>

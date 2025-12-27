@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import MangosteenCard from './components/MangosteenCard';
+import BookingWidget from './components/BookingWidget'; // Pastikan Import ini ada
 import { SERVICES } from './constants';
 import { 
   ArrowRight, MapPin, Mail, Phone, CheckCircle2, Globe, TrendingUp, 
@@ -20,37 +21,33 @@ const App: React.FC = () => {
 
   // --- LOGIKA GAMBAR & LABEL PRODUK ---
   
-  // 1. Default images per kategori
   const defaultImages = {
     fruits: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=600",
     vegetables: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&q=80&w=600",
     spices: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600"
   };
 
-  // 2. Kata-kata pemasaran (Adjectives)
   const adjectives = [
     'Sensational', 'Premium', 'Popular', 'Exquisite', 
     'Fresh Harvest', 'Top-Tier', 'Finest', 'Signature', 'Selected', 'Organic'
   ];
 
-  // 3. State untuk menyimpan URL gambar aktif (Desktop per kategori)
   const [categoryImages, setCategoryImages] = useState({
     fruits: defaultImages.fruits,
     vegetables: defaultImages.vegetables,
     spices: defaultImages.spices
   });
 
-  // 4. State untuk menyimpan teks label (Object: adjective + name)
   const [selectedLabels, setSelectedLabels] = useState({
       fruits: { adj: 'Sensational', name: 'Fruits' }, 
       vegetables: { adj: 'Premium', name: 'Vegetables' },
       spices: { adj: 'Exquisite', name: 'Spices & Flowers' }
   });
 
-  // 5. State untuk gambar aktif di Mobile
   const [mobileActiveImage, setMobileActiveImage] = useState(defaultImages.fruits);
+  const [activeProduct, setActiveProduct] = useState<string>('');
+  const [mobileActiveCategory, setMobileActiveCategory] = useState<'fruits' | 'vegetables' | 'spices'>('fruits');
 
-  // Mapping Produk ke Gambar
   const productImages: Record<string, string> = {
     // Fruits
     'Avocado': 'https://images.unsplash.com/photo-1523049673856-38866de6c069?auto=format&fit=crop&q=80&w=600',
@@ -80,25 +77,17 @@ const App: React.FC = () => {
     'White Pepper': 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&q=80&w=600'
   };
 
-  // Handler saat produk diklik
   const handleProductClick = (category: 'fruits' | 'vegetables' | 'spices', productName: string) => {
     const imageUrl = productImages[productName] || defaultImages[category];
-    
-    // 1. Update Gambar
     setCategoryImages(prev => ({ ...prev, [category]: imageUrl }));
     setMobileActiveImage(imageUrl);
-
-    // 2. Pilih Adjective Acak
+    setActiveProduct(productName);
     const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-
-    // 3. Update Label Dinamis (Objek terpisah)
     setSelectedLabels(prev => ({
         ...prev,
         [category]: { adj: randomAdjective, name: productName }
     }));
   };
-
-  // --- END LOGIKA GAMBAR & LABEL ---
 
   const galleryImages = [
     "https://images.unsplash.com/photo-1599940859674-a7fef05b94ae?auto=format&fit=crop&q=80&w=1200", 
@@ -188,6 +177,11 @@ const App: React.FC = () => {
         <div id="home">
             <Hero />
         </div>
+
+        {/* --- BOOKING WIDGET (Ditampilkan di semua device, tanpa overlap) --- */}
+        <div>
+           <BookingWidget />
+        </div>
         
         <div id="popular" className="scroll-mt-24">
             <MangosteenCard />
@@ -203,7 +197,7 @@ const App: React.FC = () => {
           </div>
           <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">Our History</p>
           
-          <h2 className="text-3xl md:text-5xl font-serif text-green-950 leading-normal mb-16 pb-2 relative z-10">
+          <h2 className="text-3xl md:text-5xl font-serif text-green-700 leading-normal mb-16 pb-2 relative z-10">
             Established in 2013, legalized in 2016. <br/> Indonesia's <span className="italic text-red-600">premier exporter</span>.
           </h2>
           <div className="grid md:grid-cols-2 gap-10 items-center relative z-10">
@@ -212,13 +206,13 @@ const App: React.FC = () => {
             </p>
             <div className="bg-stone-50 border border-stone-200 p-8 rounded-sm shadow-xl transition-all duration-500 transform hover:-translate-y-1">
               <div className="flex items-start gap-5">
-                 <div className="bg-green-100 p-3 rounded-full text-green-800 shrink-0">
+                 <div className="bg-green-100 p-3 rounded-full text-green-600 shrink-0">
                     <CheckCircle2 size={24} />
                  </div>
                  <div>
-                    <h4 className="font-serif text-xl text-green-950 mb-2">GACC Registered</h4>
+                    <h4 className="font-serif text-xl text-green-700 mb-2">GACC Registered</h4>
                     <p className="text-sm text-stone-500 leading-relaxed">
-                      Our packaging house is legally registered at GACC <strong className="text-green-950 block mt-1">(Reg No. KEMTAN RI PH-32-73-0018-0418)</strong> for Mangosteen and Salacca, ensuring strict global quality standards.
+                      Our packaging house is legally registered at GACC <strong className="text-green-700 block mt-1">(Reg No. KEMTAN RI PH-32-73-0018-0418)</strong> for Mangosteen and Salacca, ensuring strict global quality standards.
                     </p>
                  </div>
               </div>
@@ -257,7 +251,7 @@ const App: React.FC = () => {
                     <Target size={16} className="text-red-600" />
                     <span className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Our Vision</span>
                  </div>
-                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-serif text-green-950 leading-[1.1] mb-8">
+                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-serif text-green-700 leading-[1.1] mb-8">
                    "To be the <span className="text-red-600 italic">most trusted</span> exporter for fruits, vegetables, and flowers."
                  </h3>
                  <div className="pl-6 border-l-2 border-red-600/30">
@@ -269,11 +263,11 @@ const App: React.FC = () => {
               
               <div className="bg-stone-50 p-8 md:p-12 rounded-3xl shadow-2xl border border-stone-200 reveal-hidden relative transform transition-transform hover:scale-[1.01] duration-500">
                  <div className="flex items-center gap-4 mb-8">
-                    <div className="bg-green-100 p-3 rounded-xl text-green-800 shadow-sm">
+                    <div className="bg-green-100 p-3 rounded-xl text-green-600 shadow-sm">
                        <Scale size={24} />
                     </div>
                     <div>
-                        <h3 className="text-3xl font-serif text-green-950 leading-none">Our Mission</h3>
+                        <h3 className="text-3xl font-serif text-green-700 leading-none">Our Mission</h3>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mt-1">Honesty & Commitment</p>
                     </div>
                  </div>
@@ -291,7 +285,7 @@ const App: React.FC = () => {
                             <item.icon size={20} />
                           </div>
                           <div>
-                            <h4 className="font-bold text-green-950 text-sm uppercase tracking-wider mb-1">{item.title}</h4>
+                            <h4 className="font-bold text-green-700 text-sm uppercase tracking-wider mb-1">{item.title}</h4>
                             <p className="text-xs text-stone-500">{item.desc}</p>
                           </div>
                       </div>
@@ -306,7 +300,7 @@ const App: React.FC = () => {
           <div className="max-w-[1400px] mx-auto relative z-10">
             <div className="text-center mb-12 md:mb-16 reveal-hidden">
                <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] bg-stone-50 border border-stone-200 px-3 py-1 rounded-full">Core Values</span>
-               <h2 className="text-4xl md:text-5xl font-serif text-green-950 mt-4">
+               <h2 className="text-4xl md:text-5xl font-serif text-green-700 mt-4">
                   Why Work <span className="text-red-600">With Us?</span>
                </h2>
             </div>
@@ -318,7 +312,7 @@ const App: React.FC = () => {
                  <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
                     <Handshake className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
                  </div>
-                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-950">Trust</h4>
+                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Trust</h4>
                  <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
                    We build your trust by giving excellent quality of products and services. These have made us grow over the decades.
                  </p>
@@ -329,7 +323,7 @@ const App: React.FC = () => {
                  <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
                     <HeartHandshake className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
                  </div>
-                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-950">Commitment</h4>
+                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Commitment</h4>
                  <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
                    We stand on a firm commitment of being the most trusted and developed exporter for Indonesian fresh fruits and vegetables.
                  </p>
@@ -340,7 +334,7 @@ const App: React.FC = () => {
                  <div className="mb-3 md:mb-6 w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100 mx-auto">
                     <Shield className="text-red-600 w-5 h-5 md:w-7 md:h-7" />
                  </div>
-                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-950">Integrity</h4>
+                 <h4 className="font-serif text-lg md:text-2xl mb-2 md:mb-4 text-green-700">Integrity</h4>
                  <p className="text-stone-600 leading-relaxed font-light text-xs md:text-sm">
                    We uphold noble values rather than winning sectoral gain. We believe in fair businesses for everyone.
                  </p>
@@ -351,11 +345,12 @@ const App: React.FC = () => {
         </section>
 
         {/* SECTION 4: STATS */}
-        <section id="global" className="py-24 bg-white relative overflow-hidden scroll-mt-24">
+        <section id="global" className="py-12 md:py-24 bg-white relative overflow-hidden scroll-mt-24">
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
              <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" alt="World Map" className="w-full h-auto object-cover opacity-[0.03]" />
           </div>
-          <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center relative z-10">
+          
+          <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-8 lg:gap-20 items-center relative z-10">
             <div className="relative order-2 lg:order-1">
               <div className="grid grid-cols-3 md:grid-cols-2 gap-3 md:gap-6">
                  
@@ -364,7 +359,7 @@ const App: React.FC = () => {
                     <div className="flex flex-row md:flex-col items-center md:items-start justify-center md:justify-start gap-3 md:gap-0 text-center md:text-left">
                         <Globe className="text-red-600 mb-0 md:mb-4 w-8 h-8 md:w-8 md:h-8 shrink-0" />
                         <div className="flex flex-row md:flex-col items-baseline md:items-start gap-2 md:gap-0">
-                           <h3 className="text-4xl md:text-5xl font-serif mb-0 md:mb-2 text-green-950">7+</h3>
+                           <h3 className="text-4xl md:text-5xl font-serif mb-0 md:mb-2 text-green-700">7+</h3>
                            <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500 whitespace-nowrap">Export Countries</p>
                         </div>
                     </div>
@@ -381,7 +376,7 @@ const App: React.FC = () => {
                  <div className="col-span-1 md:col-span-1 bg-stone-50 backdrop-blur-sm p-3 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
                     <div className="flex flex-col items-center md:items-start text-center md:text-left">
                         <TrendingUp className="text-red-600 mb-2 md:mb-4 w-6 h-6 md:w-8 md:h-8" />
-                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-950">100+</h3>
+                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-700">100+</h3>
                         <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-stone-500 leading-tight">Happy Clients</p>
                     </div>
                     <p className="hidden md:block text-sm mt-2 text-stone-600 leading-tight">Trusting us annually.</p>
@@ -391,7 +386,7 @@ const App: React.FC = () => {
                  <div className="col-span-1 md:col-span-1 bg-stone-50 backdrop-blur-sm p-3 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
                     <div className="flex flex-col items-center md:items-start text-center md:text-left">
                         <Package className="text-red-600 mb-2 md:mb-4 w-6 h-6 md:w-8 md:h-8" />
-                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-950">100<span className="text-sm md:text-2xl">MT</span></h3>
+                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-700">100<span className="text-sm md:text-2xl">MT</span></h3>
                         <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-stone-500 leading-tight">Monthly Capacity</p>
                     </div>
                     <p className="hidden md:block text-sm mt-2 text-stone-600 leading-tight">For each commodity.</p>
@@ -401,7 +396,7 @@ const App: React.FC = () => {
                  <div className="col-span-1 md:col-span-1 bg-stone-50 backdrop-blur-sm p-3 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
                     <div className="flex flex-col items-center md:items-start text-center md:text-left">
                         <CheckCircle2 className="text-red-600 mb-2 md:mb-4 w-6 h-6 md:w-8 md:h-8" />
-                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-950">GACC</h3>
+                        <h3 className="text-xl md:text-5xl font-serif mb-1 md:mb-2 text-green-700">GACC</h3>
                         <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-stone-500 leading-tight">Certified</p>
                     </div>
                     <p className="hidden md:block text-sm mt-2 text-stone-600 leading-tight">Registered Packaging House.</p>
@@ -410,12 +405,12 @@ const App: React.FC = () => {
               </div>
             </div>
             <div className="reveal-hidden order-1 lg:order-2 lg:pl-10">
-              <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">Global Reach</span>
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-green-950 mb-8 leading-tight">
+              <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] mb-4 md:mb-6 block">Global Reach</span>
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-green-700 mb-6 md:mb-8 leading-tight">
                 Connecting <br /> 
                 <span className="italic text-red-600">Indonesian Harvests</span> to the World.
               </h2>
-              <p className="text-stone-600 font-light leading-relaxed mb-10 text-lg">
+              <p className="text-stone-600 font-light leading-relaxed mb-6 lg:mb-10 text-lg">
                 We uphold our decision-making process based on noble values rather than winning sectoral gain. We firmly believe in the importance of fair businesses for everyone.
               </p>
             </div>
@@ -429,26 +424,43 @@ const App: React.FC = () => {
               <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-stone-200 pb-6 reveal-hidden">
                 <div className="mb-4 md:mb-0">
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-red-600 mb-2">Our Goods</p>
-                  <h3 className="text-3xl md:text-5xl font-serif text-green-950">Product Catalogue</h3>
+                  <h3 className="text-3xl md:text-5xl font-serif text-green-700">Product Catalogue</h3>
                 </div>
                 <div className="text-right">
                    <p className="text-stone-500 text-sm font-light">Explore our premium selection of 23 commodities.</p>
                 </div>
               </div>
               
-              <div className="grid lg:grid-cols-2 gap-10 items-stretch reveal-hidden">
+              <div className="grid lg:grid-cols-2 gap-4 lg:gap-10 items-stretch reveal-hidden">
                 
                 {/* 1. KOLOM KIRI (FOTO) */}
-                <div className="h-full relative min-h-[400px]">
+                <div className="h-full relative md:min-h-[400px]">
                    
                    {/* MOBILE: Single Image (Center) */}
-                   <div className="md:hidden flex flex-col items-center justify-center mb-6">
+                   <div className="md:hidden flex flex-col items-center justify-center mb-0">
                       <div className="w-full max-w-sm aspect-[4/3] rounded-sm overflow-hidden shadow-lg border border-stone-200 relative group">
                          <img 
                            src={mobileActiveImage} 
                            alt="Selected Product" 
                            className="w-full h-full object-cover transition-opacity duration-500"
                          />
+
+                         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/90 via-green-950/40 to-transparent pointer-events-none opacity-95"></div>
+
+                         <div className="absolute bottom-4 right-4 z-10">
+                             <div className="bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full flex items-baseline gap-2">
+                                <span className="text-red-500 font-serif font-light italic text-xs tracking-widest">
+                                    {selectedLabels[mobileActiveCategory].adj}
+                                </span>
+                                <span className={`font-serif font-thin text-xs tracking-widest uppercase ${
+                                    mobileActiveCategory === 'fruits' ? 'text-red-100' :
+                                    mobileActiveCategory === 'vegetables' ? 'text-green-100' :
+                                    'text-yellow-100'
+                                }`}>
+                                    {selectedLabels[mobileActiveCategory].name}
+                                </span>
+                             </div>
+                         </div>
                       </div>
                    </div>
 
@@ -457,15 +469,14 @@ const App: React.FC = () => {
                        {/* Foto Kategori Fruits */}
                        <div className="relative h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200 group">
                           <img src={categoryImages.fruits} alt="Fruits" className="w-full h-full object-cover transition-opacity duration-500" />
-                          {/* Overlay Gradient Hijau Gelap */}
                           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/90 via-green-950/40 to-transparent pointer-events-none opacity-95"></div>
-                          {/* Teks Label Dinamis dengan Garis Bawah Putih */}
-                          <div className="absolute bottom-6 right-6 z-10 text-right">
-                             <div className="border-b border-white pb-1 inline-block">
-                                <span className="text-stone-100 font-serif font-light italic text-base tracking-widest mr-2">
+                          
+                          <div className="absolute bottom-4 right-4 z-10">
+                             <div className="bg-black/40 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full flex items-baseline gap-2">
+                                <span className="text-red-500 font-serif font-light italic text-sm tracking-widest">
                                     {selectedLabels.fruits.adj}
                                 </span>
-                                <span className="text-white font-serif font-light italic text-base tracking-widest">
+                                <span className="text-red-100 font-serif font-thin text-sm tracking-widest uppercase">
                                     {selectedLabels.fruits.name}
                                 </span>
                              </div>
@@ -476,12 +487,13 @@ const App: React.FC = () => {
                        <div className="relative h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200 group">
                           <img src={categoryImages.vegetables} alt="Vegetables" className="w-full h-full object-cover transition-opacity duration-500" />
                           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/90 via-green-950/40 to-transparent pointer-events-none opacity-95"></div>
-                          <div className="absolute bottom-6 right-6 z-10 text-right">
-                             <div className="border-b border-white pb-1 inline-block">
-                                <span className="text-stone-100 font-serif font-light italic text-base tracking-widest mr-2">
+                          
+                          <div className="absolute bottom-4 right-4 z-10">
+                             <div className="bg-black/40 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full flex items-baseline gap-2">
+                                <span className="text-red-500 font-serif font-light italic text-sm tracking-widest">
                                     {selectedLabels.vegetables.adj}
                                 </span>
-                                <span className="text-white font-serif font-light italic text-base tracking-widest">
+                                <span className="text-green-100 font-serif font-thin text-sm tracking-widest uppercase">
                                     {selectedLabels.vegetables.name}
                                 </span>
                              </div>
@@ -492,12 +504,13 @@ const App: React.FC = () => {
                        <div className="relative h-[250px] rounded-sm overflow-hidden shadow-lg border border-stone-200 group">
                           <img src={categoryImages.spices} alt="Spices" className="w-full h-full object-cover transition-opacity duration-500" />
                           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/90 via-green-950/40 to-transparent pointer-events-none opacity-95"></div>
-                          <div className="absolute bottom-6 right-6 z-10 text-right">
-                             <div className="border-b border-white pb-1 inline-block">
-                                <span className="text-stone-100 font-serif font-light italic text-base tracking-widest mr-2">
+                          
+                          <div className="absolute bottom-4 right-4 z-10">
+                             <div className="bg-black/40 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full flex items-baseline gap-2">
+                                <span className="text-red-500 font-serif font-light italic text-sm tracking-widest">
                                     {selectedLabels.spices.adj}
                                 </span>
-                                <span className="text-white font-serif font-light italic text-base tracking-widest">
+                                <span className="text-yellow-100 font-serif font-thin text-sm tracking-widest uppercase">
                                     {selectedLabels.spices.name}
                                 </span>
                              </div>
@@ -510,60 +523,56 @@ const App: React.FC = () => {
                 {/* 2. KOLOM KANAN (LIST) */}
                 <div className="h-full">
                    
-                   {/* --- TAMPILAN MOBILE: SATU KOTAK BESAR, TEXT CENTER --- */}
-                   <div className="md:hidden bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 flex flex-col justify-center text-center">
-                       {/* CATEGORY: FRUITS */}
-                       <div className="mb-8">
-                          <h4 className="flex items-center justify-center gap-3 font-serif text-2xl text-red-600 mb-4 border-b border-stone-200 pb-2">
-                             <Sprout size={24} /> Fruits
-                          </h4>
-                          <ul className="grid grid-cols-1 gap-2">
-                             {allProducts.fruits.map((item, i) => (
-                                <li 
-                                  key={i} 
-                                  className="text-stone-600 text-sm flex items-center justify-center gap-2 cursor-pointer hover:text-red-600 hover:font-bold transition-all"
-                                  onClick={() => handleProductClick('fruits', item)}
-                                >
-                                   <div className="w-1.5 h-1.5 bg-red-600 rounded-full shrink-0"></div> {item}
-                                </li>
-                             ))}
-                          </ul>
+                   {/* --- TAMPILAN MOBILE: CUSTOM TAB SELECTION --- */}
+                   <div className="md:hidden bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 flex flex-col">
+                       {/* Mobile Tabs: Text Only, Aligned */}
+                       <div className="flex justify-between items-center px-2 mb-6 border-b border-stone-200 pb-2">
+                           {(['fruits', 'vegetables', 'spices'] as const).map((cat) => (
+                               <button 
+                                 key={cat}
+                                 onClick={() => setMobileActiveCategory(cat)}
+                                 className={`text-xs uppercase tracking-widest transition-all pb-1 ${
+                                    mobileActiveCategory === cat 
+                                      ? (cat === 'fruits' ? 'text-red-600 font-bold border-b-2 border-red-600' : 
+                                         cat === 'vegetables' ? 'text-green-600 font-bold border-b-2 border-green-600' : 
+                                         'text-yellow-500 font-bold border-b-2 border-yellow-500')
+                                      : 'text-stone-400 font-light hover:text-stone-600'
+                                 }`}
+                               >
+                                 {cat === 'spices' ? 'Spices' : cat}
+                               </button>
+                           ))}
                        </div>
 
-                       {/* CATEGORY: VEGETABLES */}
-                       <div className="mb-8">
-                          <h4 className="flex items-center justify-center gap-3 font-serif text-2xl text-green-600 mb-4 border-b border-stone-200 pb-2">
-                             <Carrot size={24} /> Vegetables
-                          </h4>
-                          <ul className="grid grid-cols-1 gap-2">
-                             {allProducts.vegetables.map((item, i) => (
-                                <li 
-                                  key={i} 
-                                  className="text-stone-600 text-sm flex items-center justify-center gap-2 cursor-pointer hover:text-green-600 hover:font-bold transition-all"
-                                  onClick={() => handleProductClick('vegetables', item)}
-                                >
-                                   <div className="w-1.5 h-1.5 bg-green-600 rounded-full shrink-0"></div> {item}
-                                </li>
-                             ))}
-                          </ul>
-                       </div>
+                       {/* List Item: Vertical, Neat, Capsule */}
+                       <div className="flex flex-col gap-2">
+                           {allProducts[mobileActiveCategory].map((item, i) => {
+                               const activeColor = 
+                                   mobileActiveCategory === 'fruits' ? 'bg-red-600 border-red-600' :
+                                   mobileActiveCategory === 'vegetables' ? 'bg-green-600 border-green-600' :
+                                   'bg-yellow-500 border-yellow-500';
+                                
+                               const isActive = activeProduct === item;
 
-                       {/* CATEGORY: SPICES */}
-                       <div>
-                          <h4 className="flex items-center justify-center gap-3 font-serif text-2xl text-yellow-500 mb-4 border-b border-stone-200 pb-2">
-                             <Flower2 size={24} /> Spices & Flowers
-                          </h4>
-                          <ul className="grid grid-cols-1 gap-2">
-                             {allProducts.spices.map((item, i) => (
-                                <li 
-                                  key={i} 
-                                  className="text-stone-600 text-sm flex items-center justify-center gap-2 cursor-pointer hover:text-yellow-500 hover:font-bold transition-all"
-                                  onClick={() => handleProductClick('spices', item)}
-                                >
-                                   <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full shrink-0"></div> {item}
-                                </li>
-                             ))}
-                          </ul>
+                               return (
+                                   <button 
+                                     key={i} 
+                                     onClick={() => handleProductClick(mobileActiveCategory, item)}
+                                     className={`w-full py-2 px-4 rounded-full text-xs text-left transition-all border flex items-center gap-3 ${
+                                        isActive 
+                                            ? `${activeColor} text-white shadow-md` 
+                                            : 'bg-white border-stone-100 text-stone-600 hover:border-stone-300'
+                                     }`}
+                                   >
+                                     <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${isActive ? 'bg-white' : (
+                                        mobileActiveCategory === 'fruits' ? 'bg-red-600' :
+                                        mobileActiveCategory === 'vegetables' ? 'bg-green-600' :
+                                        'bg-yellow-500'
+                                     )}`}></div>
+                                     {item}
+                                   </button>
+                               )
+                           })}
                        </div>
                    </div>
 
@@ -580,10 +589,12 @@ const App: React.FC = () => {
                              {allProducts.fruits.map((item, i) => (
                                 <li 
                                   key={i} 
-                                  className="text-stone-600 text-sm flex items-center justify-start gap-2 cursor-pointer hover:text-red-600 hover:font-bold transition-all"
+                                  className={`text-sm flex items-center justify-start gap-2 cursor-pointer transition-all ${
+                                      activeProduct === item ? 'text-red-600 font-bold' : 'text-stone-600 hover:text-red-600 hover:font-bold'
+                                  }`}
                                   onClick={() => handleProductClick('fruits', item)}
                                 >
-                                   <div className="w-1.5 h-1.5 bg-red-600 rounded-full shrink-0"></div> {item}
+                                   <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeProduct === item ? 'bg-red-600' : 'bg-red-600/50'}`}></div> {item}
                                 </li>
                              ))}
                           </ul>
@@ -598,10 +609,12 @@ const App: React.FC = () => {
                              {allProducts.vegetables.map((item, i) => (
                                 <li 
                                   key={i} 
-                                  className="text-stone-600 text-sm flex items-center justify-start gap-2 cursor-pointer hover:text-green-600 hover:font-bold transition-all"
+                                  className={`text-sm flex items-center justify-start gap-2 cursor-pointer transition-all ${
+                                      activeProduct === item ? 'text-green-600 font-bold' : 'text-stone-600 hover:text-green-600 hover:font-bold'
+                                  }`}
                                   onClick={() => handleProductClick('vegetables', item)}
                                 >
-                                   <div className="w-1.5 h-1.5 bg-green-600 rounded-full shrink-0"></div> {item}
+                                   <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeProduct === item ? 'bg-green-600' : 'bg-green-600/50'}`}></div> {item}
                                 </li>
                              ))}
                           </ul>
@@ -616,10 +629,12 @@ const App: React.FC = () => {
                              {allProducts.spices.map((item, i) => (
                                 <li 
                                   key={i} 
-                                  className="text-stone-600 text-sm flex items-center justify-start gap-2 cursor-pointer hover:text-yellow-500 hover:font-bold transition-all"
+                                  className={`text-sm flex items-center justify-start gap-2 cursor-pointer transition-all ${
+                                      activeProduct === item ? 'text-yellow-600 font-bold' : 'text-stone-600 hover:text-yellow-500 hover:font-bold'
+                                  }`}
                                   onClick={() => handleProductClick('spices', item)}
                                 >
-                                   <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full shrink-0"></div> {item}
+                                   <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${activeProduct === item ? 'bg-yellow-500' : 'bg-yellow-500/50'}`}></div> {item}
                                 </li>
                              ))}
                           </ul>
@@ -634,12 +649,11 @@ const App: React.FC = () => {
 
         {/* SECTION 6: PARTNER */}
         <section className="py-32 bg-white text-stone-600 relative overflow-hidden">
-           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
            <div className="max-w-[1000px] mx-auto px-6 relative z-10 text-center">
               {/* WRAPPER BARU AGAR ANIMASI BERJALAN */}
               <div className="reveal-hidden">
                   <div className="w-16 h-1 bg-red-600 mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.3)]"></div>
-                  <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif mb-8 leading-tight text-green-950 drop-shadow-sm">
+                  <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif mb-8 leading-tight text-green-700 drop-shadow-sm">
                      Partner <br/> <span className="italic text-red-600">With Us.</span>
                   </h2>
                   <p className="text-stone-600 text-xl md:text-2xl font-light mb-12 leading-relaxed max-w-2xl mx-auto">
@@ -648,7 +662,7 @@ const App: React.FC = () => {
                   
                   <button 
                     onClick={() => setIsContactOpen(true)}
-                    className="group relative px-12 py-6 bg-green-950 text-white text-xs font-bold uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all overflow-hidden shadow-2xl hover:shadow-red-900/50 rounded-sm mx-auto flex items-center gap-4"
+                    className="group relative px-12 py-6 bg-green-600 text-white text-xs font-bold uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all overflow-hidden shadow-2xl hover:shadow-red-900/50 rounded-sm mx-auto flex items-center gap-4"
                   >
                       Contact Sales <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </button>
@@ -658,8 +672,7 @@ const App: React.FC = () => {
       </main>
 
       {/* FOOTER */}
-      {/* MENAMBAHKAN reveal-hidden DI FOOTER */}
-      <footer className="bg-[#010805] text-white pt-24 pb-12 px-6 border-t border-white/5 relative z-10 reveal-hidden">
+      <footer className="bg-[#021a10] text-white pt-24 pb-12 px-6 border-t border-white/5 relative z-10 reveal-hidden">
         <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16 mb-20">
           
           <div className="col-span-1">
@@ -770,7 +783,7 @@ const App: React.FC = () => {
                <button onClick={() => setIsContactOpen(false)} className="absolute top-4 right-4 p-2 text-stone-400 hover:text-red-600 transition-colors"><X size={24} /></button>
                
                <div className="text-center mb-6">
-                  <h2 className="text-3xl font-serif text-green-950 mb-2">Get in Touch</h2>
+                  <h2 className="text-3xl font-serif text-green-700 mb-2">Get in Touch</h2>
                   <p className="text-xs font-bold uppercase tracking-[0.2em] text-red-600">We'd love to hear from you</p>
                </div>
                
@@ -778,7 +791,7 @@ const App: React.FC = () => {
                   <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
                       <Phone className="text-green-600 shrink-0 mt-1" size={20} />
                       <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Phone / WhatsApp</h4>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">Phone / WhatsApp</h4>
                           <a href="tel:+62226016306" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">+62 22 6016 306</a>
                           <a href="tel:+628176878166" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">+62 817 687 8166</a>
                       </div>
@@ -786,7 +799,7 @@ const App: React.FC = () => {
                   <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
                       <Mail className="text-green-600 shrink-0 mt-1" size={20} />
                       <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Emails</h4>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">Emails</h4>
                           <a href="mailto:info@bkkemuliaan.com" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors break-all">info@bkkemuliaan.com</a>
                           <a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors break-all">Sales-marketing.2@bkkemuliaan.com</a>
                       </div>
@@ -794,14 +807,14 @@ const App: React.FC = () => {
                   <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
                       <Globe className="text-green-600 shrink-0 mt-1" size={20} />
                       <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-1">Website</h4>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">Website</h4>
                           <a href="https://www.bkkemuliaan.com" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm hover:text-red-600 transition-colors break-all">www.bkkemuliaan.com</a>
                       </div>
                   </div>
                   <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
                       <MapPin className="text-green-600 shrink-0 mt-1" size={20} />
                       <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-950 mb-2">Our Locations</h4>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-2">Our Locations</h4>
                           <div className="mb-4">
                             <strong className="text-stone-500 text-[10px] uppercase tracking-wide block mb-1">Main Office:</strong>
                             <a href="https://www.google.com/maps/search/?api=1&query=Jl.+Sawit+Darangdan+No.+3,+Purwakarta,+West+Java+41163+-+Indonesia" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm leading-relaxed hover:text-red-600 transition-colors block">Jl. Sawit Darangdan No. 3, Purwakarta, West Java 41163 - Indonesia</a>
@@ -816,7 +829,7 @@ const App: React.FC = () => {
                <div className="mt-8 pt-6 border-t border-stone-200 text-center">
                   <div className="flex flex-col items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-500">
                       <img src="/images/logo.png" alt="BKK Logo" className="w-12 h-12 object-contain mb-3" />
-                      <h3 className="text-xl font-serif text-green-950 tracking-[0.2em] uppercase">BKK</h3>
+                      <h3 className="text-xl font-serif text-green-700 tracking-[0.2em] uppercase">BKK</h3>
                       <p className="text-[9px] font-medium tracking-[0.3em] uppercase text-stone-500 mt-1">PT. Bintang Kiat Kemuliaan</p>
                   </div>
                </div>
