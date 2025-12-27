@@ -33,8 +33,9 @@ const Hero: React.FC = () => {
   };
 
   return (
-    // PERBAIKAN: h-screen diubah jadi h-[915px] untuk mobile, md:h-screen untuk desktop
-    <section className="relative h-[915px] md:h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
+    // --- UBAH TINGGI DI SINI ---
+    // Ganti 'h-[800px]' dengan angka yang pas (misal 750px atau 850px)
+    <section className="relative h-[800px] md:h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
       
       <style>{`
         @keyframes scroll {
