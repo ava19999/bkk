@@ -24,8 +24,11 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
     }
   };
 
+  // UBAH: Ukuran font dikembalikan ke text-[5px] agar pas (tidak terlalu kecil seperti text-[4px])
   const buttonClass = `
-    group relative px-3 py-1.5 rounded-sm text-[9px] font-bold uppercase tracking-[0.2em] transition-all duration-300 border
+    group relative px-1 py-0.5 md:px-3 md:py-1.5 rounded-sm 
+    text-[5px] md:text-[9px] font-bold uppercase 
+    tracking-tight md:tracking-[0.2em] transition-all duration-300 border whitespace-nowrap
     ${scrolled 
         ? 'border-green-950 text-green-950 hover:bg-green-950 hover:text-white' 
         : 'border-white/20 text-white hover:bg-white hover:text-green-950 backdrop-blur-sm bg-white/5'}
@@ -36,46 +39,40 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
       <header 
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b ${
           scrolled 
-            ? 'bg-white/95 backdrop-blur-md py-3 border-stone-200 shadow-sm' 
-            : 'bg-transparent py-6 border-transparent'
+            ? 'bg-white/95 backdrop-blur-md py-2 md:py-3 border-stone-200 shadow-sm' 
+            : 'bg-transparent py-2 md:py-6 border-transparent'
         }`}
       >
-        <div className="w-full px-6 md:px-12 flex justify-between items-center">
+        {/* UBAH: pr-2 (Menggeser menu sedikit ke kanan dibanding pr-3, tapi tidak terlalu mepet) */}
+        <div className="w-full pl-1 pr-2 md:px-12 flex justify-between items-center gap-1">
           
-          <button onClick={() => scrollToSection('home')} className="flex items-center gap-2 group shrink-0 text-left">
+          <button onClick={() => scrollToSection('home')} className="flex items-center gap-1 md:gap-2 group shrink-0 text-left">
               <img 
                 src="/images/logo.png" 
                 alt="BKK Logo" 
-                className="w-12 h-12 md:w-16 md:h-16 object-contain transition-transform duration-300 group-hover:scale-105"
+                className="w-5 h-5 md:w-16 md:h-16 object-contain transition-transform duration-300 group-hover:scale-105"
               />
               <div className="flex flex-col">
-                  <h1 className={`text-3xl md:text-4xl font-serif font-bold leading-none tracking-wide transition-colors duration-300 ${scrolled ? 'text-green-950' : 'text-white'}`}>
+                  <h1 className={`text-sm md:text-4xl font-serif font-bold leading-none tracking-wide transition-colors duration-300 ${scrolled ? 'text-green-950' : 'text-white'}`}>
                       BKK
                   </h1>
-                  {/* UBAH: text-red-600 selalu (konsisten merah) */}
-                  <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] mt-1 text-red-600 transition-colors duration-300">
+                  <p className="text-[4px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] mt-0.5 md:mt-1 text-red-600 transition-colors duration-300 whitespace-nowrap">
                       PT. Bintang Kiat Kemuliaan
                   </p>
               </div>
           </button>
 
-          <nav className="hidden lg:flex items-center gap-1.5">
+          <nav className="flex items-center gap-1 md:gap-1.5 overflow-x-auto scrollbar-hide">
               <button onClick={() => scrollToSection('about')} className={buttonClass}>About Us</button>
               <button onClick={() => scrollToSection('global')} className={buttonClass}>Global Reach</button>
               <button onClick={() => scrollToSection('catalogue')} className={buttonClass}>Product</button>
-              <button onClick={() => setIsContactOpen(true)} className={`${buttonClass} pl-4 pr-3 flex items-center gap-2 ml-1`}>
+              
+              <button onClick={() => setIsContactOpen(true)} className={`${buttonClass} pl-1.5 pr-1.5 md:pl-4 md:pr-3 flex items-center gap-0.5 md:gap-2`}>
                   <span>Contact</span>
-                  <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
+                  {/* UBAH: Ukuran icon disesuaikan dengan font text-[5px] */}
+                  <ArrowRight size={6} className="group-hover:translate-x-1 transition-transform md:w-[10px] md:h-[10px]" />
               </button>
           </nav>
-          
-          <button className={`lg:hidden ${scrolled ? 'text-green-950' : 'text-white'}`} onClick={() => setIsContactOpen(true)}>
-             <div className="space-y-1.5 cursor-pointer p-2">
-                <div className="w-6 h-0.5 bg-current"></div>
-                <div className="w-6 h-0.5 bg-current"></div>
-                <div className="w-4 h-0.5 bg-current ml-auto"></div>
-             </div>
-          </button>
 
         </div>
       </header>

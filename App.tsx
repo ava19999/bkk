@@ -224,8 +224,10 @@ const App: React.FC = () => {
                <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] bg-stone-50 border border-stone-200 px-3 py-1 rounded-full">Core Values</span>
                <h2 className="text-4xl md:text-5xl font-serif text-green-950 mt-4">Why Work With Us?</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-hidden">
-               <div className="p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm">
+            {/* HAPUS 'reveal-hidden' DARI CONTAINER GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               {/* TAMBAHKAN 'reveal-hidden' KE SETIAP KARTU */}
+               <div className="p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden">
                  <div className="mb-6 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100">
                     <Handshake className="text-red-600" size={28} />
                  </div>
@@ -235,7 +237,7 @@ const App: React.FC = () => {
                  </p>
                </div>
                
-               <div className="p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm">
+               <div className="p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden">
                  <div className="mb-6 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100">
                     <HeartHandshake className="text-red-600" size={28} />
                  </div>
@@ -245,7 +247,7 @@ const App: React.FC = () => {
                  </p>
                </div>
                
-               <div className="p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm">
+               <div className="p-8 bg-stone-50 border border-stone-200 hover:border-red-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-default rounded-sm reveal-hidden">
                  <div className="mb-6 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-stone-100">
                     <Shield className="text-red-600" size={28} />
                  </div>
@@ -264,23 +266,21 @@ const App: React.FC = () => {
              <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" alt="World Map" className="w-full h-auto object-cover opacity-[0.03]" />
           </div>
           <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center relative z-10">
-            <div className="reveal-hidden relative order-2 lg:order-1">
-              
-              {/* FIX: Ubah grid-cols-2 menjadi grid-cols-1 pada mobile (grid-cols-1 sm:grid-cols-2) */}
+            <div className="relative order-2 lg:order-1">
+              {/* HAPUS 'reveal-hidden' DARI CONTAINER GRID */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                  
-                 {/* FIX: Ubah padding p-8 menjadi p-6 pada mobile (p-6 md:p-8) agar lebih lega */}
-                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
+                 {/* TAMBAHKAN 'reveal-hidden' KE SETIAP KARTU STATISTIK */}
+                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
                     <div>
                         <Globe className="text-red-600 mb-4" size={32} />
-                        {/* FIX: Ubah text-5xl jadi text-4xl di mobile */}
                         <h3 className="text-4xl md:text-5xl font-serif mb-2 text-green-950">7+</h3>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Export Countries</p>
                     </div>
                     <p className="text-sm mt-4 text-stone-600">China, Singapore, Thailand, Malaysia, UAE, Bangladesh, Canada.</p>
                  </div>
 
-                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
+                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
                     <div>
                         <TrendingUp className="text-red-600 mb-4" size={32} />
                         <h3 className="text-4xl md:text-5xl font-serif mb-2 text-green-950">100+</h3>
@@ -289,7 +289,7 @@ const App: React.FC = () => {
                     <p className="text-sm mt-4 text-stone-600">Trusting us annually.</p>
                  </div>
 
-                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
+                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
                     <div>
                         <Package className="text-red-600 mb-4" size={32} />
                         <h3 className="text-4xl md:text-5xl font-serif mb-2 text-green-950">100<span className="text-xl md:text-2xl">MT</span></h3>
@@ -298,7 +298,7 @@ const App: React.FC = () => {
                     <p className="text-sm mt-4 text-stone-600">For each commodity.</p>
                  </div>
 
-                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between">
+                 <div className="bg-stone-50 backdrop-blur-sm p-6 md:p-8 shadow-sm rounded-sm border border-stone-200 hover:border-red-200 transition-colors h-full flex flex-col justify-between reveal-hidden">
                     <div>
                         <CheckCircle2 className="text-red-600 mb-4" size={32} />
                         <h3 className="text-4xl md:text-5xl font-serif mb-2 text-green-950">GACC</h3>
@@ -343,10 +343,11 @@ const App: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
                   {SERVICES.map((item, idx) => (
                     <div key={item.id} className="group relative h-[340px] overflow-hidden cursor-pointer bg-stone-100 rounded-sm shadow-md hover:shadow-xl transition-all duration-500 border border-stone-200">
+                      {/* PERBAIKAN: MENGHAPUS opacity-80 AGAR GAMBAR CERAH 100% */}
                       <img 
                         src={item.image} 
                         alt={item.name} 
-                        className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                        className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 group-hover:opacity-70 transition-opacity"></div>
                       <div className="absolute bottom-0 left-0 p-6 text-white w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
@@ -405,29 +406,32 @@ const App: React.FC = () => {
 
         {/* SECTION 6: PARTNER */}
         <section className="py-32 bg-white text-stone-600 relative overflow-hidden">
-           {/* IMAGE BACKGROUND REMOVED & BG CHANGED TO WHITE */}
            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
            <div className="max-w-[1000px] mx-auto px-6 relative z-10 text-center">
-              <div className="w-16 h-1 bg-red-600 mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.3)]"></div>
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif mb-8 leading-tight text-green-950 drop-shadow-sm">
-                 Partner <br/> <span className="italic text-red-600">With Us.</span>
-              </h2>
-              <p className="text-stone-600 text-xl md:text-2xl font-light mb-12 leading-relaxed max-w-2xl mx-auto">
-                  We are looking forward to working with you to bring nature's finest to your market.
-              </p>
-              
-              <button 
-                onClick={() => setIsContactOpen(true)}
-                className="group relative px-12 py-6 bg-green-950 text-white text-xs font-bold uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all overflow-hidden shadow-2xl hover:shadow-red-900/50 rounded-sm mx-auto flex items-center gap-4"
-              >
-                  Contact Sales <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </button>
+              {/* WRAPPER BARU AGAR ANIMASI BERJALAN */}
+              <div className="reveal-hidden">
+                  <div className="w-16 h-1 bg-red-600 mb-8 mx-auto shadow-[0_0_20px_rgba(220,38,38,0.3)]"></div>
+                  <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif mb-8 leading-tight text-green-950 drop-shadow-sm">
+                     Partner <br/> <span className="italic text-red-600">With Us.</span>
+                  </h2>
+                  <p className="text-stone-600 text-xl md:text-2xl font-light mb-12 leading-relaxed max-w-2xl mx-auto">
+                      We are looking forward to working with you to bring nature's finest to your market.
+                  </p>
+                  
+                  <button 
+                    onClick={() => setIsContactOpen(true)}
+                    className="group relative px-12 py-6 bg-green-950 text-white text-xs font-bold uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all overflow-hidden shadow-2xl hover:shadow-red-900/50 rounded-sm mx-auto flex items-center gap-4"
+                  >
+                      Contact Sales <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </button>
+              </div>
            </div>
         </section>
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-[#010805] text-white pt-24 pb-12 px-6 border-t border-white/5 relative z-10">
+      {/* MENAMBAHKAN reveal-hidden DI FOOTER */}
+      <footer className="bg-[#010805] text-white pt-24 pb-12 px-6 border-t border-white/5 relative z-10 reveal-hidden">
         <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16 mb-20">
           
           <div className="col-span-1">
