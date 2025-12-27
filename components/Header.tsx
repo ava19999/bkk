@@ -24,8 +24,6 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
     }
   };
 
-  // --- TEMPAT MENGUBAH UKURAN TEKS MENU ---
-  // Cari 'text-[6px]' di bawah ini. Ganti angkanya jika ingin lebih besar/kecil.
   const buttonClass = `
     group relative px-1 py-0.5 md:px-3 md:py-1.5 rounded-sm 
     text-[6px] md:text-[9px] font-bold uppercase 
@@ -47,21 +45,16 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
         <div className="w-full pl-1 pr-2 md:px-12 flex justify-between items-center gap-1">
           
           <button onClick={() => scrollToSection('home')} className="flex items-center gap-1 md:gap-2 group shrink-0 text-left">
-              {/* --- TEMPAT MENGUBAH UKURAN LOGO --- */}
-              {/* Ubah 'w-6 h-6' menjadi angka lain (misal w-7 h-7) */}
+              {/* PERBAIKAN: Logo dibesarkan sedikit menjadi w-7 h-7 (sebelumnya w-6 h-6) */}
               <img 
                 src="/images/logo.png" 
                 alt="BKK Logo" 
-                className="w-6 h-6 md:w-16 md:h-16 object-contain transition-transform duration-300 group-hover:scale-105"
+                className="w-9 h-9 md:w-16 md:h-16 object-contain transition-transform duration-300 group-hover:scale-105"
               />
               <div className="flex flex-col">
-                  {/* --- TEMPAT MENGUBAH UKURAN JUDUL 'BKK' --- */}
-                  {/* Ubah 'text-base' menjadi text-lg atau text-sm */}
                   <h1 className={`text-base md:text-4xl font-serif font-bold leading-none tracking-wide transition-colors duration-300 ${scrolled ? 'text-green-950' : 'text-white'}`}>
                       BKK
                   </h1>
-                  {/* --- TEMPAT MENGUBAH UKURAN SUBTITLE 'PT...' --- */}
-                  {/* Ubah 'text-[5px]' menjadi angka lain */}
                   <p className="text-[5px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] mt-0.5 md:mt-1 text-red-600 transition-colors duration-300 whitespace-nowrap">
                       PT. Bintang Kiat Kemuliaan
                   </p>
