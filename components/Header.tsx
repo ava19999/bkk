@@ -47,26 +47,33 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
       <header 
         className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 border-b ${
           isScrolled || isMobileMenuOpen
-            ? 'bg-white/90 backdrop-blur-md py-3 shadow-sm border-stone-200/50' 
-            : 'bg-transparent py-5 border-transparent'
+            ? 'bg-white/90 backdrop-blur-md py-2 md:py-3 shadow-sm border-stone-200/50' 
+            : 'bg-transparent py-3 md:py-5 border-transparent'
         }`}
       >
-        <div className="max-w-[1600px] mx-auto px-4 md:px-8">
+        {/* PERUBAHAN 1: px-2 untuk Mobile (agar mepet tepi), md:px-8 untuk Desktop */}
+        <div className="max-w-[1600px] mx-auto px-2 md:px-8">
           <div className="flex justify-between items-center">
             
             {/* 1. LOGO SECTION (KIRI) */}
             <div className="flex items-center gap-2 md:gap-4 shrink-0 relative z-[70]">
-               <img src="/images/logo.png" alt="BKK Logo" className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-md" />
+               {/* Logo Image: Mobile w-8, Desktop w-12 */}
+               <img 
+                  src="/images/logo.png" 
+                  alt="BKK Logo" 
+                  className="w-8 h-8 md:w-12 md:h-12 object-contain drop-shadow-md" 
+               />
                <div className="flex flex-col">
-                  <h1 className={`font-serif text-xl md:text-2xl font-bold tracking-widest leading-none ${isScrolled || isMobileMenuOpen ? 'text-green-800' : 'text-white'}`}>BKK</h1>
-                  <p className={`text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] ${isScrolled || isMobileMenuOpen ? 'text-stone-500' : 'text-stone-300'}`}>PT. Bintang Kiat Kemuliaan</p>
+                  {/* Title: Mobile text-lg, Desktop text-2xl */}
+                  <h1 className={`font-serif text-lg md:text-2xl font-bold tracking-widest leading-none ${isScrolled || isMobileMenuOpen ? 'text-green-800' : 'text-white'}`}>BKK</h1>
+                  {/* Subtitle: Mobile text-[6px], Desktop text-[9px] */}
+                  <p className={`text-[6px] md:text-[9px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] ${isScrolled || isMobileMenuOpen ? 'text-stone-500' : 'text-stone-300'}`}>PT. Bintang Kiat Kemuliaan</p>
                </div>
             </div>
 
-            {/* 2. DESKTOP NAVIGATION (TENGAH/KANAN) - "NYAMBUNG" */}
+            {/* 2. DESKTOP NAVIGATION (TENGAH/KANAN) */}
             <nav className="hidden md:flex items-center gap-6 bg-black/10 backdrop-blur-sm px-6 py-2 rounded-full border border-white/10 relative z-[70]">
-                
-                {/* Tombol Bahasa (Desktop) - Masuk di dalam Nav */}
+                {/* Tombol Bahasa Desktop */}
                 <button 
                   onClick={toggleLanguage} 
                   className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest py-1 px-2 transition-all border-r border-white/20 pr-6 mr-2 ${isScrolled ? 'text-stone-600 hover:text-red-600' : 'text-white hover:text-red-300'}`}
@@ -74,7 +81,6 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                   <Globe size={14} /> <span>{language}</span>
                 </button>
 
-                {/* Menu Items */}
                 {menuItems.map((item) => (
                     <button key={item.id} onClick={() => scrollToSection(item.id)} className={`text-xs font-bold uppercase tracking-widest hover:text-red-400 transition-colors ${isScrolled ? 'text-stone-600' : 'text-white'}`}>
                       {item.label}
@@ -86,23 +92,23 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
             </nav>
 
             {/* 3. MOBILE ONLY ACTIONS (KANAN) */}
-            {/* Hanya muncul di layar kecil (md:hidden) */}
-            <div className="md:hidden flex items-center gap-3 relative z-[70]">
+            {/* PERUBAHAN 2: Ukuran tombol diperkecil */}
+            <div className="md:hidden flex items-center gap-2 relative z-[70]">
               
-              {/* Language Switcher (Mobile) */}
+              {/* Language Switcher (Mobile Kecil) */}
               <button 
                 onClick={toggleLanguage} 
-                className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest py-2 px-3 rounded-full transition-all border ${isScrolled || isMobileMenuOpen ? 'border-stone-200 text-stone-600 hover:bg-stone-50' : 'border-white/20 text-white hover:bg-white/10'}`}
+                className={`flex items-center gap-1 text-[8px] font-bold uppercase tracking-widest py-1 px-2 rounded-full transition-all border ${isScrolled || isMobileMenuOpen ? 'border-stone-200 text-stone-600 hover:bg-stone-50' : 'border-white/20 text-white hover:bg-white/10'}`}
               >
-                <Globe size={14} /> <span>{language}</span>
+                <Globe size={12} /> <span>{language}</span>
               </button>
 
-              {/* Hamburger */}
+              {/* Hamburger (Mobile Kecil) */}
               <button 
-                className={`p-2 rounded-full transition-colors active:scale-95 ${isScrolled || isMobileMenuOpen ? 'text-green-900 bg-green-50' : 'text-white bg-white/10'}`} 
+                className={`p-1 rounded-md transition-colors active:scale-95 ${isScrolled || isMobileMenuOpen ? 'text-green-900 bg-green-50' : 'text-white bg-white/10'}`} 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
 
@@ -141,7 +147,6 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                  </div>
 
                  <div className="grid md:grid-cols-2 gap-8">
-                    {/* Contact Info */}
                     <div className="bg-stone-50 p-6 rounded-sm border border-stone-100">
                         <div className="flex gap-4 mb-6">
                             <div className="p-2 bg-white text-green-600 shadow-sm rounded-full h-fit"><Phone size={18} /></div>
@@ -160,8 +165,6 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Addresses */}
                     <div className="space-y-6">
                         <div className="flex gap-4">
                             <div className="p-2 bg-stone-50 text-red-600 border border-stone-200 rounded-full h-fit"><Building2 size={18} /></div>

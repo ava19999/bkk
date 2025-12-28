@@ -54,11 +54,12 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 text-center text-white px-4 mt-20 md:mt-24 w-full">
+      {/* PERBAIKAN POSISI: mt-12 (Mobile) agar lebih naik, md:mt-24 (Desktop) tetap */}
+      <div className="relative z-10 text-center text-white px-4 mt-12 md:mt-24 w-full">
         
         <button 
             onClick={scrollToPopular}
-            className="group inline-flex items-center gap-3 border border-white/20 pl-1 pr-4 py-1 rounded-full mb-8 backdrop-blur-sm bg-white/5 animate-in fade-in slide-in-from-bottom-4 duration-1000 hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all cursor-pointer"
+            className="group inline-flex items-center gap-3 border border-white/20 pl-1 pr-4 py-1 rounded-full mb-6 md:mb-8 backdrop-blur-sm bg-white/5 animate-in fade-in slide-in-from-bottom-4 duration-1000 hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all cursor-pointer"
         >
             <span className="bg-red-600 text-white text-[9px] font-bold px-2 py-1 rounded-full uppercase tracking-wider group-hover:bg-red-500 transition-colors">
                 {t.hero.hotTag}
@@ -68,11 +69,14 @@ const Hero: React.FC = () => {
             </p>
         </button>
         
-        {/* PERBAIKAN: whitespace-nowrap agar teks merah tidak turun baris */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
+        {/* PERBAIKAN FONT & WRAPPING: 
+            1. text-3xl (Mobile) -> text-6xl (Tablet) -> text-8xl (PC). Ini mencegah teks terlalu besar di HP.
+            2. whitespace-normal (Mobile) -> whitespace-nowrap (Desktop). Ini agar di HP teks merah bisa turun baris jika kepanjangan, tidak terpotong.
+        */}
+        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
           <span className="text-white drop-shadow-lg block">{t.hero.titleTrusted}</span>
           <span className="text-white drop-shadow-lg block">{t.hero.titleIndonesian}</span>
-          <span className="italic text-red-600 font-light block whitespace-nowrap" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+          <span className="italic text-red-600 font-light block whitespace-normal md:whitespace-nowrap px-2 leading-none md:leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
             {t.hero.titleSuffix}
           </span>
         </h1>
