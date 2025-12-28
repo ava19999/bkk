@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Globe, Phone, Mail, Building2, Plane } from 'lucide-react';
+import { Menu, X, Globe, Phone, Mail, Building2, Plane, Info, Map, Package, Mail as MailIcon } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface HeaderProps {
@@ -37,9 +37,9 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
   };
 
   const menuItems = [
-    { id: 'about', label: t.nav.about },
-    { id: 'global', label: t.nav.global },
-    { id: 'catalogue', label: t.nav.product },
+    { id: 'about', label: t.nav.about, icon: Info },
+    { id: 'global', label: t.nav.global, icon: Map },
+    { id: 'catalogue', label: t.nav.product, icon: Package },
   ];
 
   return (
@@ -51,29 +51,24 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
             : 'bg-transparent py-3 md:py-5 border-transparent'
         }`}
       >
-        {/* PERUBAHAN 1: px-2 untuk Mobile (agar mepet tepi), md:px-8 untuk Desktop */}
         <div className="max-w-[1600px] mx-auto px-2 md:px-8">
           <div className="flex justify-between items-center">
             
             {/* 1. LOGO SECTION (KIRI) */}
             <div className="flex items-center gap-2 md:gap-4 shrink-0 relative z-[70]">
-               {/* Logo Image: Mobile w-8, Desktop w-12 */}
                <img 
                   src="/images/logo.png" 
                   alt="BKK Logo" 
                   className="w-8 h-8 md:w-12 md:h-12 object-contain drop-shadow-md" 
                />
                <div className="flex flex-col">
-                  {/* Title: Mobile text-lg, Desktop text-2xl */}
                   <h1 className={`font-serif text-lg md:text-2xl font-bold tracking-widest leading-none ${isScrolled || isMobileMenuOpen ? 'text-green-800' : 'text-white'}`}>BKK</h1>
-                  {/* Subtitle: Mobile text-[6px], Desktop text-[9px] */}
                   <p className={`text-[6px] md:text-[9px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] ${isScrolled || isMobileMenuOpen ? 'text-stone-500' : 'text-stone-300'}`}>PT. Bintang Kiat Kemuliaan</p>
                </div>
             </div>
 
             {/* 2. DESKTOP NAVIGATION (TENGAH/KANAN) */}
             <nav className="hidden md:flex items-center gap-6 bg-black/10 backdrop-blur-sm px-6 py-2 rounded-full border border-white/10 relative z-[70]">
-                {/* Tombol Bahasa Desktop */}
                 <button 
                   onClick={toggleLanguage} 
                   className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest py-1 px-2 transition-all border-r border-white/20 pr-6 mr-2 ${isScrolled ? 'text-stone-600 hover:text-red-600' : 'text-white hover:text-red-300'}`}
@@ -92,10 +87,7 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
             </nav>
 
             {/* 3. MOBILE ONLY ACTIONS (KANAN) */}
-            {/* PERUBAHAN 2: Ukuran tombol diperkecil */}
             <div className="md:hidden flex items-center gap-2 relative z-[70]">
-              
-              {/* Language Switcher (Mobile Kecil) */}
               <button 
                 onClick={toggleLanguage} 
                 className={`flex items-center gap-1 text-[8px] font-bold uppercase tracking-widest py-1 px-2 rounded-full transition-all border ${isScrolled || isMobileMenuOpen ? 'border-stone-200 text-stone-600 hover:bg-stone-50' : 'border-white/20 text-white hover:bg-white/10'}`}
@@ -103,7 +95,6 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                 <Globe size={12} /> <span>{language}</span>
               </button>
 
-              {/* Hamburger (Mobile Kecil) */}
               <button 
                 className={`p-1 rounded-md transition-colors active:scale-95 ${isScrolled || isMobileMenuOpen ? 'text-green-900 bg-green-50' : 'text-white bg-white/10'}`} 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -116,21 +107,113 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
         </div>
       </header>
 
-      {/* MOBILE MENU DRAWER */}
-      <div className={`fixed inset-0 z-50 md:hidden bg-black/20 backdrop-blur-sm transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMobileMenuOpen(false)}>
-        <div className={`absolute top-0 right-0 w-[85%] max-w-[320px] h-full bg-[#051f15] shadow-2xl transition-transform duration-500 ease-in-out flex flex-col pt-24 pb-8 px-8 border-l border-white/5 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`} onClick={(e) => e.stopPropagation()}>
-            <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: `url("https://www.transparenttextures.com/patterns/cream-paper.png")` }}></div>
-            <nav className="flex flex-col space-y-4 relative z-10 mb-auto">
-               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-red-600 mb-2 block opacity-80">Menu</span>
-               {menuItems.map((item) => (
-                  <button key={item.id} onClick={() => scrollToSection(item.id)} className="text-xl font-serif text-white hover:text-red-400 transition-colors text-left border-b border-white/10 pb-3">
-                      {item.label}
+      {/* MOBILE MENU DRAWER - ELEGANT & PROFESSIONAL */}
+      <div className={`fixed inset-0 z-50 md:hidden transition-all duration-300 ${isMobileMenuOpen ? 'bg-black/30 backdrop-blur-sm' : 'pointer-events-none'}`} onClick={() => setIsMobileMenuOpen(false)}>
+        <div 
+          className={`absolute top-0 right-0 w-full max-w-sm h-full bg-gradient-to-br from-white to-stone-50 shadow-2xl transition-transform duration-300 ease-out flex flex-col overflow-hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`} 
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Navigation Menu - Menambahkan padding top yang lebih besar */}
+          <div className="flex-1 px-6 pt-28 pb-8 overflow-y-auto">
+            {/* Language Switcher - Diposisikan lebih turun */}
+            <div className="mb-12 px-4 py-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-white rounded-xl border border-green-200 shadow-sm">
+                    <Globe size={20} className="text-green-700" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-stone-800 mb-1">Language</h3>
+                    <p className="text-xs text-stone-600">Current: {language}</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={toggleLanguage}
+                  className="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm hover:shadow"
+                >
+                  Switch
+                </button>
+              </div>
+            </div>
+
+            {/* Navigation Menu Items */}
+            <nav className="space-y-3">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button 
+                    key={item.id} 
+                    onClick={() => scrollToSection(item.id)}
+                    className="w-full flex items-center gap-4 px-4 py-4 rounded-xl hover:bg-green-50 hover:border-green-100 border border-transparent transition-all duration-200 group"
+                  >
+                    <div className="p-2 bg-gradient-to-br from-green-100 to-emerald-50 rounded-lg group-hover:from-green-200 group-hover:to-emerald-100 transition-colors">
+                      <Icon size={18} className="text-green-700" />
+                    </div>
+                    <div className="text-left flex-1">
+                      <span className="block text-sm font-medium text-stone-800 group-hover:text-green-700 transition-colors">
+                        {item.label}
+                      </span>
+                      <span className="block text-xs text-stone-500 mt-0.5">
+                        {item.id === 'about' ? 'About our company' : 
+                         item.id === 'global' ? 'Global reach & presence' : 
+                         'Product catalogue'}
+                      </span>
+                    </div>
+                    <div className="text-stone-300 group-hover:text-green-300">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
+                    </div>
                   </button>
-               ))}
-               <button onClick={() => { setIsMobileMenuOpen(false); setIsContactOpen(true); }} className="text-xl font-serif text-white hover:text-red-400 transition-colors text-left border-b border-white/10 pb-3">
-                  {t.nav.contact}
-               </button>
+                );
+              })}
+              
+              {/* Contact Button */}
+              <button 
+                onClick={() => { setIsMobileMenuOpen(false); setIsContactOpen(true); }}
+                className="w-full flex items-center gap-4 px-4 py-4 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 transition-all duration-200 shadow-md hover:shadow-lg group mt-2"
+              >
+                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                  <MailIcon size={18} className="text-white" />
+                </div>
+                <div className="text-left flex-1">
+                  <span className="block text-sm font-semibold text-white">
+                    {t.nav.contact}
+                  </span>
+                  <span className="block text-xs text-white/80 mt-0.5">
+                    Get in touch with our team
+                  </span>
+                </div>
+                <div className="text-white/60 group-hover:text-white">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </div>
+              </button>
             </nav>
+
+            {/* Logo and Company Name Section */}
+            <div className="mt-16 flex flex-col items-center justify-center">
+              <img 
+                src="/images/logo.png" 
+                alt="BKK Logo" 
+                className="w-16 h-16 object-contain mb-4" 
+              />
+              <div className="text-center">
+                <h1 className="font-serif text-xl font-bold text-green-800">BKK</h1>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500 mt-1">
+                  PT. Bintang Kiat Kemuliaan
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer - Hanya copyright */}
+          <div className="px-6 py-4 border-t border-stone-100 bg-gradient-to-r from-green-50/50 to-white">
+            <p className="text-center text-[10px] text-stone-400">
+              © {new Date().getFullYear()} PT. Bintang Kiat Kemuliaan
+            </p>
+          </div>
         </div>
       </div>
 
