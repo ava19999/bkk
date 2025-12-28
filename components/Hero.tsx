@@ -39,8 +39,15 @@ const Hero: React.FC = () => {
       <style>{`
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-scroll { animation: scroll 60s linear infinite; width: max-content; }
-        /* Updated text-shadow to dark green */
-        .text-outline { -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3); text-shadow: 3px 3px 6px rgba(1, 50, 32, 0.9); }
+        
+        /* CUSTOM CSS UNTUK TEXT OUTLINE & SHADOW HIJAU GELAP */
+        .text-outline { 
+            /* Stroke/Outline Hijau Gelap (Hex #022c22 = green-950) */
+            -webkit-text-stroke: 1.5px #022c22; 
+            
+            /* Shadow Hijau Gelap */
+            text-shadow: 3px 3px 4px #022c22 !important; 
+        }
       `}</style>
 
       {/* Background Image */}
@@ -55,7 +62,6 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Hero Content */}
-      {/* PERBAIKAN POSISI: mt-12 (Mobile) agar lebih naik, md:mt-24 (Desktop) tetap */}
       <div className="relative z-10 text-center text-white px-4 mt-12 md:mt-24 w-full">
         
         <button 
@@ -70,18 +76,17 @@ const Hero: React.FC = () => {
             </p>
         </button>
         
-        {/* PERBAIKAN FONT & WRAPPING: 
-            1. text-3xl (Mobile) -> text-6xl (Tablet) -> text-8xl (PC). Ini mencegah teks terlalu besar di HP.
-            2. whitespace-normal (Mobile) -> whitespace-nowrap (Desktop). Ini agar di HP teks merah bisa turun baris jika kepanjangan, tidak terpotong.
-        */}
-        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
-          <span className="text-white drop-shadow-lg block text-outline">{t.hero.titleTrusted}</span>
-          <span className="text-white drop-shadow-lg block text-outline">{t.hero.titleIndonesian}</span>
-          <span className="italic text-red-600 font-light block whitespace-normal md:whitespace-nowrap px-2 leading-none md:leading-tight text-outline" style={{ textShadow: '3px 3px 6px rgba(1, 50, 32, 0.9)' }}>
+        {/* KEMBALI KE STANDARD: duration-1000 (1 detik) */}
+        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight">
+          <span className="text-white block text-outline">{t.hero.titleTrusted}</span>
+          <span className="text-white block text-outline">{t.hero.titleIndonesian}</span>
+          
+          <span className="italic text-red-600 font-light block whitespace-normal md:whitespace-nowrap px-2 leading-none md:leading-tight text-outline">
             {t.hero.titleSuffix}
           </span>
         </h1>
         
+        {/* KEMBALI KE STANDARD: duration-1000 dan delay-200 */}
         <p className="max-w-3xl mx-auto text-sm md:text-xl font-light tracking-wide leading-relaxed opacity-90 text-stone-200 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 mb-10 drop-shadow-md px-4">
           {t.hero.description}
         </p>
