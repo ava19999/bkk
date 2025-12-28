@@ -45,6 +45,7 @@ const App: React.FC = () => {
         }
 
         /* Clean styles for other elements */
+        /* PERBAIKAN: Menghapus !important agar style di komponen lain (seperti Hero) bisa bekerja */
         .text-enhanced p, 
         .text-enhanced span, 
         .text-enhanced div, 
@@ -54,8 +55,8 @@ const App: React.FC = () => {
         .text-enhanced input, 
         .text-enhanced label,
         .text-enhanced svg {
-           text-shadow: none !important;
-           -webkit-text-stroke: 0 !important;
+           text-shadow: none; 
+           -webkit-text-stroke: 0;
         }
       `}</style>
 
