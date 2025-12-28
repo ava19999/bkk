@@ -293,10 +293,16 @@ const ProductSection: React.FC = () => {
                
                {/* Mobile Tabs */}
                <div className="md:hidden bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 flex flex-col">
-                   <div className="flex justify-between items-center px-2 mb-6 border-b border-stone-200 pb-2">
+                   <div className="flex justify-between items-center mb-6 border-b border-stone-200 pb-2">
                        {(['fruits', 'vegetables', 'spices'] as const).map((cat) => (
-                           <button key={cat} onClick={() => setMobileActiveCategory(cat)} className={`text-xs uppercase tracking-widest transition-all pb-1 ${mobileActiveCategory === cat ? 'text-red-600 font-bold border-b-2 border-red-600' : 'text-stone-400 font-light'}`}>
-                             {t.products.cats[cat]}
+                           <button 
+                               key={cat} 
+                               onClick={() => setMobileActiveCategory(cat)} 
+                               className={`flex-1 text-center text-xs uppercase tracking-wider transition-all pb-1 px-1 ${mobileActiveCategory === cat ? 'text-red-600 font-bold border-b-2 border-red-600' : 'text-stone-400 font-light'}`}
+                           >
+                             {cat === 'fruits' ? 'Fruit' : 
+                              cat === 'vegetables' ? 'Vege' : 
+                              'Spice & Flower'}
                            </button>
                        ))}
                    </div>
