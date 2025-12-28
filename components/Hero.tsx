@@ -39,7 +39,8 @@ const Hero: React.FC = () => {
       <style>{`
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-scroll { animation: scroll 60s linear infinite; width: max-content; }
-        .text-outline { -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); }
+        /* Updated text-shadow to dark green */
+        .text-outline { -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3); text-shadow: 3px 3px 6px rgba(1, 50, 32, 0.9); }
       `}</style>
 
       {/* Background Image */}
@@ -74,9 +75,9 @@ const Hero: React.FC = () => {
             2. whitespace-normal (Mobile) -> whitespace-nowrap (Desktop). Ini agar di HP teks merah bisa turun baris jika kepanjangan, tidak terpotong.
         */}
         <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
-          <span className="text-white drop-shadow-lg block">{t.hero.titleTrusted}</span>
-          <span className="text-white drop-shadow-lg block">{t.hero.titleIndonesian}</span>
-          <span className="italic text-red-600 font-light block whitespace-normal md:whitespace-nowrap px-2 leading-none md:leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+          <span className="text-white drop-shadow-lg block text-outline">{t.hero.titleTrusted}</span>
+          <span className="text-white drop-shadow-lg block text-outline">{t.hero.titleIndonesian}</span>
+          <span className="italic text-red-600 font-light block whitespace-normal md:whitespace-nowrap px-2 leading-none md:leading-tight text-outline" style={{ textShadow: '3px 3px 6px rgba(1, 50, 32, 0.9)' }}>
             {t.hero.titleSuffix}
           </span>
         </h1>
