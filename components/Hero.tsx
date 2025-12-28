@@ -6,35 +6,18 @@ const Hero: React.FC = () => {
   const { t } = useLanguage();
 
   const fruits = [
-    t.commodities['Avocado'], 
-    t.commodities['Harumanis Mango'], 
-    t.commodities['Honey Pineapple'],
-    t.commodities['Mangosteen'], 
-    t.commodities['Rockmelon'], 
-    t.commodities['Salacca'], 
-    t.commodities['Watermelon'], 
-    t.commodities['Durian'], 
-    t.commodities['Dragon Fruit']
+    t.commodities['Avocado'], t.commodities['Harumanis Mango'], t.commodities['Honey Pineapple'],
+    t.commodities['Mangosteen'], t.commodities['Rockmelon'], t.commodities['Salacca'], 
+    t.commodities['Watermelon'], t.commodities['Durian'], t.commodities['Dragon Fruit']
   ];
-
   const vegetables = [
-    t.commodities['French Beans'], 
-    t.commodities['Capsicum'], 
-    t.commodities['Honey Sweet Potato'], 
-    t.commodities['Elephant Ginger'],
-    t.commodities['Young Ginger'], 
-    t.commodities['Potato'], 
-    t.commodities['Sweet Potato'], 
-    t.commodities['Watercress']
+    t.commodities['French Beans'], t.commodities['Capsicum'], t.commodities['Honey Sweet Potato'], 
+    t.commodities['Elephant Ginger'], t.commodities['Young Ginger'], t.commodities['Potato'], 
+    t.commodities['Sweet Potato'], t.commodities['Watercress']
   ];
-
   const spices = [
-    t.commodities['Cinnamon'], 
-    t.commodities['Vanilla'], 
-    t.commodities['Black Pepper'], 
-    t.commodities['Clove'], 
-    t.commodities['Jasmine Flower'], 
-    t.commodities['White Pepper']
+    t.commodities['Cinnamon'], t.commodities['Vanilla'], t.commodities['Black Pepper'], 
+    t.commodities['Clove'], t.commodities['Jasmine Flower'], t.commodities['White Pepper']
   ];
 
   const allCommodities = [...fruits, ...vegetables, ...spices];
@@ -48,27 +31,15 @@ const Hero: React.FC = () => {
 
   const scrollToPopular = () => {
     const element = document.getElementById('popular');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (element) { element.scrollIntoView({ behavior: 'smooth' }); }
   };
 
   return (
     <section className="relative h-[730px] md:h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
-      
       <style>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-          animation: scroll 60s linear infinite;
-          width: max-content;
-        }
-        .text-outline {
-           -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
-           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-        }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-scroll { animation: scroll 60s linear infinite; width: max-content; }
+        .text-outline { -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); }
       `}</style>
 
       {/* Background Image */}
@@ -83,8 +54,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Hero Content */}
-      {/* PERUBAHAN 1: max-w diperbesar jadi max-w-7xl agar teks panjang muat */}
-      <div className="relative z-10 text-center text-white px-6 mt-20 md:mt-24 max-w-7xl">
+      <div className="relative z-10 text-center text-white px-4 mt-20 md:mt-24 w-full">
         
         <button 
             onClick={scrollToPopular}
@@ -98,17 +68,16 @@ const Hero: React.FC = () => {
             </p>
         </button>
         
-        {/* PERUBAHAN 2: Ukuran font disesuaikan jadi text-7xl agar tidak wrapping */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
-          <span className="text-white drop-shadow-lg">{t.hero.titleTrusted}</span> <br />
-          <span className="text-white drop-shadow-lg">{t.hero.titleIndonesian}</span> <br />
-          {/* whitespace-nowrap ditambahkan untuk memaksa teks tetap satu baris */}
-          <span className="italic text-red-600 font-light whitespace-nowrap" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+        {/* PERBAIKAN: whitespace-nowrap agar teks merah tidak turun baris */}
+        <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
+          <span className="text-white drop-shadow-lg block">{t.hero.titleTrusted}</span>
+          <span className="text-white drop-shadow-lg block">{t.hero.titleIndonesian}</span>
+          <span className="italic text-red-600 font-light block whitespace-nowrap" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
             {t.hero.titleSuffix}
           </span>
         </h1>
         
-        <p className="max-w-3xl mx-auto text-base md:text-xl font-light tracking-wide leading-relaxed opacity-90 text-stone-200 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 mb-10 drop-shadow-md">
+        <p className="max-w-3xl mx-auto text-sm md:text-xl font-light tracking-wide leading-relaxed opacity-90 text-stone-200 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 mb-10 drop-shadow-md px-4">
           {t.hero.description}
         </p>
       </div>
@@ -130,7 +99,6 @@ const Hero: React.FC = () => {
              </div>
           </div>
       </div>
-
     </section>
   );
 };
