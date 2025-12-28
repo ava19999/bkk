@@ -28,7 +28,7 @@ const HistorySection: React.FC = () => {
   // Duplikasi 3x agar looping berjalan mulus (seamless)
   const displayGallery = [...galleryImages, ...galleryImages, ...galleryImages];
 
-  // --- MOUSE EVENTS (DRAG) ---
+  // --- MOUSE EVENTS (DESKTOP DRAG) ---
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
     isDown.current = true;
@@ -45,34 +45,61 @@ const HistorySection: React.FC = () => {
     scrollRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
-  // Stop dragging saat mouse dilepas
+  const handleMouseUp = () => {
+    isDown.current = false;
+    setIsGrabbing(false);
+  };
+
+  // --- TOUCH EVENTS (MOBILE SWIPE) ---
+  // Fungsi baru ditambahkan di sini
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!scrollRef.current) return;
+    isDown.current = true;
+    setIsGrabbing(true);
+    // Menggunakan touches[0] untuk mendapatkan posisi jari pertama
+    startX.current = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    scrollLeft.current = scrollRef.current.scrollLeft;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDown.current || !scrollRef.current) return;
+    // Hitung pergerakan berdasarkan jari
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX.current) * 2; // Kecepatan swipe
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
+  const handleTouchEnd = () => {
+    isDown.current = false;
+    setIsGrabbing(false);
+  };
+
+  // Stop dragging saat mouse dilepas di luar area (Global)
   useEffect(() => {
     const handleGlobalMouseUp = () => { isDown.current = false; setIsGrabbing(false); };
     window.addEventListener('mouseup', handleGlobalMouseUp);
     return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
   }, []);
 
-  // --- ANIMASI AUTO SCROLL (Ini yang sebelumnya hilang) ---
+  // --- ANIMASI AUTO SCROLL ---
   useEffect(() => {
     let animationFrameId: number;
     const scrollContainer = scrollRef.current;
     
     const animate = () => {
       if (scrollContainer) {
-        // Jika user tidak sedang menahan klik (drag), jalankan auto scroll
+        // Jika user tidak sedang menahan klik (drag) atau menyentuh layar, jalankan auto scroll
         if (!isDown.current) {
            scrollContainer.scrollLeft += 1; // Kecepatan scroll
         }
         
         // Logika Infinite Loop
         const totalWidth = scrollContainer.scrollWidth;
-        const oneSetWidth = totalWidth / 3; // Karena kita duplikasi 3x
+        const oneSetWidth = totalWidth / 3; 
         
-        // Jika sudah scroll melewati set ke-2, kembalikan ke set ke-1 (seamless jump)
         if (scrollContainer.scrollLeft >= oneSetWidth * 2) {
             scrollContainer.scrollLeft -= oneSetWidth;
         } 
-        // Jika di-drag mundur terlalu jauh
         else if (scrollContainer.scrollLeft <= 0) {
             scrollContainer.scrollLeft += oneSetWidth;
         }
@@ -114,8 +141,18 @@ const HistorySection: React.FC = () => {
             <div 
                 ref={scrollRef} 
                 className={`flex h-full w-full overflow-x-hidden select-none ${isGrabbing ? 'cursor-grabbing' : 'cursor-grab'}`} 
+                
+                // Mouse Events (Desktop)
                 onMouseDown={handleMouseDown} 
-                onMouseMove={handleMouseMove} 
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+
+                // Touch Events (Mobile) - INI YANG DITAMBAHKAN
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
                 {displayGallery.map((src, index) => (
