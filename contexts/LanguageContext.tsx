@@ -40,6 +40,7 @@ const content = {
     hero: {
       hotTag: "HOT",
       hotText: "Premium Mangosteen",
+      // Struktur 3 Baris Inggris
       titleTrusted: "Trusted",
       titleIndonesian: "Indonesian",
       titleSuffix: "Fresh Produce Exporter",
@@ -125,7 +126,6 @@ const content = {
       warehouse: "Operational Warehouse:",
     },
     commodities: {
-      // Fruits
       'Avocado': "Avocado",
       'Harumanis Mango': "Harumanis Mango",
       'Honey Sweet Pineapple': "Honey Sweet Pineapple",
@@ -136,7 +136,6 @@ const content = {
       'Watermelon': "Watermelon",
       'Durian': "Durian",
       'Dragon Fruit': "Dragon Fruit",
-      // Veg
       'French Beans': "French Beans",
       'Capsicum': "Capsicum (Bell Pepper)",
       'Honey Sweet Potato': "Honey Sweet Potato",
@@ -145,7 +144,6 @@ const content = {
       'Potato': "Potato",
       'Sweet Potato': "Sweet Potato",
       'Watercress': "Watercress",
-      // Spices
       'Cinnamon': "Cinnamon",
       'Vanilla': "Vanilla",
       'Black Pepper': "Black Pepper",
@@ -191,9 +189,10 @@ const content = {
     hero: {
       hotTag: "TERLARIS",
       hotText: "Manggis Premium",
-      titleTrusted: "Terpercaya",
-      titleIndonesian: "Indonesia",
-      titleSuffix: "Eksportir Hasil Bumi Segar",
+      // --- PERBAIKAN SUSUNAN KATA (3 BARIS) ---
+      titleTrusted: "Eksportir",           // Baris 1
+      titleIndonesian: "Produk Segar",     // Baris 2
+      titleSuffix: "Terpercaya Di Indonesia", // Baris 3 (Akan Merah & Italic di komponen)
       description: "Menghubungkan Hasil Panen Terbaik Indonesia ke Pasar Global. Melayani China, Singapura, Thailand, Malaysia, UAE, Bangladesh, dan Kanada.",
     },
     history: {
@@ -247,7 +246,7 @@ const content = {
       title: "Katalog Produk",
       subtitle: "Jelajahi pilihan premium kami dari 23 komoditas.",
       cats: { fruits: "Buah", vegetables: "Sayuran", spices: "Rempah & Bunga" },
-      adjectives: ['Sensasional', 'Premium', 'Populer', 'Eksklusif', 'Panen Segar', 'Tingkat Atas', 'Terbaik', 'Khas', 'Pilihan', 'Organik']
+      adjectives: ['Sensational', 'Premium', 'Populer', 'Eksklusif', 'Panen Segar', 'Tingkat Atas', 'Terbaik', 'Khas', 'Pilihan', 'Organik']
     },
     partner: {
       title: "Bermitra Dengan Kami.",
@@ -276,7 +275,6 @@ const content = {
       warehouse: "Gudang Operasional:",
     },
     commodities: {
-      // Buah
       'Avocado': "Alpukat",
       'Harumanis Mango': "Mangga Harumanis",
       'Honey Sweet Pineapple': "Nanas Madu",
@@ -287,7 +285,6 @@ const content = {
       'Watermelon': "Semangka",
       'Durian': "Durian",
       'Dragon Fruit': "Buah Naga",
-      // Sayur
       'French Beans': "Buncis",
       'Capsicum': "Paprika",
       'Honey Sweet Potato': "Ubi Madu",
@@ -296,7 +293,6 @@ const content = {
       'Potato': "Kentang",
       'Sweet Potato': "Ubi Jalar",
       'Watercress': "Selada Air",
-      // Rempah
       'Cinnamon': "Kayu Manis",
       'Vanilla': "Vanili",
       'Black Pepper': "Lada Hitam",

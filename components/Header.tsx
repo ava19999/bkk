@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Phone, Mail, MapPin, Globe } from 'lucide-react';
+import { Menu, X, Globe, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface HeaderProps {
@@ -8,155 +8,226 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, toggleLanguage, t } = useLanguage();
 
+  // Handle Scroll Effect
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMobileMenuOpen]);
+
   const scrollToSection = (id: string) => {
+    setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+         element.scrollIntoView({ behavior: 'smooth' });
+      }, 300); // Delay sedikit agar menu menutup dulu
     }
   };
 
-  const buttonClass = `
-    group relative px-2 py-1 md:px-3 md:py-1.5 rounded-sm 
-    text-[9px] md:text-[10px] font-bold uppercase 
-    tracking-tight md:tracking-[0.1em] transition-all duration-300 border whitespace-nowrap shadow-none
-    ${scrolled 
-        ? 'border-green-600 text-green-600 hover:bg-green-600 hover:text-white' 
-        : 'border-white/20 text-white hover:bg-white hover:text-green-600 backdrop-blur-sm bg-white/5'}
-  `;
+  const menuItems = [
+    { id: 'about', label: t.nav.about },
+    { id: 'global', label: t.nav.global },
+    { id: 'catalogue', label: t.nav.product },
+    // Contact ditangani khusus
+  ];
 
   return (
     <>
-      {/* CSS KHUSUS UNTUK MENGHAPUS SHADOW DI HEADER */}
-      <style>{`
-        .header-clean, 
-        .header-clean *, 
-        .header-clean span, 
-        .header-clean button {
-           text-shadow: none !important;
-           -webkit-text-stroke: 0 !important;
-        }
-      `}</style>
-
+      {/* --- HEADER UTAMA --- */}
       <header 
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b ${
-          scrolled 
-            ? 'bg-white/95 backdrop-blur-md py-2 md:py-3 border-stone-200 shadow-sm' 
-            : 'bg-transparent py-2 md:py-6 border-transparent'
+        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 border-b ${
+          isScrolled || isMobileMenuOpen
+            ? 'bg-white/90 backdrop-blur-md py-3 shadow-sm border-stone-200/50' 
+            : 'bg-transparent py-5 border-transparent'
         }`}
       >
-        <div className="w-full pl-4 md:pl-12 pr-2 md:pr-6 flex justify-between items-center">
-          
-          <button onClick={() => scrollToSection('home')} className="flex items-center gap-2 md:gap-4 group shrink-0 text-left">
-              <img 
-                src="/images/logo.png" 
-                alt="BKK Logo" 
-                className="w-12 h-12 md:w-20 md:h-20 object-contain transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="flex flex-col">
-                  {/* Judul Logo Boleh Ada Shadow Sedikit Agar Terbaca */}
-                  <h1 className={`text-xl md:text-3xl font-serif font-bold leading-none tracking-wide transition-colors duration-300 ${scrolled ? 'text-green-700' : 'text-white'}`}>
-                      BKK
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8">
+          <div className="flex justify-between items-center">
+            
+            {/* 1. LOGO SECTION (KIRI) */}
+            <div className="flex items-center gap-3 shrink-0 relative z-[70]">
+               <img 
+                 src="/images/logo.png" 
+                 alt="BKK Logo" 
+                 className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-md" 
+               />
+               <div className="flex flex-col">
+                  <h1 className={`font-serif text-xl md:text-2xl font-bold tracking-widest leading-none ${isScrolled || isMobileMenuOpen ? 'text-green-800' : 'text-white'}`}>
+                    BKK
                   </h1>
-                  <p className="text-[6px] md:text-[8px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] mt-0.5 md:mt-1 text-red-600 transition-colors duration-300 whitespace-nowrap">
-                      PT. Bintang Kiat Kemuliaan
+                  <p className={`text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] ${isScrolled || isMobileMenuOpen ? 'text-stone-500' : 'text-stone-300'}`}>
+                    PT. Bintang Kiat Kemuliaan
                   </p>
-              </div>
-          </button>
-
-          {/* Tambahkan class 'header-clean' di sini untuk menghapus shadow pada menu */}
-          <nav className="flex items-center gap-1 md:gap-2 justify-end header-clean">
-              
-              <button 
-                onClick={toggleLanguage}
-                className={`${buttonClass} flex items-center gap-1 mr-1 shadow-none`}
-                title="Switch Language / Ganti Bahasa"
-              >
-                  <Globe size={12} className={scrolled ? 'text-green-600 group-hover:text-white' : 'text-white group-hover:text-green-600'} />
-                  <span>{language}</span>
-              </button>
-
-              <button onClick={() => scrollToSection('about')} className={buttonClass}>{t.nav.about}</button>
-              <button onClick={() => scrollToSection('global')} className={buttonClass}>{t.nav.global}</button>
-              <button onClick={() => scrollToSection('catalogue')} className={buttonClass}>{t.nav.product}</button>
-              
-              <button onClick={() => setIsContactOpen(true)} className={buttonClass}>
-                  {t.nav.contact}
-              </button>
-          </nav>
-
-        </div>
-      </header>
-      
-      {/* POPUP CONTACT - Juga dibersihkan dari shadow */}
-      {isContactOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center px-4 header-clean">
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={() => setIsContactOpen(false)}></div>
-            <div className="relative bg-white border border-stone-200 rounded-sm shadow-2xl max-w-lg w-full p-8 md:p-10 animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto">
-               <button onClick={() => setIsContactOpen(false)} className="absolute top-4 right-4 p-2 text-stone-400 hover:text-red-600 transition-colors"><X size={24} /></button>
-               
-               <div className="text-center mb-6">
-                  <h2 className="text-3xl font-serif text-green-700 mb-2">{t.contact.title}</h2>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-red-600">{t.contact.subtitle}</p>
-               </div>
-               
-               <div className="space-y-4">
-                  <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
-                      <Phone className="text-green-600 shrink-0 mt-1" size={20} />
-                      <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">{t.contact.phone}</h4>
-                          <a href="tel:+62226016306" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">+62 22 6016 306</a>
-                          <a href="tel:+628176878166" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors">+62 817 687 8166</a>
-                      </div>
-                  </div>
-                  <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
-                      <Mail className="text-green-600 shrink-0 mt-1" size={20} />
-                      <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">{t.contact.email}</h4>
-                          <a href="mailto:info@bkkemuliaan.com" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors break-all">info@bkkemuliaan.com</a>
-                          <a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="text-stone-600 font-light text-sm hover:text-red-600 block transition-colors break-all">Sales-marketing.2@bkkemuliaan.com</a>
-                      </div>
-                  </div>
-                  <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
-                      <Globe className="text-green-600 shrink-0 mt-1" size={20} />
-                      <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-1">{t.contact.website}</h4>
-                          <a href="https://www.bkkemuliaan.com" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm hover:text-red-600 transition-colors break-all">www.bkkemuliaan.com</a>
-                      </div>
-                  </div>
-                  <div className="flex items-start gap-4 p-4 bg-stone-50 rounded-sm border border-stone-200 group hover:border-red-200 transition-colors">
-                      <MapPin className="text-green-600 shrink-0 mt-1" size={20} />
-                      <div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-green-700 mb-2">{t.contact.location}</h4>
-                          <div className="mb-4">
-                            <strong className="text-stone-500 text-[10px] uppercase tracking-wide block mb-1">{t.contact.office}</strong>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Jl.+Sawit+Darangdan+No.+3,+Purwakarta,+West+Java+41163+-+Indonesia" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm leading-relaxed hover:text-red-600 transition-colors block">Jl. Sawit Darangdan No. 3, Purwakarta, West Java 41163 - Indonesia</a>
-                          </div>
-                          <div>
-                            <strong className="text-stone-500 text-[10px] uppercase tracking-wide block mb-1">{t.contact.warehouse}</strong>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Husein+Sastranegara+Airport,+Cargo+Park+C.49+Jl.+Padjajaran+No.+156,+Bandung,+West+Java+40174" target="_blank" rel="noreferrer" className="text-stone-600 font-light text-sm leading-relaxed hover:text-red-600 transition-colors block">Husein Sastranegara Airport, Cargo Park C.49 Jl. Padjajaran No. 156, Bandung, West Java 40174</a>
-                          </div>
-                      </div>
-                  </div>
-               </div>
-               <div className="mt-8 pt-6 border-t border-stone-200 text-center">
-                  <div className="flex flex-col items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-500">
-                      <img src="/images/logo.png" alt="BKK Logo" className="w-12 h-12 object-contain mb-3" />
-                      <h3 className="text-xl font-serif text-green-700 tracking-[0.2em] uppercase">BKK</h3>
-                      <p className="text-[9px] font-medium tracking-[0.3em] uppercase text-stone-500 mt-1">PT. Bintang Kiat Kemuliaan</p>
-                  </div>
                </div>
             </div>
+
+            {/* 2. DESKTOP NAVIGATION (Hidden on Mobile) */}
+            <nav className="hidden md:flex items-center gap-8 bg-black/10 backdrop-blur-sm px-8 py-3 rounded-full border border-white/10">
+              {menuItems.map((item) => (
+                  <button key={item.id} onClick={() => scrollToSection(item.id)} className={`text-xs font-bold uppercase tracking-widest hover:text-red-400 transition-colors ${isScrolled ? 'text-stone-600' : 'text-white'}`}>
+                    {item.label}
+                  </button>
+              ))}
+              <button onClick={() => setIsContactOpen(true)} className={`text-xs font-bold uppercase tracking-widest hover:text-red-400 transition-colors ${isScrolled ? 'text-stone-600' : 'text-white'}`}>
+                {t.nav.contact}
+              </button>
+            </nav>
+
+            {/* 3. RIGHT ACTIONS (Language & Hamburger) */}
+            <div className="flex items-center gap-3 md:gap-6 relative z-[70]">
+              
+              {/* Language Switcher */}
+              <button 
+                onClick={toggleLanguage}
+                className={`flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest py-2 px-3 md:px-4 rounded-full transition-all border ${
+                  isScrolled || isMobileMenuOpen
+                    ? 'border-stone-200 text-stone-600 hover:bg-stone-50' 
+                    : 'border-white/20 text-white hover:bg-white/10'
+                }`}
+              >
+                <Globe size={14} />
+                <span>{language}</span>
+              </button>
+
+              {/* Hamburger Button */}
+              <button 
+                className={`md:hidden p-2 rounded-full transition-colors active:scale-95 ${isScrolled || isMobileMenuOpen ? 'text-green-900 bg-green-50' : 'text-white bg-white/10'}`}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* --- MOBILE MENU DRAWER (SLIDE DARI KANAN) --- */}
+      <div 
+        className={`fixed inset-0 z-50 md:hidden bg-black/20 backdrop-blur-sm transition-opacity duration-500 ${
+          isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)} // Klik luar untuk tutup
+      >
+        {/* Panel Menu Putih */}
+        <div 
+            className={`absolute top-0 right-0 w-[85%] max-w-[320px] h-full bg-[#051f15] shadow-2xl transition-transform duration-500 ease-in-out flex flex-col pt-24 pb-8 px-8 border-l border-white/5 ${
+              isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+            onClick={(e) => e.stopPropagation()} // Mencegah klik dalam panel menutup menu
+        >
+            {/* Background Texture */}
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: `url("https://www.transparenttextures.com/patterns/cream-paper.png")` }}></div>
+
+            {/* Navigation Links */}
+            <nav className="flex flex-col space-y-2 relative z-10 mb-auto">
+               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-red-600 mb-4 block opacity-80">Menu</span>
+               
+               {menuItems.map((item, index) => (
+                  <button 
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)} 
+                    className="group flex items-center justify-between py-4 border-b border-white/10 text-left"
+                    style={{ transitionDelay: `${index * 50}ms` }} // Staggered animation effect
+                  >
+                      <span className="text-2xl font-serif text-white group-hover:text-red-400 transition-colors">{item.label}</span>
+                      <ArrowRight size={16} className="text-stone-500 group-hover:translate-x-1 transition-transform opacity-0 group-hover:opacity-100" />
+                  </button>
+               ))}
+               
+               <button 
+                  onClick={() => { setIsMobileMenuOpen(false); setIsContactOpen(true); }}
+                  className="group flex items-center justify-between py-4 border-b border-white/10 text-left"
+               >
+                  <span className="text-2xl font-serif text-white group-hover:text-red-400 transition-colors">{t.nav.contact}</span>
+                  <ArrowRight size={16} className="text-stone-500 group-hover:translate-x-1 transition-transform opacity-0 group-hover:opacity-100" />
+               </button>
+            </nav>
+
+            {/* Footer Info di Menu Mobile */}
+            <div className="relative z-10 space-y-6">
+                <div className="h-px w-full bg-white/10"></div>
+                <div className="space-y-4">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500">Quick Contact</p>
+                    <a href="https://wa.me/628176878166" className="flex items-center gap-3 text-stone-300 hover:text-white transition-colors">
+                        <Phone size={16} className="text-green-500" />
+                        <span className="text-sm font-light">+62 817 687 8166</span>
+                    </a>
+                    <a href="mailto:info@bkkemuliaan.com" className="flex items-center gap-3 text-stone-300 hover:text-white transition-colors">
+                        <Mail size={16} className="text-green-500" />
+                        <span className="text-sm font-light">info@bkkemuliaan.com</span>
+                    </a>
+                    <div className="flex items-start gap-3 text-stone-300">
+                        <MapPin size={16} className="text-green-500 mt-1 shrink-0" />
+                        <span className="text-xs font-light leading-relaxed">Jl. Sawit Darangdan No. 3, Purwakarta, Indonesia</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+      </div>
+
+      {/* --- CONTACT FORM MODAL --- */}
+      {isContactOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+           <div className="bg-white w-full max-w-lg rounded-sm shadow-2xl overflow-hidden relative animate-in zoom-in-95 duration-300">
+              <button onClick={() => setIsContactOpen(false)} className="absolute top-4 right-4 p-2 hover:bg-stone-100 rounded-full transition-colors z-10">
+                 <X size={20} className="text-stone-500" />
+              </button>
+              
+              <div className="p-8 md:p-10">
+                 <div className="text-center mb-8">
+                    <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.2em]">{t.contact.title}</span>
+                    <h3 className="text-2xl md:text-3xl font-serif text-green-700 mt-2">{t.contact.subtitle}</h3>
+                 </div>
+
+                 <div className="space-y-6">
+                    <div>
+                       <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">{t.contact.phone}</label>
+                       <div className="space-y-2">
+                          <a href="https://wa.me/628176878166" target="_blank" rel="noreferrer" className="block p-3 bg-stone-50 rounded-sm hover:bg-green-50 hover:text-green-700 transition-colors text-sm font-medium border border-stone-100">
+                             +62 817 687 8166 (WhatsApp)
+                          </a>
+                          <a href="tel:+62226016306" className="block p-3 bg-stone-50 rounded-sm hover:bg-green-50 hover:text-green-700 transition-colors text-sm font-medium border border-stone-100">
+                             +62 22 6016 306 (Office)
+                          </a>
+                       </div>
+                    </div>
+
+                    <div>
+                       <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">{t.contact.email}</label>
+                       <a href="mailto:info@bkkemuliaan.com" className="block p-3 bg-stone-50 rounded-sm hover:bg-green-50 hover:text-green-700 transition-colors text-sm font-medium border border-stone-100 mb-2">
+                          info@bkkemuliaan.com
+                       </a>
+                       <a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="block p-3 bg-stone-50 rounded-sm hover:bg-green-50 hover:text-green-700 transition-colors text-sm font-medium border border-stone-100">
+                          Sales-marketing.2@bkkemuliaan.com
+                       </a>
+                    </div>
+                    
+                    <div className="pt-4 border-t border-stone-100 text-center">
+                        <p className="text-xs text-stone-400 font-light">
+                           Operational Hours: Mon - Fri, 09:00 - 17:00 WIB
+                        </p>
+                    </div>
+                 </div>
+              </div>
+           </div>
         </div>
       )}
     </>

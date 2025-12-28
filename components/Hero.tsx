@@ -55,9 +55,16 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative h-[730px] md:h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
+      
       <style>{`
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-scroll { animation: scroll 60s linear infinite; width: max-content; }
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+          animation: scroll 60s linear infinite;
+          width: max-content;
+        }
         .text-outline {
            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -75,7 +82,10 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-green-950/90 via-green-900/30 to-green-950/40 mix-blend-multiply"></div>
       </div>
 
-      <div className="relative z-10 text-center text-white px-6 mt-20 md:mt-24 max-w-5xl">
+      {/* Hero Content */}
+      {/* PERUBAHAN 1: max-w diperbesar jadi max-w-7xl agar teks panjang muat */}
+      <div className="relative z-10 text-center text-white px-6 mt-20 md:mt-24 max-w-7xl">
+        
         <button 
             onClick={scrollToPopular}
             className="group inline-flex items-center gap-3 border border-white/20 pl-1 pr-4 py-1 rounded-full mb-8 backdrop-blur-sm bg-white/5 animate-in fade-in slide-in-from-bottom-4 duration-1000 hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all cursor-pointer"
@@ -88,21 +98,22 @@ const Hero: React.FC = () => {
             </p>
         </button>
         
-        {/* JUDUL UTAMA TETAP PAKAI SHADOW AGAR TERBACA */}
-        <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
+        {/* PERUBAHAN 2: Ukuran font disesuaikan jadi text-7xl agar tidak wrapping */}
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium mb-6 leading-tight md:leading-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 tracking-tight text-outline">
           <span className="text-white drop-shadow-lg">{t.hero.titleTrusted}</span> <br />
           <span className="text-white drop-shadow-lg">{t.hero.titleIndonesian}</span> <br />
-          <span className="italic text-red-600 font-light" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+          {/* whitespace-nowrap ditambahkan untuk memaksa teks tetap satu baris */}
+          <span className="italic text-red-600 font-light whitespace-nowrap" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
             {t.hero.titleSuffix}
           </span>
         </h1>
         
-        {/* DESKRIPSI TANPA SHADOW (Sesuai Request) */}
         <p className="max-w-3xl mx-auto text-base md:text-xl font-light tracking-wide leading-relaxed opacity-90 text-stone-200 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 mb-10 drop-shadow-md">
           {t.hero.description}
         </p>
       </div>
 
+      {/* Running Text */}
       <div className="absolute bottom-0 left-0 w-full z-20 bg-green-950/40 backdrop-blur-md border-t border-white/10">
           <div className="flex overflow-hidden py-4">
              <div className="flex animate-scroll">

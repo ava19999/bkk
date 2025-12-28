@@ -3,7 +3,7 @@ import { Handshake, HeartHandshake, Shield } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const ValuesSection: React.FC = () => {
-  const { t, language } = useLanguage(); // Ambil 'language' untuk cek kondisi jika perlu
+  const { t, language } = useLanguage();
 
   // BARIS 1: Urutan Folder A - Z
   const bgRow1 = [
@@ -37,7 +37,8 @@ const ValuesSection: React.FC = () => {
   return (
     <section className="py-20 md:py-32 px-6 relative overflow-hidden bg-stone-50">
       <div className="absolute inset-0 z-0 overflow-hidden flex flex-col pointer-events-none">
-         {/* ... (Background Animation Code Tetap Sama) ... */}
+         
+         {/* Row 1 Animation */}
          <div className="flex-1 w-full relative overflow-hidden flex items-center bg-green-50">
             <div className="flex animate-scroll-right min-w-full h-full">
                 {displayBgRow1.map((src, i) => (
@@ -47,6 +48,8 @@ const ValuesSection: React.FC = () => {
                 ))}
             </div>
          </div>
+
+         {/* Row 2 Animation */}
          <div className="flex-1 w-full relative overflow-hidden flex items-center bg-green-50">
             <div className="flex animate-scroll-left min-w-full h-full">
                 {displayBgRow2.map((src, i) => (
@@ -56,6 +59,8 @@ const ValuesSection: React.FC = () => {
                 ))}
             </div>
          </div>
+
+         {/* Gradient Overlays */}
          <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-green-50 to-transparent z-[2]"></div>
          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-green-50 to-transparent z-[2]"></div>
          <div className="absolute inset-0 bg-green-50/20 backdrop-blur-[1px] z-[1]"></div>
@@ -65,18 +70,16 @@ const ValuesSection: React.FC = () => {
         <div className="text-center mb-12 md:mb-16 reveal-hidden">
            <span className="text-red-600 text-[10px] font-bold uppercase tracking-[0.3em] bg-white border border-stone-200 px-3 py-1 rounded-full shadow-sm">{t.values.label}</span>
            
-           {/* MODIFIKASI: Memecah judul agar "With Us" berwarna merah */}
+           {/* MODIFIKASI: Menangani pewarnaan merah untuk kedua bahasa */}
            <h2 className="text-4xl md:text-5xl font-serif text-green-700 mt-4 drop-shadow-sm">
               {language === 'EN' ? (
                 <>Why Work <span className="text-red-600 italic">With Us?</span></>
               ) : (
-                // Fallback untuk Bahasa Indonesia (Mengapa Bekerja Sama Dengan Kami?)
-                // Jika ingin spesifik: "Mengapa Bekerja Sama <span...>Dengan Kami?</span>"
-                t.values.title
+                <>Mengapa Bekerja Sama <span className="text-red-600 italic">Dengan Kami?</span></>
               )}
            </h2>
+
         </div>
-        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-8">
            {t.values.cards.map((card, i) => {
              const Icon = i === 0 ? Handshake : i === 1 ? HeartHandshake : Shield;
