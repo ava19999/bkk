@@ -1,6 +1,6 @@
 import { LogisticsService, Advantage } from './types';
 
-// ... (Bagian SERVICES, ADVANTAGES, TESTIMONIALS - BIARKAN TETAP SAMA) ...
+// --- DATA SERVICES (Tetap) ---
 export const SERVICES: LogisticsService[] = [
   {
     id: 'fruit-mangosteen',
@@ -36,6 +36,7 @@ export const SERVICES: LogisticsService[] = [
   }
 ];
 
+// --- DATA ADVANTAGES (Tetap) ---
 export const ADVANTAGES: Advantage[] = [
   {
     title: 'Trust',
@@ -49,6 +50,7 @@ export const ADVANTAGES: Advantage[] = [
   }
 ];
 
+// --- DATA TESTIMONIALS (Tetap) ---
 export const TESTIMONIALS = [
   {
     quote: "BKK consistently delivers the freshest mangosteens we have received in Shanghai.",
@@ -64,7 +66,7 @@ export const TESTIMONIALS = [
   }
 ];
 
-// --- DATA POPULAR PRODUCTS ---
+// --- DATA POPULAR PRODUCTS (LENGKAP) ---
 export const POPULAR_PRODUCTS = {
     // 1. MANGOSTEEN
     mangosteen: {
@@ -73,8 +75,8 @@ export const POPULAR_PRODUCTS = {
       subTitle: "PREMIUM INDONESIAN MANGOSTEEN FOR GLOBAL MARKETS",
       description: "Mangosteen (Garcinia mangostana L.) - The Queen of Fruits. Known for its sweet, juicy white flesh and deep purple rind, harvested at the peak of perfection.",
       
-      // FILE PDF (Pastikan ada di folder public/pdf/)
-      portfolioUrl: "/pdf/mangosteen.pdf", 
+      // PASTIKAN FILE INI ADA DI: public/pdf/mangosteen-portfolio.pdf
+      portfolioUrl: "/pdf/mangosteen-portfolio.pdf", 
       
       specsTitle: "PRODUCT DETAIL",
       specs: [
@@ -116,7 +118,7 @@ export const POPULAR_PRODUCTS = {
       ]
     },
 
-    // 2. SALACCA
+    // 2. SALACCA (Data Detail Baru)
     salacca: {
       id: 'salacca',
       name: "Fresh Salacca (Snake Fruit)",
@@ -153,7 +155,7 @@ export const POPULAR_PRODUCTS = {
       ]
     },
 
-    // 3. JASMINE
+    // 3. JASMINE (Data Detail Baru)
     jasmine: {
       id: 'jasmine',
       name: "Fresh Jasmine",
