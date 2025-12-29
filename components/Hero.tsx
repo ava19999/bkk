@@ -5,6 +5,16 @@ import { useLanguage } from '../contexts/LanguageContext';
 const Hero: React.FC = () => {
   const { t } = useLanguage();
 
+  // 1. Definisikan item untuk HOT tag
+  const hotItems = [
+    "Premium Mangosteen", 
+    "Fresh Salacca", 
+    "Fresh Jasmine"
+  ];
+  
+  // Duplikasi array agar loop berjalan mulus (seamless)
+  const hotDisplayList = [...hotItems, ...hotItems, ...hotItems, ...hotItems];
+
   const fruits = [
     t.commodities['Avocado'], t.commodities['Harumanis Mango'], t.commodities['Honey Pineapple'],
     t.commodities['Mangosteen'], t.commodities['Rockmelon'], t.commodities['Salacca'], 
@@ -38,11 +48,15 @@ const Hero: React.FC = () => {
     <section className="relative h-[730px] md:h-screen w-full flex items-center justify-center overflow-hidden bg-green-950">
       <style>{`
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        /* Animasi lambat untuk footer bawah */
         .animate-scroll { animation: scroll 60s linear infinite; width: max-content; }
         
-        /* CUSTOM CSS: HANYA SHADOW (OUTLINE DIHAPUS) */
+        /* 2. Animasi lebih cepat untuk tombol HOT */
+        .animate-scroll-fast { animation: scroll 20s linear infinite; width: max-content; }
+        
+        /* CUSTOM CSS: HANYA SHADOW */
         .text-custom-shadow { 
-            /* Shadow Hijau Gelap (Hex #022c22 = green-950) */
             text-shadow: 3px 3px 4px #022c22 !important; 
         }
       `}</style>
@@ -61,16 +75,25 @@ const Hero: React.FC = () => {
       {/* Hero Content */}
       <div className="relative z-10 text-center text-white px-4 mt-12 md:mt-24 w-full">
         
+        {/* 3. Tombol HOT dengan Running Text */}
         <button 
             onClick={scrollToPopular}
-            className="group inline-flex items-center gap-3 border border-white/20 pl-1 pr-4 py-1 rounded-full mb-6 md:mb-8 backdrop-blur-sm bg-white/5 animate-in fade-in slide-in-from-bottom-4 duration-1000 hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all cursor-pointer"
+            className="group inline-flex items-center gap-3 border border-white/20 pl-1 pr-4 py-1 rounded-full mb-6 md:mb-8 backdrop-blur-sm bg-white/5 animate-in fade-in slide-in-from-bottom-4 duration-1000 hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all cursor-pointer overflow-hidden max-w-[280px] sm:max-w-[320px]"
         >
-            <span className="bg-red-600 text-white text-[9px] font-bold px-2 py-1 rounded-full uppercase tracking-wider group-hover:bg-red-500 transition-colors">
+            <span className="bg-red-600 text-white text-[9px] font-bold px-2 py-1 rounded-full uppercase tracking-wider group-hover:bg-red-500 transition-colors shrink-0 z-10">
                 {t.hero.hotTag}
             </span>
-            <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase group-hover:text-red-200 transition-colors">
-             {t.hero.hotText}
-            </p>
+            
+            {/* Area Running Text */}
+            <div className="overflow-hidden w-full mask-image-linear-gradient(to right, transparent, black 10%, black 90%, transparent)">
+              <div className="flex animate-scroll-fast gap-6">
+                {hotDisplayList.map((text, i) => (
+                  <p key={i} className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase group-hover:text-red-200 transition-colors whitespace-nowrap">
+                    {text}
+                  </p>
+                ))}
+              </div>
+            </div>
         </button>
         
         {/* JUDUL UTAMA */}
@@ -89,7 +112,7 @@ const Hero: React.FC = () => {
         </p>
       </div>
 
-      {/* Running Text */}
+      {/* Running Text Bottom */}
       <div className="absolute bottom-0 left-0 w-full z-20 bg-green-950/40 backdrop-blur-md border-t border-white/10">
           <div className="flex overflow-hidden py-4">
              <div className="flex animate-scroll">
