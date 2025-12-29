@@ -66,7 +66,7 @@ export const TESTIMONIALS = [
   }
 ];
 
-// --- DATA POPULAR PRODUCTS (UPDATE LENGKAP) ---
+// --- DATA POPULAR PRODUCTS (UPDATE DENGAN NAMA FILE SEDERHANA) ---
 export const POPULAR_PRODUCTS = {
     // 1. MANGOSTEEN
     mangosteen: {
@@ -75,7 +75,6 @@ export const POPULAR_PRODUCTS = {
       subTitle: "PREMIUM INDONESIAN MANGOSTEEN FOR GLOBAL MARKETS",
       description: "Mangosteen (Garcinia mangostana L.) - The Queen of Fruits. Known for its sweet, juicy white flesh and deep purple rind, harvested at the peak of perfection.",
       
-      // PDF MANGOSTEEN
       portfolioUrl: "/pdf/mangosteen.pdf", 
       
       specsTitle: "PRODUCT DETAIL",
@@ -111,10 +110,25 @@ export const POPULAR_PRODUCTS = {
         { label: "Availability", value: "Oct, Dec, Jan, Feb, Mar, Apr" },
         { label: "Lead Time", value: "1-2 weeks (depends on season/destination)" }
       ],
+      // PASTIKAN ANDA SUDAH MENGUBAH NAMA FILE DI FOLDER MENJADI 1.jpg, 2.jpg, dst.
       images: [
-        "/images/popular/48cbbd1b8072032c0c3b6441cddbe9e1.jpg", 
-        encodeURI("/images/popular/Adventure Instagram Post_20250206_114851_0000.png"), 
-        encodeURI("/images/buah/manggis/2a0990b6987bd640d14d85c5cf40c222.jpg")
+        // FOLDER 1 (ATAS)
+        [
+            "/images/popular/mangosteen/1/1.jpg", 
+            "/images/popular/mangosteen/1/2.jpg", 
+            "/images/popular/mangosteen/1/3.jpg"
+        ],
+        // FOLDER 2 (TENGAH)
+        [
+            "/images/popular/mangosteen/2/1.jpg",
+            "/images/popular/mangosteen/2/2.jpg",
+            "/images/popular/mangosteen/2/3.jpg",
+            "/images/popular/mangosteen/2/4.jpg"
+        ],
+        // FOLDER 3 (BAWAH)
+        [
+            "/images/popular/mangosteen/3/1.png" // Sesuaikan ekstensi jika jpg
+        ]
       ]
     },
 
@@ -125,7 +139,6 @@ export const POPULAR_PRODUCTS = {
       subTitle: "INDONESIAN PONDOH SALLACA FOR EXPORT",
       description: "Fresh Pondoh Sallaca from Indonesia. Known for its glossy brown skin and sweet, crunchy yellowish-white flesh.",
       
-      // PDF SALACCA (Tambahan Baru)
       portfolioUrl: "/pdf/salacca.pdf",
 
       specsTitle: "TECHNICAL SPECIFICATIONS",
@@ -152,10 +165,11 @@ export const POPULAR_PRODUCTS = {
         { label: "Availability", value: "All Year Round" },
         { label: "Lead Time", value: "1 week" }
       ],
+      // SAYA SARANKAN RENAME JUGA FILE SALAK AGAR LEBIH STABIL
       images: [
-        encodeURI("/images/buah/salak/0d34951d7917a30bc40ad39a12a11b86.jpg"),
-        encodeURI("/images/buah/salak/26cd2d3889fecf0db7d48da0e56c6ef6.jpg"),
-        encodeURI("/images/buah/salak/92f2c8cfecbcb42657e3aa442dd4043d.jpg")
+        "/images/buah/salak/0d34951d7917a30bc40ad39a12a11b86.jpg",
+        "/images/buah/salak/26cd2d3889fecf0db7d48da0e56c6ef6.jpg",
+        "/images/buah/salak/92f2c8cfecbcb42657e3aa442dd4043d.jpg"
       ]
     },
 
@@ -166,7 +180,6 @@ export const POPULAR_PRODUCTS = {
       subTitle: "PURE INDONESIAN JASMINE SAMBAC FOR EXPORT",
       description: "Fresh Jasmine Sambac buds, harvested at dawn to preserve their potent, sweet fragrance. Essential for tea blending, high-end perfumery, and religious garlands.",
       
-      // PDF JASMINE (Tambahan Baru)
       portfolioUrl: "/pdf/jasmine.pdf",
 
       specsTitle: "PRODUCT DETAIL & PHYSICAL SPECIFICATIONS",
@@ -204,9 +217,9 @@ export const POPULAR_PRODUCTS = {
         { label: "Lead Time", value: "2-3 Days (Air Cargo Only)" }
       ],
       images: [
-        encodeURI("/images/bumbu & bunga/bunga melati/8513c1f6f28394f2df0ac15cfc9250a6.jpg"),
-        encodeURI("/images/bumbu & bunga/bunga melati/abd0d39a6aa29c23baafcfb304e0b5ac.jpg"),
-        encodeURI("/images/bumbu & bunga/bunga melati/d878c8ad6781452f3e540539244f828f.jpg")
+        "/images/bumbu & bunga/bunga melati/8513c1f6f28394f2df0ac15cfc9250a6.jpg",
+        "/images/bumbu & bunga/bunga melati/abd0d39a6aa29c23baafcfb304e0b5ac.jpg",
+        "/images/bumbu & bunga/bunga melati/d878c8ad6781452f3e540539244f828f.jpg"
       ]
     }
 };

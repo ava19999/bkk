@@ -2,6 +2,40 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Sprout, Star, ArrowRight, Globe, Scale, ChevronDown, Check, Info, Package, Clock, ShieldCheck, FileText, ExternalLink, MousePointer2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
+// Helper Component untuk Animasi Fade
+const FadeImage = ({ images, interval = 3000 }: { images: string | string[], interval?: number }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    // Pastikan selalu dalam bentuk array
+    const imageArray = Array.isArray(images) ? images : [images];
+
+    useEffect(() => {
+        if (imageArray.length <= 1) return;
+
+        const timer = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % imageArray.length);
+        }, interval);
+
+        return () => clearInterval(timer);
+    }, [imageArray.length, interval]);
+
+    return (
+        <div className="absolute inset-0 w-full h-full">
+            {imageArray.map((img, idx) => (
+                <img
+                    key={idx}
+                    src={img}
+                    alt="Product"
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                        idx === currentIndex ? 'opacity-100' : 'opacity-0'
+                    }`}
+                />
+            ))}
+            {/* Fog Overlay */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-950/80 to-transparent pointer-events-none mix-blend-multiply z-10"></div>
+        </div>
+    );
+};
+
 const MangosteenCard: React.FC = () => {
   const { t } = useLanguage();
   
@@ -99,7 +133,7 @@ const MangosteenCard: React.FC = () => {
                           {product.name}
                         </h3>
                         
-                        {/* FITUR BARU: Hover Text Simpel (Tanpa Garis) */}
+                        {/* FITUR BARU: Hover Text Simpel */}
                         {!isActive && (
                            <div className="hidden sm:flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out translate-x-[-5px] group-hover:translate-x-0">
                               <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-red-500 flex items-center gap-1">
@@ -204,8 +238,8 @@ const MangosteenCard: React.FC = () => {
             {/* GAMBAR MOBILE */}
             <div className="md:hidden flex flex-col gap-4 mb-10">
                 <div className="relative w-full h-[300px] bg-white rounded-lg overflow-hidden shadow-md border border-stone-100">
-                   <img src={currentProduct.images[0]} alt={currentProduct.name} className="w-full h-full object-cover" />
-                   <div className={fogOverlayClass}></div>
+                   {/* Menggunakan FadeImage untuk Mobile juga */}
+                   <FadeImage images={currentProduct.images[0]} />
                 </div>
             </div>
 
@@ -244,14 +278,11 @@ const MangosteenCard: React.FC = () => {
 
         {/* KOLOM KANAN (3 FOTO SEJAJAR MENURUN) */}
         <div className="hidden md:flex flex-col gap-6 h-full pt-16 sticky top-20">
-            {currentProduct.images.slice(0, 3).map((img, idx) => (
+            {/* LOGIKA FLEXIBLE: Menangani Array Tunggal maupun Nested Array */}
+            {(currentProduct.images as any[]).slice(0, 3).map((imgSource, idx) => (
                 <div key={`${activeTab}-${idx}`} className="flex-1 relative w-full min-h-[200px] bg-white rounded-lg overflow-hidden shadow-lg border border-stone-100 animate-in fade-in zoom-in-95 duration-700" style={{ animationDelay: `${idx * 150}ms` }}>
-                   <img 
-                     src={img}
-                     alt={`${currentProduct.name} ${idx + 1}`}
-                     className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                   />
-                   <div className={fogOverlayClass}></div>
+                   {/* FadeImage akan mendeteksi apakah imgSource adalah string (foto diam) atau array (slide show) */}
+                   <FadeImage images={imgSource} interval={4000 + (idx * 1000)} />
                 </div>
             ))}
         </div>
