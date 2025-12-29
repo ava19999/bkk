@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sprout, Star, ArrowRight, Globe, Scale, ChevronDown, Check, Info, Package, Clock, ShieldCheck, FileText, ExternalLink } from 'lucide-react';
+import { Sprout, Star, ArrowRight, Globe, Scale, ChevronDown, Check, Info, Package, Clock, ShieldCheck, FileText, ExternalLink, MousePointer2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { POPULAR_PRODUCTS } from '../constants'; 
 
 const MangosteenCard: React.FC = () => {
   const { t } = useLanguage();
@@ -15,7 +14,8 @@ const MangosteenCard: React.FC = () => {
   const destinationRef = useRef<HTMLDivElement>(null);
   const countries = ['China', 'Singapore', 'Thailand', 'Malaysia', 'UAE', 'Bangladesh', 'Canada', 'Other'];
 
-  const currentProduct = POPULAR_PRODUCTS[activeTab];
+  // Mengambil data produk dinamis dari Context
+  const currentProduct = t.popularProducts[activeTab];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,10 +33,9 @@ const MangosteenCard: React.FC = () => {
         alert(t.booking.alert);
         return;
     }
-    const subject = `Quote Request: ${currentProduct.name}`;
-    const body = `Hello BKK Team,%0D%0A%0D%0AI would like to request a quotation for:%0D%0A%0D%0A- Commodity: ${currentProduct.name}%0D%0A- Destination: ${destination}%0D%0A- Volume: ${volume || 'TBD'} MT%0D%0A%0D%0AThank you.`;
+    const subject = `${t.popularCard.emailSubject}: ${currentProduct.name}`;
+    const body = `${t.popularCard.emailIntro}%0D%0A%0D%0A${t.popularCard.emailReq}%0D%0A%0D%0A- ${t.popularCard.emailComm}: ${currentProduct.name}%0D%0A- ${t.popularCard.emailDest}: ${destination}%0D%0A- ${t.popularCard.emailVol}: ${volume || 'TBD'} MT%0D%0A%0D%0A${t.popularCard.emailThanks}`;
     
-    // UPDATE EMAIL DI SINI
     window.location.href = `mailto:Sales-marketing.2@bkkemuliaan.com?subject=${subject}&body=${body}`;
   };
 
@@ -77,19 +76,19 @@ const MangosteenCard: React.FC = () => {
                 <Star size={24} className="text-red-600" />
              </div>
              
-             <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">Popular Indonesia Commodity</p>
+             <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">{t.popularCard.header}</p>
 
             {/* SELECTION MENU INTERAKTIF */}
             <div className="flex flex-col gap-3 mb-8 relative z-50">
               {(['mangosteen', 'salacca', 'jasmine'] as const).map((key) => {
                 const isActive = activeTab === key;
-                const product = POPULAR_PRODUCTS[key];
+                const product = t.popularProducts[key]; // Data Dinamis
 
                 return (
                   <div key={key} className="relative">
                     <div 
                         onClick={() => setActiveTab(key)} 
-                        className="group cursor-pointer flex items-center gap-4 transition-all duration-300 transform group-hover:translate-x-2"
+                        className="group cursor-pointer flex flex-wrap items-center gap-x-4 gap-y-1 transition-all duration-300 transform group-hover:translate-x-2 py-1"
                     >
                         <h3 className={`font-serif leading-tight transition-all duration-300 
                             ${isActive 
@@ -99,6 +98,16 @@ const MangosteenCard: React.FC = () => {
                         >
                           {product.name}
                         </h3>
+                        
+                        {/* FITUR BARU: Hover Text Simpel (Tanpa Garis) */}
+                        {!isActive && (
+                           <div className="hidden sm:flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out translate-x-[-5px] group-hover:translate-x-0">
+                              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-red-500 flex items-center gap-1">
+                                 {t.popularCard.clickDetail} 
+                                 <MousePointer2 size={12} className="animate-bounce" />
+                              </span>
+                           </div>
+                        )}
                     </div>
                     {isActive && (
                         <div className={`h-1.5 w-24 ${getActiveBarColor(key)} mt-3 rounded-full animate-in fade-in slide-in-from-left-8 duration-500`}></div>
@@ -121,7 +130,7 @@ const MangosteenCard: React.FC = () => {
                        rel="noopener noreferrer"
                        className="w-fit flex items-center gap-2 px-5 py-3 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 transition-all text-xs font-bold uppercase tracking-widest mt-2 group border border-red-700"
                      >
-                        <FileText size={16} /> CLICK OFFICIAL PORTFOLIO
+                        <FileText size={16} /> {t.popularCard.portfolioBtn}
                         <ExternalLink size={14} className="group-hover:translate-x-1 transition-transform opacity-70"/>
                      </a>
                  )}
@@ -138,7 +147,7 @@ const MangosteenCard: React.FC = () => {
                    {currentProduct.specs && (
                    <div>
                        <h5 className="font-bold text-stone-800 mb-3 flex items-center gap-2 border-b border-stone-100 pb-2 text-xs uppercase tracking-wide">
-                         <Info size={14} className="text-green-600" /> {currentProduct.specsTitle || "Product Detail"}
+                         <Info size={14} className="text-green-600" /> {t.popularCard.specsTitle}
                        </h5>
                        <div className="grid grid-cols-1 gap-y-2">
                          {currentProduct.specs.map((spec, idx) => (
@@ -154,7 +163,7 @@ const MangosteenCard: React.FC = () => {
                    {currentProduct.packagingDetails && (
                      <div>
                        <h5 className="font-bold text-stone-800 mb-3 flex items-center gap-2 border-b border-stone-100 pb-2 text-xs uppercase tracking-wide">
-                         <Package size={14} className="text-green-600" /> Packaging & Export Standard
+                         <Package size={14} className="text-green-600" /> {t.popularCard.packagingTitle}
                        </h5>
                        <div className="grid grid-cols-1 gap-y-2">
                          {currentProduct.packagingDetails.map((pkg, idx) => (
@@ -166,7 +175,7 @@ const MangosteenCard: React.FC = () => {
                        </div>
                        {currentProduct.qualityControl && (
                           <div className="mt-4 bg-stone-50 p-3 rounded border border-stone-100">
-                             <div className="flex items-center gap-2 mb-2"><ShieldCheck size={12} className="text-green-600"/><span className="text-stone-600 font-bold text-[10px] uppercase tracking-wider">Quality Control Points</span></div>
+                             <div className="flex items-center gap-2 mb-2"><ShieldCheck size={12} className="text-green-600"/><span className="text-stone-600 font-bold text-[10px] uppercase tracking-wider">{t.popularCard.qcTitle}</span></div>
                              <ul className="list-disc list-inside text-stone-600 text-xs space-y-1">{currentProduct.qualityControl.map((qc, i) => <li key={i}>{qc}</li>)}</ul>
                           </div>
                        )}
@@ -176,7 +185,7 @@ const MangosteenCard: React.FC = () => {
                    {currentProduct.orderInfo && (
                      <div>
                        <h5 className="font-bold text-stone-800 mb-3 flex items-center gap-2 border-b border-stone-100 pb-2 text-xs uppercase tracking-wide">
-                         <Clock size={14} className="text-green-600" /> Detail Order
+                         <Clock size={14} className="text-green-600" /> {t.popularCard.orderTitle}
                        </h5>
                        <div className="grid grid-cols-1 gap-y-2">
                          {currentProduct.orderInfo.map((info, idx) => (
@@ -212,7 +221,7 @@ const MangosteenCard: React.FC = () => {
                       <div className="relative" ref={destinationRef}>
                           <div className="relative w-full cursor-pointer" onClick={() => setIsOpenDestination(!isOpenDestination)}>
                               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Globe className="text-stone-400" size={16} /></div>
-                              <input type="text" readOnly value={destination} className="block w-full pl-10 pr-3 py-3 text-sm text-stone-700 bg-white border border-stone-200 rounded focus:ring-1 focus:ring-green-600 cursor-pointer placeholder:text-stone-400 font-normal shadow-sm" placeholder="Destination Country" />
+                              <input type="text" readOnly value={destination} className="block w-full pl-10 pr-3 py-3 text-sm text-stone-700 bg-white border border-stone-200 rounded focus:ring-1 focus:ring-green-600 cursor-pointer placeholder:text-stone-400 font-normal shadow-sm" placeholder={t.popularCard.placeholderDest} />
                               <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"><ChevronDown className={`text-stone-400 transition-transform ${isOpenDestination ? 'rotate-180' : ''}`} size={16} /></div>
                           </div>
                           {isOpenDestination && (
@@ -223,7 +232,7 @@ const MangosteenCard: React.FC = () => {
                       </div>
                       <div className="relative group">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Scale className="text-stone-400 group-focus-within:text-green-600 transition-colors" size={16} /></div>
-                          <input type="number" value={volume} onChange={(e) => setVolume(e.target.value)} className="block w-full pl-10 pr-3 py-3 text-sm text-stone-700 bg-white border border-stone-200 rounded focus:ring-1 focus:ring-green-600 transition-all placeholder:text-stone-400 font-normal shadow-sm" placeholder="Volume (MT)" />
+                          <input type="number" value={volume} onChange={(e) => setVolume(e.target.value)} className="block w-full pl-10 pr-3 py-3 text-sm text-stone-700 bg-white border border-stone-200 rounded focus:ring-1 focus:ring-green-600 transition-all placeholder:text-stone-400 font-normal shadow-sm" placeholder={t.popularCard.placeholderVol} />
                       </div>
                    </div>
                    <button onClick={handleEmail} className="w-full group inline-flex items-center justify-center gap-2 py-3.5 bg-green-700 text-white text-xs font-bold uppercase tracking-widest rounded hover:bg-red-700 transition-all shadow-lg hover:shadow-red-900/20">
