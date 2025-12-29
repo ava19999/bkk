@@ -15,15 +15,16 @@ const VisionSection: React.FC = () => {
                 <span className="text-[10px] font-bold uppercase tracking-widest text-stone-500">{t.vision.label}</span>
              </div>
              
-             {/* MODIFIKASI: Hanya "trusted exporter for fruits" yang merah */}
+             {/* PERUBAHAN DI SINI: Highlight hanya pada "trusted exporter" dan "eksportir paling terpercaya" */}
              <h3 className="text-3xl md:text-5xl lg:text-6xl font-serif text-green-700 leading-[1.1] mb-8">
                {language === 'EN' ? (
                  <>
-                   "To be the most <span className="text-red-600 italic">trusted exporter for fruits</span>, vegetables, and flowers."
+                   "To be the most <span className="text-red-600 italic">trusted exporter</span> for fruits, vegetables, and flowers."
                  </>
                ) : (
-                 // Fallback untuk Bahasa Indonesia (atau Anda bisa menyesuaikan split-nya juga)
-                 t.vision.text
+                 <>
+                   "Menjadi <span className="text-red-600 italic">eksportir paling terpercaya</span> untuk buah, sayuran, dan bunga."
+                 </>
                )}
              </h3>
              

@@ -10,7 +10,7 @@ const HistorySection: React.FC = () => {
   const scrollLeft = useRef(0);
   const [isGrabbing, setIsGrabbing] = useState(false);
 
-  // Gallery Images (Local) - UPDATE: Menambahkan foto baru
+  // Gallery Images (Local)
   const galleryImages = [
     encodeURI("/images/about us/IMG-20250620-WA0002_edit_505128042216672.jpg"),
     encodeURI("/images/about us/IMG_2222.JPG"),
@@ -23,7 +23,6 @@ const HistorySection: React.FC = () => {
     encodeURI("/images/about us/IMG_2264.PNG"),
     encodeURI("/images/about us/IMG_2266.PNG"),
     encodeURI("/images/about us/Screenshot_20250723_132856.jpg"),
-    // Foto Baru Ditambahkan:
     encodeURI("/images/about us/WhatsApp Image 2025-12-29 at 9.10.58 AM.jpeg"),
     encodeURI("/images/about us/WhatsApp Image 2025-12-29 at 9.10.59 AM.jpeg"),
     encodeURI("/images/about us/WhatsApp Image 2025-12-29 at 9.11.00 AM.jpeg"),
@@ -143,7 +142,7 @@ const HistorySection: React.FC = () => {
           </div>
        </div>
 
-       <div className="relative w-full h-[60vh] bg-green-50 group">
+       <div className="relative w-full h-[60vh] bg-green-50 group pl-4"> {/* Menambahkan padding kiri sedikit di container utama */}
             <div 
                 ref={scrollRef} 
                 className={`flex h-full w-full overflow-x-hidden select-none ${isGrabbing ? 'cursor-grabbing' : 'cursor-grab'}`} 
@@ -162,14 +161,18 @@ const HistorySection: React.FC = () => {
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
                 {displayGallery.map((src, index) => (
-                    <div key={index} className="h-full min-w-[50vw] md:min-w-[33vw] lg:min-w-[25vw] border-r border-green-50 relative shrink-0">
+                    // PERUBAHAN DI SINI:
+                    // 1. Menghapus 'border-r border-green-50'
+                    // 2. Menambahkan 'mr-4' untuk jarak antar foto
+                    // 3. Menambahkan 'rounded-lg overflow-hidden' untuk sudut yang lebih rapi
+                    <div key={index} className="h-full min-w-[50vw] md:min-w-[33vw] lg:min-w-[25vw] mr-4 relative shrink-0 rounded-lg overflow-hidden shadow-sm">
                          <img 
                            src={src} 
                            alt={`About Us Gallery ${index}`} 
-                           className="w-full h-full object-cover pointer-events-none transition-all duration-700" 
+                           className="w-full h-full object-cover pointer-events-none transition-all duration-700 hover:scale-105" 
                            draggable={false} 
                          />
-                         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-900/80 to-transparent pointer-events-none opacity-80"></div>
+                         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-green-900/70 to-transparent pointer-events-none opacity-80"></div>
                     </div>
                 ))}
             </div>

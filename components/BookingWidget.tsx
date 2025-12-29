@@ -53,7 +53,9 @@ const BookingWidget: React.FC = () => {
     }
     const subject = `Quote Request: ${commodity}`;
     const body = `Hello BKK Team,%0D%0A%0D%0AI would like to request a quotation for:%0D%0A%0D%0A- Commodity: ${commodity}%0D%0A- Destination: ${destination}%0D%0A- Volume: ${volume || 'TBD'} MT%0D%0A%0D%0AThank you.`;
-    window.location.href = `mailto:info@bkkemuliaan.com?subject=${subject}&body=${body}`;
+    
+    // UPDATE: Email tujuan telah diubah di sini
+    window.location.href = `mailto:sales-marketing.2@bkkemuliaan.com?subject=${subject}&body=${body}`;
   };
 
   // Helper untuk mendapatkan nama komoditas yang diterjemahkan

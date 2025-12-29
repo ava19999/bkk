@@ -3,7 +3,8 @@ import { Sprout, Carrot, Flower2, ChevronLeft, ChevronRight } from 'lucide-react
 import { useLanguage } from '../contexts/LanguageContext';
 
 const ProductSection: React.FC = () => {
-  const { t } = useLanguage();
+  // Tambahkan 'language' untuk logika pewarnaan teks
+  const { t, language } = useLanguage();
 
   // --- STATE ---
   const [imageIndexes, setImageIndexes] = useState({
@@ -38,8 +39,9 @@ const ProductSection: React.FC = () => {
         encodeURI("/images/buah/nanas/d806a750fa99f788d52f03b7269ad0f9.jpg"),
         encodeURI("/images/buah/nanas/f34792a24db6df14d02d3e1f7bc42553.jpg")
     ],
+    // UPDATE: Gambar Manggis sesuai folder (perhatikan .jpeg di file pertama)
     'Mangosteen': [
-        encodeURI("/images/buah/manggis/04d24571d83174a6ce2b388889e0f9d7.jpg"),
+        encodeURI("/images/buah/manggis/04d24571d83174a6ce2b388889e0f9d7.jpeg"),
         encodeURI("/images/buah/manggis/2a0990b6987bd640d14d85c5cf40c222.jpg"),
         encodeURI("/images/buah/manggis/490341710341566b001f04ed7f0a200e.jpg")
     ],
@@ -203,7 +205,7 @@ const ProductSection: React.FC = () => {
     }));
   };
 
-  // Komponen Helper untuk Menampilkan Kartu Gambar (Tinggi diubah jadi h-full agar responsif)
+  // Komponen Helper untuk Menampilkan Kartu Gambar
   const ImageCard = ({ category }: { category: 'fruits' | 'vegetables' | 'spices' }) => {
       const images = activeImages[category];
       const currentIndex = imageIndexes[category];
@@ -211,7 +213,6 @@ const ProductSection: React.FC = () => {
       const hasMultiple = images.length > 1;
 
       return (
-        // PERUBAHAN: Menggunakan h-full agar mengikuti tinggi container induknya
         <div className="relative h-full rounded-sm overflow-hidden shadow-lg border border-stone-200 group">
             <img 
                 src={currentImage} 
@@ -262,7 +263,15 @@ const ProductSection: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-stone-200 pb-6 reveal-hidden">
             <div className="mb-4 md:mb-0">
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-red-600 mb-2">{t.products.label}</p>
-              <h3 className="text-3xl md:text-5xl font-serif text-green-700">{t.products.title}</h3>
+              
+              {/* PERUBAHAN: Warna merah untuk "Catalogue" atau "Produk" */}
+              <h3 className="text-3xl md:text-5xl font-serif text-green-700">
+                {language === 'EN' ? (
+                  <>Product <span className="text-red-600 italic">Catalogue</span></>
+                ) : (
+                  <>Katalog <span className="text-red-600 italic">Produk</span></>
+                )}
+              </h3>
             </div>
             <div className="text-right"><p className="text-stone-500 text-sm font-light">{t.products.subtitle}</p></div>
           </div>
@@ -281,7 +290,6 @@ const ProductSection: React.FC = () => {
 
                {/* Desktop View: 3 Stacked Images */}
                <div className="hidden md:flex flex-col gap-6 h-full">
-                   {/* PERUBAHAN: Pembungkus div diberi tinggi 350px */}
                    <div className="h-[350px]"><ImageCard category="fruits" /></div>
                    <div className="h-[350px]"><ImageCard category="vegetables" /></div>
                    <div className="h-[350px]"><ImageCard category="spices" /></div>
@@ -320,7 +328,7 @@ const ProductSection: React.FC = () => {
 
                {/* Desktop List */}
                <div className="hidden md:flex flex-col gap-6 h-full text-left">
-                   {/* FRUITS LIST - PERUBAHAN: Tinggi diubah jadi 350px */}
+                   {/* FRUITS LIST */}
                    <div className="h-[350px] bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 overflow-y-auto hover:border-red-200 transition-colors custom-scrollbar">
                       <h4 className="flex items-center gap-3 font-serif text-2xl text-red-600 mb-4 border-b border-stone-200 pb-2 sticky top-0 bg-stone-50 z-10"><Sprout size={24} /> {t.products.cats.fruits}</h4>
                       <ul className="grid grid-cols-2 gap-y-2 gap-x-6">
@@ -332,9 +340,9 @@ const ProductSection: React.FC = () => {
                       </ul>
                    </div>
 
-                   {/* VEGETABLES LIST - PERUBAHAN: Tinggi diubah jadi 350px */}
+                   {/* VEGETABLES LIST */}
                    <div className="h-[350px] bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 overflow-y-auto hover:border-green-200 transition-colors custom-scrollbar">
-                      <h4 className="flex items-center gap-3 font-serif text-2xl text-green-600 mb-4 border-b border-stone-200 pb-2 sticky top-0 bg-stone-50 z-10"><Carrot size={24} /> {t.products.cats.vegetables}</h4>
+                      <h4 className="flex items-center gap-3 font-serif text-green-600 mb-4 border-b border-stone-200 pb-2 sticky top-0 bg-stone-50 z-10"><Carrot size={24} /> {t.products.cats.vegetables}</h4>
                       <ul className="grid grid-cols-2 gap-y-2 gap-x-6">
                          {allProductKeys.vegetables.map((key, i) => (
                             <li key={i} className={`text-sm flex items-center gap-2 cursor-pointer transition-all ${activeProduct === key ? 'text-green-600 font-bold' : 'text-stone-600 hover:text-green-600'}`} onClick={() => handleProductClick('vegetables', key)}>
@@ -344,9 +352,9 @@ const ProductSection: React.FC = () => {
                       </ul>
                    </div>
 
-                   {/* SPICES LIST - PERUBAHAN: Tinggi diubah jadi 350px */}
+                   {/* SPICES LIST */}
                    <div className="h-[350px] bg-stone-50 border border-stone-200 rounded-sm shadow-sm p-6 overflow-y-auto hover:border-yellow-200 transition-colors custom-scrollbar">
-                      <h4 className="flex items-center gap-3 font-serif text-2xl text-yellow-500 mb-4 border-b border-stone-200 pb-2 sticky top-0 bg-stone-50 z-10"><Flower2 size={24} /> {t.products.cats.spices}</h4>
+                      <h4 className="flex items-center gap-3 font-serif text-yellow-500 mb-4 border-b border-stone-200 pb-2 sticky top-0 bg-stone-50 z-10"><Flower2 size={24} /> {t.products.cats.spices}</h4>
                       <ul className="grid grid-cols-2 gap-y-2 gap-x-6">
                          {allProductKeys.spices.map((key, i) => (
                             <li key={i} className={`text-sm flex items-center gap-2 cursor-pointer transition-all ${activeProduct === key ? 'text-yellow-600 font-bold' : 'text-stone-600 hover:text-yellow-600'}`} onClick={() => handleProductClick('spices', key)}>
