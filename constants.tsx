@@ -1,6 +1,6 @@
 import { LogisticsService, Advantage } from './types';
 
-// --- DATA SERVICES (Tetap sama) ---
+// ... (SERVICES, ADVANTAGES, TESTIMONIALS - Biarkan Default) ...
 export const SERVICES: LogisticsService[] = [
   {
     id: 'fruit-mangosteen',
@@ -36,7 +36,6 @@ export const SERVICES: LogisticsService[] = [
   }
 ];
 
-// --- DATA ADVANTAGES (Tetap sama) ---
 export const ADVANTAGES: Advantage[] = [
   {
     title: 'Trust',
@@ -50,7 +49,6 @@ export const ADVANTAGES: Advantage[] = [
   }
 ];
 
-// --- DATA TESTIMONIALS (Tetap sama) ---
 export const TESTIMONIALS = [
   {
     quote: "BKK consistently delivers the freshest mangosteens we have received in Shanghai.",
@@ -68,12 +66,16 @@ export const TESTIMONIALS = [
 
 // --- DATA POPULAR PRODUCTS ---
 export const POPULAR_PRODUCTS = {
-    // 1. MANGOSTEEN (Tetap Data Sebelumnya)
+    // 1. MANGOSTEEN
     mangosteen: {
       id: 'mangosteen',
       name: "Premium Mangosteen",
       subTitle: "PREMIUM INDONESIAN MANGOSTEEN FOR GLOBAL MARKETS",
       description: "Mangosteen (Garcinia mangostana L.) - The Queen of Fruits. Known for its sweet, juicy white flesh and deep purple rind, harvested at the peak of perfection.",
+      
+      // PASTIKAN FILE INI ADA DI FOLDER: public/pdf/mangosteen.pdf
+      portfolioUrl: "/pdf/mangosteen.pdf", 
+      
       specsTitle: "PRODUCT DETAIL",
       specs: [
         { label: "Variety", value: "Kaligesing Superior" },
@@ -114,10 +116,10 @@ export const POPULAR_PRODUCTS = {
       ]
     },
 
-    // 2. SALACCA (Tetap Data Sebelumnya)
+    // 2. SALACCA (DETAIL LENGKAP)
     salacca: {
       id: 'salacca',
-      name: "Fresh Sallaca (Snake Fruit)",
+      name: "Fresh Salacca (Snake Fruit)",
       subTitle: "INDONESIAN PONDOH SALLACA FOR EXPORT",
       description: "Fresh Pondoh Sallaca from Indonesia. Known for its glossy brown skin and sweet, crunchy yellowish-white flesh.",
       specsTitle: "TECHNICAL SPECIFICATIONS",
@@ -151,7 +153,7 @@ export const POPULAR_PRODUCTS = {
       ]
     },
 
-    // 3. JASMINE (Data Baru Lengkap)
+    // 3. JASMINE (DETAIL LENGKAP)
     jasmine: {
       id: 'jasmine',
       name: "Fresh Jasmine",
@@ -161,6 +163,7 @@ export const POPULAR_PRODUCTS = {
       specs: [
           { label: "Variety", value: "Jasminum sambac" },
           { label: "Origin", value: "Indonesia" },
+          { label: "HS Code", value: "06031900" },
           { label: "Form", value: "Intact flower buds" },
           { label: "Color", value: "Creige white with natural yellow" },
           { label: "Aroma", value: "Great Jasmine, Strong & Durable" },
@@ -168,7 +171,6 @@ export const POPULAR_PRODUCTS = {
           { label: "Water Content", value: "≤ 10%" },
           { label: "Purity", value: "≥ 99% (No stems/leaves)" },
           { label: "Content", value: "High quality essential oil" },
-          // Available Grades/Types
           { label: "Type A", value: "Jasmine Flower (With Head)" },
           { label: "Type B", value: "Jasmine Bald (Headless)" },
           { label: "Garland S", value: "Small / Fat Small (FS/FSS)" },
@@ -181,7 +183,6 @@ export const POPULAR_PRODUCTS = {
       ],
        packagingDetails: [
           { label: "Type", value: "Styrofoam Box" },
-          { label: "HS Code", value: "06031900" },
           { label: "Dimensions", value: "52 x 37 x 34 cm" },
           { label: "Net Weight", value: "9 kg / box" },
           { label: "Material", value: "Paper + Standard Plastic Bag (Moisture Control)" },

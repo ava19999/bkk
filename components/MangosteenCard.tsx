@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sprout, Star, ArrowRight, Globe, Scale, ChevronDown, Check, Info, Package, Clock, ShieldCheck, MousePointerClick } from 'lucide-react';
+import { Sprout, Star, ArrowRight, Globe, Scale, ChevronDown, Check, Info, Package, Clock, ShieldCheck, MousePointerClick, FileText, X, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { POPULAR_PRODUCTS } from '../constants'; 
 
@@ -11,13 +11,28 @@ const MangosteenCard: React.FC = () => {
   const [destination, setDestination] = useState('');
   const [volume, setVolume] = useState('');
   const [isOpenDestination, setIsOpenDestination] = useState(false);
+  
+  // State khusus Popup PDF
+  const [showPdfModal, setShowPdfModal] = useState(false); 
+  
   const destinationRef = useRef<HTMLDivElement>(null);
-
   const countries = ['China', 'Singapore', 'Thailand', 'Malaysia', 'UAE', 'Bangladesh', 'Canada', 'Other'];
 
   const currentProduct = POPULAR_PRODUCTS[activeTab];
 
-  // --- EFFECTS & HANDLERS ---
+  // Efek: Saat ganti tab, jika Mangosteen (ada PDF), TAMPILKAN TOMBOL, tapi jangan auto popup agar tidak kaget
+  // Kita biarkan user klik manual di tombol "Click for Portfolio" di menu
+  
+  // Handle klik di list menu
+  const handleProductClick = (key: 'mangosteen' | 'salacca' | 'jasmine') => {
+      setActiveTab(key);
+      const product = POPULAR_PRODUCTS[key];
+      // Jika produk punya PDF, langsung buka Popup
+      if (product.portfolioUrl) {
+          setShowPdfModal(true);
+      }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (destinationRef.current && !destinationRef.current.contains(event.target as Node)) {
@@ -39,7 +54,7 @@ const MangosteenCard: React.FC = () => {
     window.location.href = `mailto:info@bkkemuliaan.com?subject=${subject}&body=${body}`;
   };
 
-  // Helper Styles
+  // Helper Colors
   const getActiveTitleColor = (id: string) => {
     if (id === 'mangosteen') return 'text-purple-900';
     if (id === 'salacca') return 'text-amber-900';
@@ -68,6 +83,72 @@ const MangosteenCard: React.FC = () => {
         .title-shadow { text-shadow: 0 1px 3px rgba(0,0,0,0.1) !important; }
       `}</style>
 
+      {/* --- PREMIUM PDF MODAL POPUP --- */}
+      {showPdfModal && currentProduct.portfolioUrl && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
+           {/* Backdrop Blur */}
+           <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={() => setShowPdfModal(false)}></div>
+           
+           {/* Modal Content */}
+           <div className="relative w-full max-w-6xl h-[90vh] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col border border-stone-200">
+              
+              {/* Header Modal */}
+              <div className="flex justify-between items-center p-4 border-b border-stone-100 bg-white shrink-0 z-10 shadow-sm">
+                  <div className="flex items-center gap-3">
+                      <div className="p-2 bg-red-50 rounded-lg text-red-600">
+                          <FileText size={20} />
+                      </div>
+                      <div>
+                          <h3 className="font-bold text-stone-800 text-lg leading-none">{currentProduct.name}</h3>
+                          <span className="text-xs text-stone-500 uppercase tracking-wider">Official Portfolio</span>
+                      </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                      {/* Tombol Backup jika PDF tidak muncul */}
+                      <a 
+                        href={currentProduct.portfolioUrl} 
+                        target="_blank" 
+                        rel="noreferrer"
+                        className="hidden md:flex items-center gap-2 px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-600 rounded-lg text-xs font-bold transition-colors"
+                      >
+                         <ExternalLink size={14} /> Open in New Tab
+                      </a>
+                      
+                      <button 
+                        onClick={() => setShowPdfModal(false)}
+                        className="p-2 hover:bg-red-50 rounded-lg transition-colors text-stone-400 hover:text-red-600"
+                      >
+                         <X size={24} />
+                      </button>
+                  </div>
+              </div>
+
+              {/* PDF Viewer Area */}
+              <div className="flex-1 bg-stone-100 relative">
+                  <iframe 
+                    src={currentProduct.portfolioUrl} 
+                    className="w-full h-full"
+                    title="Portfolio PDF"
+                  />
+                  
+                  {/* Fallback Message (Di belakang iframe) */}
+                  <div className="absolute inset-0 -z-10 flex flex-col items-center justify-center text-stone-400 gap-4">
+                     <p>Loading document preview...</p>
+                     <a 
+                        href={currentProduct.portfolioUrl} 
+                        className="text-blue-600 hover:underline text-sm font-semibold"
+                        target="_blank"
+                        rel="noreferrer"
+                     >
+                        Click here if document does not load
+                     </a>
+                  </div>
+              </div>
+           </div>
+        </div>
+      )}
+
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 lg:gap-16">
         
         {/* KOLOM KIRI (MENU & KONTEN) */}
@@ -79,13 +160,16 @@ const MangosteenCard: React.FC = () => {
              <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">Popular Indonesia Commodity</p>
 
             {/* SELECTION MENU INTERAKTIF */}
-            <div className="flex flex-col gap-3 mb-10">
+            <div className="flex flex-col gap-3 mb-8">
               {(['mangosteen', 'salacca', 'jasmine'] as const).map((key) => {
                 const isActive = activeTab === key;
+                const product = POPULAR_PRODUCTS[key];
+                const hasPdf = !!product.portfolioUrl;
+
                 return (
                   <div 
                     key={key} 
-                    onClick={() => setActiveTab(key)} 
+                    onClick={() => handleProductClick(key)} 
                     className="group cursor-pointer relative"
                   >
                     <div className="flex items-center gap-4 transition-all duration-300 transform group-hover:translate-x-2">
@@ -96,16 +180,20 @@ const MangosteenCard: React.FC = () => {
                                 : 'text-3xl text-green-700/50 group-hover:text-green-700 font-light'
                             }`}
                         >
-                          {POPULAR_PRODUCTS[key].name}
+                          {product.name}
                         </h3>
 
-                        {/* "Click for Detail" Animation (Hanya muncul saat TIDAK aktif & di-HOVER) */}
+                        {/* Petunjuk Klik Melayang */}
                         {!isActive && (
                             <div className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 flex items-center gap-2">
-                                <span className="text-[10px] font-bold text-red-500 uppercase tracking-widest bg-white/80 px-2 py-1 rounded shadow-sm border border-red-100">
-                                    Click for Detail
+                                <span className={`text-[10px] font-bold uppercase tracking-widest bg-white/80 px-2 py-1 rounded shadow-sm border ${hasPdf ? 'text-purple-600 border-purple-200' : 'text-red-500 border-red-100'}`}>
+                                    {hasPdf ? 'Click for Portfolio' : 'Click for Detail'}
                                 </span>
-                                <MousePointerClick size={16} className="text-red-500 animate-bounce" />
+                                {hasPdf ? (
+                                    <FileText size={16} className="text-purple-600 animate-bounce" />
+                                ) : (
+                                    <MousePointerClick size={16} className="text-red-500 animate-bounce" />
+                                )}
                             </div>
                         )}
                     </div>
@@ -122,9 +210,22 @@ const MangosteenCard: React.FC = () => {
             {/* CONTENT AREA */}
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 key={activeTab}">
               
-              {currentProduct.subTitle && <h4 className="text-stone-800 font-bold uppercase tracking-wider text-sm mb-2">{currentProduct.subTitle}</h4>}
+              <div className="flex flex-col gap-2 mb-4">
+                 {currentProduct.subTitle && <h4 className="text-stone-800 font-bold uppercase tracking-wider text-sm">{currentProduct.subTitle}</h4>}
+                 
+                 {/* Tombol Buka Popup Manual (Jika sudah ditutup user) */}
+                 {currentProduct.portfolioUrl && (
+                     <button 
+                       onClick={() => setShowPdfModal(true)}
+                       className="w-fit flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-md shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-xs font-bold uppercase tracking-widest mt-2 group border border-red-400"
+                     >
+                        <FileText size={16} /> Open Portfolio
+                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform"/>
+                     </button>
+                 )}
+              </div>
 
-              <p className="text-stone-700 text-base font-normal mb-6 leading-relaxed border-l-4 border-stone-200 pl-4">
+              <p className="text-stone-700 text-base font-normal mb-6 leading-relaxed border-l-4 border-stone-200 pl-4 mt-4">
                  {currentProduct.description}
               </p>
 
