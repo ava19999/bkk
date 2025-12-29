@@ -66,7 +66,7 @@ export const TESTIMONIALS = [
   }
 ];
 
-// --- DATA POPULAR PRODUCTS (UPDATE DENGAN NAMA FILE SEDERHANA) ---
+// --- DATA POPULAR PRODUCTS ---
 export const POPULAR_PRODUCTS = {
     // 1. MANGOSTEEN
     mangosteen: {
@@ -110,24 +110,25 @@ export const POPULAR_PRODUCTS = {
         { label: "Availability", value: "Oct, Dec, Jan, Feb, Mar, Apr" },
         { label: "Lead Time", value: "1-2 weeks (depends on season/destination)" }
       ],
-      // PASTIKAN ANDA SUDAH MENGUBAH NAMA FILE DI FOLDER MENJADI 1.jpg, 2.jpg, dst.
+      // [PERUBAHAN DI SINI] 
+      // Gambar lama dihapus total, diganti dengan path folder1, folder2, folder3 yang baru.
       images: [
-        // FOLDER 1 (ATAS)
+        // GROUP 1: Slide Atas (folder1)
         [
-            "/images/popular/mangosteen/1/1.jpg", 
-            "/images/popular/mangosteen/1/2.jpg", 
-            "/images/popular/mangosteen/1/3.jpg"
+            "/images/popular/mangosteen/folder1/1.jpg", 
+            "/images/popular/mangosteen/folder1/2.jpg", 
+            "/images/popular/mangosteen/folder1/3.jpeg" // Perhatikan .jpeg
         ],
-        // FOLDER 2 (TENGAH)
+        // GROUP 2: Slide Tengah (folder2)
         [
-            "/images/popular/mangosteen/2/1.jpg",
-            "/images/popular/mangosteen/2/2.jpg",
-            "/images/popular/mangosteen/2/3.jpg",
-            "/images/popular/mangosteen/2/4.jpg"
+            "/images/popular/mangosteen/folder2/1.jpg",
+            "/images/popular/mangosteen/folder2/2.jpg",
+            "/images/popular/mangosteen/folder2/3.jpg",
+            "/images/popular/mangosteen/folder2/4.jpg"
         ],
-        // FOLDER 3 (BAWAH)
+        // GROUP 3: Slide Bawah (folder3)
         [
-            "/images/popular/mangosteen/3/1.png" // Sesuaikan ekstensi jika jpg
+            "/images/popular/mangosteen/folder3/1.png" // Perhatikan .png
         ]
       ]
     },
@@ -165,7 +166,6 @@ export const POPULAR_PRODUCTS = {
         { label: "Availability", value: "All Year Round" },
         { label: "Lead Time", value: "1 week" }
       ],
-      // SAYA SARANKAN RENAME JUGA FILE SALAK AGAR LEBIH STABIL
       images: [
         "/images/buah/salak/0d34951d7917a30bc40ad39a12a11b86.jpg",
         "/images/buah/salak/26cd2d3889fecf0db7d48da0e56c6ef6.jpg",

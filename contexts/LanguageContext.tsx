@@ -19,7 +19,8 @@ interface ProductData {
   packagingDetails: ProductSpec[];
   qualityControl?: string[];
   orderInfo: ProductSpec[];
-  images: string[];
+  // Mengizinkan string (gambar tunggal) atau string[] (slideshow)
+  images: (string | string[])[];
 }
 
 interface PopularProductsData {
@@ -63,7 +64,7 @@ const content = {
         emailDest: "Destination",
         emailVol: "Volume",
         emailThanks: "Thank you.",
-        clickDetail: "Detail" // UBAH DISINI
+        clickDetail: "Detail"
     },
     // --- DATA PRODUK LENGKAP (BAHASA INGGRIS) ---
     popularProducts: {
@@ -107,9 +108,23 @@ const content = {
           { label: "Lead Time", value: "1-2 weeks (depends on season/destination)" }
         ],
         images: [
-          "/images/popular/48cbbd1b8072032c0c3b6441cddbe9e1.jpg", 
-          encodeURI("/images/popular/Adventure Instagram Post_20250206_114851_0000.png"), 
-          encodeURI("/images/buah/manggis/2a0990b6987bd640d14d85c5cf40c222.jpg")
+          // Folder 1 (Atas)
+          [
+            "/images/popular/mangosteen/folder1/1.jpg", 
+            "/images/popular/mangosteen/folder1/2.jpg", 
+            "/images/popular/mangosteen/folder1/3.jpeg"
+          ],
+          // Folder 2 (Tengah)
+          [
+            "/images/popular/mangosteen/folder2/1.jpg",
+            "/images/popular/mangosteen/folder2/2.jpg",
+            "/images/popular/mangosteen/folder2/3.jpg",
+            "/images/popular/mangosteen/folder2/4.jpg"
+          ],
+          // Folder 3 (Bawah)
+          [
+            "/images/popular/mangosteen/folder3/1.png"
+          ]
         ]
       },
       salacca: {
@@ -144,9 +159,21 @@ const content = {
           { label: "Lead Time", value: "1 week" }
         ],
         images: [
-          encodeURI("/images/buah/salak/0d34951d7917a30bc40ad39a12a11b86.jpg"),
-          encodeURI("/images/buah/salak/26cd2d3889fecf0db7d48da0e56c6ef6.jpg"),
-          encodeURI("/images/buah/salak/92f2c8cfecbcb42657e3aa442dd4043d.jpg")
+          // Folder 1 (Atas)
+          [
+             "/images/popular/salacca/1/Salak (Snake Fruit).jpg",
+             "/images/popular/salacca/1/WhatsApp Image 2025-12-29 at 9.10.58 AM.jpeg"
+          ],
+          // Folder 2 (Tengah)
+          [
+             "/images/popular/salacca/2/WhatsApp Image 2025-12-29 at 9.10.55 AM.jpeg",
+             "/images/popular/salacca/2/salak 3.jpeg",
+             "/images/popular/salacca/2/salak 4.jpeg"
+          ],
+          // Folder 3 (Bawah)
+          [
+             "/images/popular/salacca/3/Snake Fruit (Salak) Whole and Cut Open on Clean Background.jpg"
+          ]
         ]
       },
       jasmine: {
@@ -190,9 +217,19 @@ const content = {
           { label: "Lead Time", value: "2-3 Days (Air Cargo Only)" }
         ],
         images: [
-          encodeURI("/images/bumbu & bunga/bunga melati/8513c1f6f28394f2df0ac15cfc9250a6.jpg"),
-          encodeURI("/images/bumbu & bunga/bunga melati/abd0d39a6aa29c23baafcfb304e0b5ac.jpg"),
-          encodeURI("/images/bumbu & bunga/bunga melati/d878c8ad6781452f3e540539244f828f.jpg")
+          // Folder 1 (Atas)
+          [
+             "/images/popular/jasmine/1/jasmine 2.jpeg"
+          ],
+          // Folder 2 (Tengah)
+          [
+             "/images/popular/jasmine/2/WhatsApp Image 2025-12-29 at 9.10.56 AM.jpeg",
+             "/images/popular/jasmine/2/jasmine 4.jpeg"
+          ],
+          // Folder 3 (Bawah)
+          [
+             "/images/popular/jasmine/3/jasmine 3.jpeg"
+          ]
         ]
       }
     },
@@ -360,7 +397,7 @@ const content = {
         emailDest: "Tujuan",
         emailVol: "Volume",
         emailThanks: "Terima kasih.",
-        clickDetail: "Detail" // UBAH DISINI
+        clickDetail: "Detail"
     },
     // --- DATA PRODUK LENGKAP (BAHASA INDONESIA - TERJEMAHAN) ---
     popularProducts: {
@@ -404,9 +441,23 @@ const content = {
           { label: "Waktu Proses", value: "1-2 minggu (tergantung musim/tujuan)" }
         ],
         images: [
-          "/images/popular/48cbbd1b8072032c0c3b6441cddbe9e1.jpg", 
-          encodeURI("/images/popular/Adventure Instagram Post_20250206_114851_0000.png"), 
-          encodeURI("/images/buah/manggis/2a0990b6987bd640d14d85c5cf40c222.jpg")
+           // Folder 1 (Atas)
+          [
+            "/images/popular/mangosteen/folder1/1.jpg", 
+            "/images/popular/mangosteen/folder1/2.jpg", 
+            "/images/popular/mangosteen/folder1/3.jpeg"
+          ],
+          // Folder 2 (Tengah)
+          [
+            "/images/popular/mangosteen/folder2/1.jpg",
+            "/images/popular/mangosteen/folder2/2.jpg",
+            "/images/popular/mangosteen/folder2/3.jpg",
+            "/images/popular/mangosteen/folder2/4.jpg"
+          ],
+          // Folder 3 (Bawah)
+          [
+            "/images/popular/mangosteen/folder3/1.png"
+          ]
         ]
       },
       salacca: {
@@ -441,9 +492,21 @@ const content = {
           { label: "Waktu Proses", value: "1 minggu" }
         ],
         images: [
-          encodeURI("/images/buah/salak/0d34951d7917a30bc40ad39a12a11b86.jpg"),
-          encodeURI("/images/buah/salak/26cd2d3889fecf0db7d48da0e56c6ef6.jpg"),
-          encodeURI("/images/buah/salak/92f2c8cfecbcb42657e3aa442dd4043d.jpg")
+           // Folder 1 (Atas)
+          [
+             "/images/popular/salacca/1/Salak (Snake Fruit).jpg",
+             "/images/popular/salacca/1/WhatsApp Image 2025-12-29 at 9.10.58 AM.jpeg"
+          ],
+          // Folder 2 (Tengah)
+          [
+             "/images/popular/salacca/2/WhatsApp Image 2025-12-29 at 9.10.55 AM.jpeg",
+             "/images/popular/salacca/2/salak 3.jpeg",
+             "/images/popular/salacca/2/salak 4.jpeg"
+          ],
+          // Folder 3 (Bawah)
+          [
+             "/images/popular/salacca/3/Snake Fruit (Salak) Whole and Cut Open on Clean Background.jpg"
+          ]
         ]
       },
       jasmine: {
@@ -487,9 +550,19 @@ const content = {
           { label: "Waktu Proses", value: "2-3 Hari (Hanya Kargo Udara)" }
         ],
         images: [
-          encodeURI("/images/bumbu & bunga/bunga melati/8513c1f6f28394f2df0ac15cfc9250a6.jpg"),
-          encodeURI("/images/bumbu & bunga/bunga melati/abd0d39a6aa29c23baafcfb304e0b5ac.jpg"),
-          encodeURI("/images/bumbu & bunga/bunga melati/d878c8ad6781452f3e540539244f828f.jpg")
+           // Folder 1 (Atas)
+          [
+             "/images/popular/jasmine/1/jasmine 2.jpeg"
+          ],
+          // Folder 2 (Tengah)
+          [
+             "/images/popular/jasmine/2/WhatsApp Image 2025-12-29 at 9.10.56 AM.jpeg",
+             "/images/popular/jasmine/2/jasmine 4.jpeg"
+          ],
+          // Folder 3 (Bawah)
+          [
+             "/images/popular/jasmine/3/jasmine 3.jpeg"
+          ]
         ]
       }
     },

@@ -10,7 +10,7 @@ const HistorySection: React.FC = () => {
   const scrollLeft = useRef(0);
   const [isGrabbing, setIsGrabbing] = useState(false);
 
-  // Gallery Images (Local)
+  // Gallery Images (Local) - UPDATE: Menambahkan foto baru
   const galleryImages = [
     encodeURI("/images/about us/IMG-20250620-WA0002_edit_505128042216672.jpg"),
     encodeURI("/images/about us/IMG_2222.JPG"),
@@ -22,7 +22,14 @@ const HistorySection: React.FC = () => {
     encodeURI("/images/about us/IMG_2241.JPG"),
     encodeURI("/images/about us/IMG_2264.PNG"),
     encodeURI("/images/about us/IMG_2266.PNG"),
-    encodeURI("/images/about us/Screenshot_20250723_132856.jpg")
+    encodeURI("/images/about us/Screenshot_20250723_132856.jpg"),
+    // Foto Baru Ditambahkan:
+    encodeURI("/images/about us/WhatsApp Image 2025-12-29 at 9.10.58 AM.jpeg"),
+    encodeURI("/images/about us/WhatsApp Image 2025-12-29 at 9.10.59 AM.jpeg"),
+    encodeURI("/images/about us/WhatsApp Image 2025-12-29 at 9.11.00 AM.jpeg"),
+    encodeURI("/images/about us/bkk.jpeg"),
+    encodeURI("/images/about us/foto 4.jpeg"),
+    encodeURI("/images/about us/foto2.jpeg")
   ];
   
   // Duplikasi 3x agar looping berjalan mulus (seamless)
@@ -51,7 +58,6 @@ const HistorySection: React.FC = () => {
   };
 
   // --- TOUCH EVENTS (MOBILE SWIPE) ---
-  // Fungsi baru ditambahkan di sini
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     isDown.current = true;
@@ -148,7 +154,7 @@ const HistorySection: React.FC = () => {
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
 
-                // Touch Events (Mobile) - INI YANG DITAMBAHKAN
+                // Touch Events (Mobile)
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
