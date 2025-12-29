@@ -75,8 +75,8 @@ export const POPULAR_PRODUCTS = {
       subTitle: "PREMIUM INDONESIAN MANGOSTEEN FOR GLOBAL MARKETS",
       description: "Mangosteen (Garcinia mangostana L.) - The Queen of Fruits. Known for its sweet, juicy white flesh and deep purple rind, harvested at the peak of perfection.",
       
-      // PASTIKAN FILE INI ADA DI: public/pdf/mangosteen-portfolio.pdf
-      portfolioUrl: "/pdf/mangosteen-portfolio.pdf", 
+      // PASTIKAN FILE: public/pdf/mangosteen.pdf
+      portfolioUrl: "/pdf/mangosteen.pdf", 
       
       specsTitle: "PRODUCT DETAIL",
       specs: [
