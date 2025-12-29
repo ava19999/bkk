@@ -1,6 +1,6 @@
 import { LogisticsService, Advantage } from './types';
 
-// ... (SERVICES, ADVANTAGES, TESTIMONIALS - Biarkan Default) ...
+// ... (Bagian SERVICES, ADVANTAGES, TESTIMONIALS - BIARKAN TETAP SAMA) ...
 export const SERVICES: LogisticsService[] = [
   {
     id: 'fruit-mangosteen',
@@ -73,7 +73,7 @@ export const POPULAR_PRODUCTS = {
       subTitle: "PREMIUM INDONESIAN MANGOSTEEN FOR GLOBAL MARKETS",
       description: "Mangosteen (Garcinia mangostana L.) - The Queen of Fruits. Known for its sweet, juicy white flesh and deep purple rind, harvested at the peak of perfection.",
       
-      // PASTIKAN FILE INI ADA DI FOLDER: public/pdf/mangosteen.pdf
+      // FILE PDF (Pastikan ada di folder public/pdf/)
       portfolioUrl: "/pdf/mangosteen.pdf", 
       
       specsTitle: "PRODUCT DETAIL",
@@ -116,7 +116,7 @@ export const POPULAR_PRODUCTS = {
       ]
     },
 
-    // 2. SALACCA (DETAIL LENGKAP)
+    // 2. SALACCA
     salacca: {
       id: 'salacca',
       name: "Fresh Salacca (Snake Fruit)",
@@ -153,7 +153,7 @@ export const POPULAR_PRODUCTS = {
       ]
     },
 
-    // 3. JASMINE (DETAIL LENGKAP)
+    // 3. JASMINE
     jasmine: {
       id: 'jasmine',
       name: "Fresh Jasmine",

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sprout, Star, ArrowRight, Globe, Scale, ChevronDown, Check, Info, Package, Clock, ShieldCheck, MousePointerClick, FileText, X, ExternalLink } from 'lucide-react';
+import { Sprout, Star, ArrowRight, Globe, Scale, ChevronDown, Check, Info, Package, Clock, ShieldCheck, MousePointerClick, FileText, X, Download } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { POPULAR_PRODUCTS } from '../constants'; 
 
@@ -12,24 +12,29 @@ const MangosteenCard: React.FC = () => {
   const [volume, setVolume] = useState('');
   const [isOpenDestination, setIsOpenDestination] = useState(false);
   
-  // State khusus Popup PDF
-  const [showPdfModal, setShowPdfModal] = useState(false); 
+  // State untuk Popup PDF Melayang
+  const [showFloatingPdf, setShowFloatingPdf] = useState(false); 
   
   const destinationRef = useRef<HTMLDivElement>(null);
   const countries = ['China', 'Singapore', 'Thailand', 'Malaysia', 'UAE', 'Bangladesh', 'Canada', 'Other'];
 
   const currentProduct = POPULAR_PRODUCTS[activeTab];
 
-  // Efek: Saat ganti tab, jika Mangosteen (ada PDF), TAMPILKAN TOMBOL, tapi jangan auto popup agar tidak kaget
-  // Kita biarkan user klik manual di tombol "Click for Portfolio" di menu
-  
   // Handle klik di list menu
   const handleProductClick = (key: 'mangosteen' | 'salacca' | 'jasmine') => {
-      setActiveTab(key);
-      const product = POPULAR_PRODUCTS[key];
-      // Jika produk punya PDF, langsung buka Popup
-      if (product.portfolioUrl) {
-          setShowPdfModal(true);
+      // Jika klik produk yang sama & punya PDF, toggle popup
+      if (activeTab === key && POPULAR_PRODUCTS[key].portfolioUrl) {
+          setShowFloatingPdf(!showFloatingPdf);
+      } else {
+          // Jika pindah produk
+          setActiveTab(key);
+          const product = POPULAR_PRODUCTS[key];
+          // Buka popup otomatis jika punya PDF (Mangosteen)
+          if (product.portfolioUrl) {
+              setShowFloatingPdf(true);
+          } else {
+              setShowFloatingPdf(false);
+          }
       }
   };
 
@@ -83,76 +88,10 @@ const MangosteenCard: React.FC = () => {
         .title-shadow { text-shadow: 0 1px 3px rgba(0,0,0,0.1) !important; }
       `}</style>
 
-      {/* --- PREMIUM PDF MODAL POPUP --- */}
-      {showPdfModal && currentProduct.portfolioUrl && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
-           {/* Backdrop Blur */}
-           <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={() => setShowPdfModal(false)}></div>
-           
-           {/* Modal Content */}
-           <div className="relative w-full max-w-6xl h-[90vh] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col border border-stone-200">
-              
-              {/* Header Modal */}
-              <div className="flex justify-between items-center p-4 border-b border-stone-100 bg-white shrink-0 z-10 shadow-sm">
-                  <div className="flex items-center gap-3">
-                      <div className="p-2 bg-red-50 rounded-lg text-red-600">
-                          <FileText size={20} />
-                      </div>
-                      <div>
-                          <h3 className="font-bold text-stone-800 text-lg leading-none">{currentProduct.name}</h3>
-                          <span className="text-xs text-stone-500 uppercase tracking-wider">Official Portfolio</span>
-                      </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                      {/* Tombol Backup jika PDF tidak muncul */}
-                      <a 
-                        href={currentProduct.portfolioUrl} 
-                        target="_blank" 
-                        rel="noreferrer"
-                        className="hidden md:flex items-center gap-2 px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-600 rounded-lg text-xs font-bold transition-colors"
-                      >
-                         <ExternalLink size={14} /> Open in New Tab
-                      </a>
-                      
-                      <button 
-                        onClick={() => setShowPdfModal(false)}
-                        className="p-2 hover:bg-red-50 rounded-lg transition-colors text-stone-400 hover:text-red-600"
-                      >
-                         <X size={24} />
-                      </button>
-                  </div>
-              </div>
-
-              {/* PDF Viewer Area */}
-              <div className="flex-1 bg-stone-100 relative">
-                  <iframe 
-                    src={currentProduct.portfolioUrl} 
-                    className="w-full h-full"
-                    title="Portfolio PDF"
-                  />
-                  
-                  {/* Fallback Message (Di belakang iframe) */}
-                  <div className="absolute inset-0 -z-10 flex flex-col items-center justify-center text-stone-400 gap-4">
-                     <p>Loading document preview...</p>
-                     <a 
-                        href={currentProduct.portfolioUrl} 
-                        className="text-blue-600 hover:underline text-sm font-semibold"
-                        target="_blank"
-                        rel="noreferrer"
-                     >
-                        Click here if document does not load
-                     </a>
-                  </div>
-              </div>
-           </div>
-        </div>
-      )}
-
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 lg:gap-16">
         
         {/* KOLOM KIRI (MENU & KONTEN) */}
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full relative">
              <div className="flex justify-start mb-4">
                 <Star size={24} className="text-red-600" />
              </div>
@@ -160,7 +99,7 @@ const MangosteenCard: React.FC = () => {
              <p className="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">Popular Indonesia Commodity</p>
 
             {/* SELECTION MENU INTERAKTIF */}
-            <div className="flex flex-col gap-3 mb-8">
+            <div className="flex flex-col gap-3 mb-8 relative z-50">
               {(['mangosteen', 'salacca', 'jasmine'] as const).map((key) => {
                 const isActive = activeTab === key;
                 const product = POPULAR_PRODUCTS[key];
@@ -169,10 +108,12 @@ const MangosteenCard: React.FC = () => {
                 return (
                   <div 
                     key={key} 
-                    onClick={() => handleProductClick(key)} 
-                    className="group cursor-pointer relative"
+                    className="relative" // Relative untuk anchor popup
                   >
-                    <div className="flex items-center gap-4 transition-all duration-300 transform group-hover:translate-x-2">
+                    <div 
+                        onClick={() => handleProductClick(key)} 
+                        className="group cursor-pointer flex items-center gap-4 transition-all duration-300 transform group-hover:translate-x-2"
+                    >
                         {/* Title Product */}
                         <h3 className={`font-serif leading-tight transition-all duration-300 
                             ${isActive 
@@ -183,7 +124,7 @@ const MangosteenCard: React.FC = () => {
                           {product.name}
                         </h3>
 
-                        {/* Petunjuk Klik Melayang */}
+                        {/* Petunjuk Klik Melayang (Jika belum aktif) */}
                         {!isActive && (
                             <div className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 flex items-center gap-2">
                                 <span className={`text-[10px] font-bold uppercase tracking-widest bg-white/80 px-2 py-1 rounded shadow-sm border ${hasPdf ? 'text-purple-600 border-purple-200' : 'text-red-500 border-red-100'}`}>
@@ -202,30 +143,75 @@ const MangosteenCard: React.FC = () => {
                     {isActive && (
                         <div className={`h-1.5 w-24 ${getActiveBarColor(key)} mt-3 rounded-full animate-in fade-in slide-in-from-left-8 duration-500`}></div>
                     )}
+
+                    {/* --- POPUP PDF MELAYANG (FLOATING) TEPAT DI BAWAH JUDUL --- */}
+                    {isActive && hasPdf && showFloatingPdf && (
+                        <div className="absolute top-full left-0 mt-4 w-[120%] md:w-[600px] h-[500px] bg-white rounded-lg shadow-2xl border-2 border-stone-200 z-[100] animate-in fade-in zoom-in-95 duration-300 flex flex-col">
+                            
+                            {/* Header Popup */}
+                            <div className="flex justify-between items-center p-3 bg-stone-50 border-b border-stone-200">
+                                <span className="text-xs font-bold text-stone-600 uppercase flex items-center gap-2">
+                                    <FileText size={14} className="text-red-600"/> 
+                                    Portfolio Viewer
+                                </span>
+                                <div className="flex items-center gap-2">
+                                    {/* Tombol Download/Buka Manual (PENTING JIKA PREVIEW KOSONG) */}
+                                    <a 
+                                        href={product.portfolioUrl} 
+                                        target="_blank" 
+                                        rel="noreferrer"
+                                        className="flex items-center gap-1 text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded hover:bg-blue-100 font-bold border border-blue-200"
+                                    >
+                                        <Download size={12}/> Buka Manual
+                                    </a>
+                                    <button 
+                                        onClick={(e) => { e.stopPropagation(); setShowFloatingPdf(false); }}
+                                        className="p-1 hover:bg-red-100 rounded text-stone-400 hover:text-red-600 transition-colors"
+                                    >
+                                        <X size={18} />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Isi PDF */}
+                            <div className="flex-1 bg-stone-200 relative">
+                                <iframe 
+                                    src={`${product.portfolioUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`}
+                                    className="w-full h-full"
+                                    title="Portfolio"
+                                />
+                                {/* Pesan di belakang iframe (muncul jika iframe loading/gagal) */}
+                                <div className="absolute inset-0 -z-10 flex flex-col items-center justify-center text-stone-400 text-xs">
+                                    <p>Memuat Portfolio...</p>
+                                    <p>Jika tidak muncul, klik tombol "Buka Manual" di atas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                   </div>
                 );
               })}
             </div>
             
-            {/* CONTENT AREA */}
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 key={activeTab}">
+            {/* CONTENT AREA (DETAIL TEKS) */}
+            {/* Z-Index rendah agar tertutup oleh popup jika muncul */}
+            <div key={activeTab} className="animate-in fade-in slide-in-from-bottom-4 duration-700 relative z-0">
               
               <div className="flex flex-col gap-2 mb-4">
                  {currentProduct.subTitle && <h4 className="text-stone-800 font-bold uppercase tracking-wider text-sm">{currentProduct.subTitle}</h4>}
                  
-                 {/* Tombol Buka Popup Manual (Jika sudah ditutup user) */}
-                 {currentProduct.portfolioUrl && (
+                 {/* Tombol Buka Ulang Popup (Jika user menutupnya) */}
+                 {currentProduct.portfolioUrl && !showFloatingPdf && (
                      <button 
-                       onClick={() => setShowPdfModal(true)}
-                       className="w-fit flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-md shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-xs font-bold uppercase tracking-widest mt-2 group border border-red-400"
+                       onClick={() => setShowFloatingPdf(true)}
+                       className="w-fit flex items-center gap-2 px-3 py-1.5 bg-red-50 text-red-600 border border-red-200 rounded text-[10px] font-bold uppercase tracking-wider hover:bg-red-600 hover:text-white transition-all mt-1"
                      >
-                        <FileText size={16} /> Open Portfolio
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform"/>
+                        <FileText size={12} /> Re-open Portfolio
                      </button>
                  )}
               </div>
 
-              <p className="text-stone-700 text-base font-normal mb-6 leading-relaxed border-l-4 border-stone-200 pl-4 mt-4">
+              <p className="text-stone-700 text-base font-normal mb-6 leading-relaxed border-l-4 border-stone-200 pl-4">
                  {currentProduct.description}
               </p>
 
