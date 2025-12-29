@@ -66,7 +66,7 @@ export const TESTIMONIALS = [
   }
 ];
 
-// --- DATA POPULAR PRODUCTS (LENGKAP) ---
+// --- DATA POPULAR PRODUCTS (UPDATE LENGKAP) ---
 export const POPULAR_PRODUCTS = {
     // 1. MANGOSTEEN
     mangosteen: {
@@ -75,7 +75,7 @@ export const POPULAR_PRODUCTS = {
       subTitle: "PREMIUM INDONESIAN MANGOSTEEN FOR GLOBAL MARKETS",
       description: "Mangosteen (Garcinia mangostana L.) - The Queen of Fruits. Known for its sweet, juicy white flesh and deep purple rind, harvested at the peak of perfection.",
       
-      // PASTIKAN FILE: public/pdf/mangosteen.pdf
+      // PDF MANGOSTEEN
       portfolioUrl: "/pdf/mangosteen.pdf", 
       
       specsTitle: "PRODUCT DETAIL",
@@ -118,12 +118,16 @@ export const POPULAR_PRODUCTS = {
       ]
     },
 
-    // 2. SALACCA (Data Detail Baru)
+    // 2. SALACCA
     salacca: {
       id: 'salacca',
       name: "Fresh Salacca (Snake Fruit)",
       subTitle: "INDONESIAN PONDOH SALLACA FOR EXPORT",
       description: "Fresh Pondoh Sallaca from Indonesia. Known for its glossy brown skin and sweet, crunchy yellowish-white flesh.",
+      
+      // PDF SALACCA (Tambahan Baru)
+      portfolioUrl: "/pdf/salacca.pdf",
+
       specsTitle: "TECHNICAL SPECIFICATIONS",
       specs: [
           { label: "Variety", value: "Pondoh Sallaca" },
@@ -155,12 +159,16 @@ export const POPULAR_PRODUCTS = {
       ]
     },
 
-    // 3. JASMINE (Data Detail Baru)
+    // 3. JASMINE
     jasmine: {
       id: 'jasmine',
       name: "Fresh Jasmine",
       subTitle: "PURE INDONESIAN JASMINE SAMBAC FOR EXPORT",
       description: "Fresh Jasmine Sambac buds, harvested at dawn to preserve their potent, sweet fragrance. Essential for tea blending, high-end perfumery, and religious garlands.",
+      
+      // PDF JASMINE (Tambahan Baru)
+      portfolioUrl: "/pdf/jasmine.pdf",
+
       specsTitle: "PRODUCT DETAIL & PHYSICAL SPECIFICATIONS",
       specs: [
           { label: "Variety", value: "Jasminum sambac" },

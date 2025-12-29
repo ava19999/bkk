@@ -17,7 +17,6 @@ const MangosteenCard: React.FC = () => {
 
   const currentProduct = POPULAR_PRODUCTS[activeTab];
 
-  // Handle outside click untuk dropdown destination
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (destinationRef.current && !destinationRef.current.contains(event.target as Node)) {
@@ -36,7 +35,9 @@ const MangosteenCard: React.FC = () => {
     }
     const subject = `Quote Request: ${currentProduct.name}`;
     const body = `Hello BKK Team,%0D%0A%0D%0AI would like to request a quotation for:%0D%0A%0D%0A- Commodity: ${currentProduct.name}%0D%0A- Destination: ${destination}%0D%0A- Volume: ${volume || 'TBD'} MT%0D%0A%0D%0AThank you.`;
-    window.location.href = `mailto:info@bkkemuliaan.com?subject=${subject}&body=${body}`;
+    
+    // UPDATE EMAIL DI SINI
+    window.location.href = `mailto:Sales-marketing.2@bkkemuliaan.com?subject=${subject}&body=${body}`;
   };
 
   // Helper Colors
@@ -90,7 +91,6 @@ const MangosteenCard: React.FC = () => {
                         onClick={() => setActiveTab(key)} 
                         className="group cursor-pointer flex items-center gap-4 transition-all duration-300 transform group-hover:translate-x-2"
                     >
-                        {/* Title Product */}
                         <h3 className={`font-serif leading-tight transition-all duration-300 
                             ${isActive 
                                 ? `text-4xl ${getActiveTitleColor(key)} title-shadow font-medium scale-105 origin-left` 
@@ -100,8 +100,6 @@ const MangosteenCard: React.FC = () => {
                           {product.name}
                         </h3>
                     </div>
-
-                    {/* Active Indicator Bar */}
                     {isActive && (
                         <div className={`h-1.5 w-24 ${getActiveBarColor(key)} mt-3 rounded-full animate-in fade-in slide-in-from-left-8 duration-500`}></div>
                     )}
@@ -110,14 +108,12 @@ const MangosteenCard: React.FC = () => {
               })}
             </div>
             
-            {/* CONTENT AREA (DETAIL TEKS) */}
+            {/* CONTENT AREA */}
             <div key={activeTab} className="animate-in fade-in slide-in-from-bottom-4 duration-700 relative z-0">
               
               <div className="flex flex-col gap-3 mb-4">
                  {currentProduct.subTitle && <h4 className="text-stone-800 font-bold uppercase tracking-wider text-sm">{currentProduct.subTitle}</h4>}
                  
-                 {/* --- TOMBOL "CLICK OFFICIAL PORTFOLIO" --- */}
-                 {/* Hanya muncul jika ada URL PDF (Mangosteen) */}
                  {currentProduct.portfolioUrl && (
                      <a 
                        href={currentProduct.portfolioUrl}
@@ -138,7 +134,6 @@ const MangosteenCard: React.FC = () => {
               {/* DETAILS */}
               {(currentProduct.specs || currentProduct.packagingDetails) && (
                 <div className="bg-white border border-stone-200 rounded-lg p-5 mb-8 text-sm shadow-sm space-y-6">
-                   
                    {/* SPECS */}
                    {currentProduct.specs && (
                    <div>
@@ -155,7 +150,6 @@ const MangosteenCard: React.FC = () => {
                        </div>
                    </div>
                    )}
-
                    {/* PACKAGING & QC */}
                    {currentProduct.packagingDetails && (
                      <div>
@@ -178,7 +172,6 @@ const MangosteenCard: React.FC = () => {
                        )}
                      </div>
                    )}
-
                    {/* ORDER INFO */}
                    {currentProduct.orderInfo && (
                      <div>
