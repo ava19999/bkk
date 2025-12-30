@@ -45,7 +45,7 @@ const Footer: React.FC<FooterProps> = ({ setIsContactOpen }) => {
                <div>
                  <strong className="text-white block text-xs uppercase tracking-wide mb-1">{t.contact.office}</strong>
                  <a href="https://www.google.com/maps/search/?api=1&query=Jl.+Sawit+Darangdan+No.+3,+Purwakarta,+West+Java+41163+-+Indonesia" target="_blank" rel="noreferrer" className="text-sm text-stone-300 font-light leading-relaxed hover:text-red-400 transition-colors block">
-                   Jl. Sawit Darangdan No. 3, Purwakarta<br/>West Java 41163 - Indonesia
+                   Husein Sastranegara Airport<br/>Cargo Park C.49 Jl. Padjajaran No. 156,<br/>Bandung, West Java 40174
                  </a>
                </div>
             </div>
@@ -54,7 +54,7 @@ const Footer: React.FC<FooterProps> = ({ setIsContactOpen }) => {
                <div>
                  <strong className="text-white block text-xs uppercase tracking-wide mb-1">{t.contact.warehouse}</strong>
                  <a href="https://www.google.com/maps/search/?api=1&query=Husein+Sastranegara+Airport,+Cargo+Park+C.49+Jl.+Padjajaran+No.+156,+Bandung,+West+Java+40174" target="_blank" rel="noreferrer" className="text-sm text-stone-300 font-light leading-relaxed hover:text-red-400 transition-colors block">
-                   Husein Sastranegara Airport<br/>Cargo Park C.49 Jl. Padjajaran No. 156,<br/>Bandung, West Java 40174
+                   Jl. Sawit Darangdan No. 3, Purwakarta<br/>West Java 41163 - Indonesia
                  </a>
                </div>
             </div>
@@ -64,7 +64,6 @@ const Footer: React.FC<FooterProps> = ({ setIsContactOpen }) => {
           <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-red-600">{t.footer.contactTitle}</h4>
           <div className="space-y-4">
              <div className="flex items-center gap-3 text-sm text-stone-300 font-light group"><Phone size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="tel:+62226016306" className="hover:text-red-400 transition-colors">+62 22 6016 306</a></div>
-             <div className="flex items-center gap-3 text-sm text-stone-300 font-light group"><Phone size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="tel:+628176878166" className="hover:text-red-400 transition-colors">+62 817 687 8166</a></div>
              <div className="flex items-center gap-3 text-sm text-stone-300 font-light group"><WhatsAppIcon size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="https://wa.me/6285198782498" target="_blank" rel="noreferrer" className="hover:text-red-400 transition-colors">+62 851 9878 2498</a></div>
              <div className="flex items-center gap-3 text-sm text-stone-300 font-light group mt-4"><Mail size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="mailto:info@bkkemuliaan.com" className="hover:text-red-400 transition-colors break-all">info@bkkemuliaan.com</a></div>
              <div className="flex items-center gap-3 text-sm text-stone-300 font-light group"><Mail size={16} className="text-green-600 group-hover:text-white transition-colors" /><a href="mailto:Sales-marketing.2@bkkemuliaan.com" className="hover:text-red-400 transition-colors break-all">Sales-marketing.2@bkkemuliaan.com</a></div>

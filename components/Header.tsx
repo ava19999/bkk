@@ -251,7 +251,6 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                             <div>
                                 <p className="text-[10px] text-stone-400 uppercase tracking-wider mb-1">Phone</p>
                                 <a href="tel:+62226016306" className="block text-stone-700 font-medium hover:text-red-600">+62 22 6016 306</a>
-                                <a href="tel:+628176878166" className="block text-stone-700 font-medium hover:text-red-600">+62 817 687 8166</a>
                             </div>
                         </div>
 
@@ -279,14 +278,14 @@ const Header: React.FC<HeaderProps> = ({ isContactOpen, setIsContactOpen }) => {
                             <div className="p-2 bg-stone-50 text-red-600 border border-stone-200 rounded-full h-fit"><Building2 size={18} /></div>
                             <div>
                                 <h5 className="text-xs font-bold uppercase tracking-widest text-green-800 mb-1">Main Office</h5>
-                                <p className="text-sm text-stone-600">Jl. Sawit Darangdan No. 3, Purwakarta<br/>West Java 41163 - Indonesia</p>
+                                <p className="text-sm text-stone-600">Husein Sastranegara Airport<br/>Cargo Park C.49 Jl. Padjajaran No. 156,<br/>Bandung, West Java 40174</p>
                             </div>
                         </div>
                         <div className="flex gap-4">
                             <div className="p-2 bg-stone-50 text-red-600 border border-stone-200 rounded-full h-fit"><Plane size={18} /></div>
                             <div>
                                 <h5 className="text-xs font-bold uppercase tracking-widest text-green-800 mb-1">Operational Warehouse</h5>
-                                <p className="text-sm text-stone-600">Husein Sastranegara Airport<br/>Cargo Park C.49 Jl. Padjajaran No. 156,<br/>Bandung, West Java 40174</p>
+                                <p className="text-sm text-stone-600">Jl. Sawit Darangdan No. 3, Purwakarta<br/>West Java 41163 - Indonesia</p>
                             </div>
                         </div>
 
